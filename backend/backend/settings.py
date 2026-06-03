@@ -82,14 +82,16 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+import os
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'brain_game',
-        'USER': 'root',
-        'PASSWORD': 'Admin@123',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': os.environ.get('MYSQLDATABASE') or os.environ.get('MYSQL_DATABASE') or 'brain_game',
+        'USER': os.environ.get('MYSQLUSER') or os.environ.get('MYSQL_USER') or 'root',
+        'PASSWORD': os.environ.get('MYSQLPASSWORD') or os.environ.get('MYSQL_PASSWORD') or 'Admin@123',
+        'HOST': os.environ.get('MYSQLHOST') or os.environ.get('MYSQL_HOST') or 'localhost',
+        'PORT': os.environ.get('MYSQLPORT') or os.environ.get('MYSQL_PORT') or '3306',
     }
 }
 
