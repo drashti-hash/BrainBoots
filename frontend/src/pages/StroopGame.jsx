@@ -9,6 +9,20 @@ const colors = [
 ];
 
 function StroopGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
+            startGame();
+        }
+    }, []);
+    // -----------------------------------------
+
     const [word, setWord] = useState("");
     const [textColor, setTextColor] = useState("");
     const [score, setScore] = useState(0);

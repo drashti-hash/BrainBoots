@@ -2,6 +2,14 @@ import { useState, useEffect, useCallback } from "react";
 import { addHanoiScore } from "../services/api";
 
 function HanoiGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+    // -----------------------------------------
+
     const [level, setLevel] = useState(1); // Level 1 = 3 disks, Level 2 = 4 disks, Level 3 = 5 disks, Level 4 = 6 disks
     const [score, setScore] = useState(0);
     const [highScore, setHighScore] = useState(0);

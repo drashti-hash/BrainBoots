@@ -2,6 +2,20 @@ import { useState, useEffect, useRef } from "react";
 import { addFocusGridScore } from "../services/api";
 
 function FocusGridGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
+            startGame();
+        }
+    }, []);
+    // -----------------------------------------
+
     const [grid, setGrid] = useState([]);
     const [targetNumber, setTargetNumber] = useState(null);
     const [level, setLevel] = useState(1);

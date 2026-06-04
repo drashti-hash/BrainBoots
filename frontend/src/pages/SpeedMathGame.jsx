@@ -2,6 +2,20 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { addSpeedMathScore } from "../services/api";
 
 function SpeedMathGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
+            startGame();
+        }
+    }, []);
+    // -----------------------------------------
+
     const [level, setLevel] = useState(1);
     const [score, setScore] = useState(0);
     const [highScore, setHighScore] = useState(0);

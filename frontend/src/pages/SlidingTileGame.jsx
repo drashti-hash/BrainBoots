@@ -4,6 +4,14 @@ import { addSlidingTileScore } from "../services/api";
 const SOLVED_STATE = [1, 2, 3, 4, 5, 6, 7, 8, 0];
 
 function SlidingTileGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+    // -----------------------------------------
+
     const [tiles, setTiles] = useState([]);
     const [moves, setMoves] = useState(0);
     const [level, setLevel] = useState(1);

@@ -2,6 +2,20 @@ import { useState, useEffect } from "react";
 import { addOddColorScore } from "../services/api";
 
 function OddColorGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
+            startGame();
+        }
+    }, []);
+    // -----------------------------------------
+
     const [level, setLevel] = useState(1);
     const [score, setScore] = useState(0);
     const [oddIndex, setOddIndex] = useState(null);

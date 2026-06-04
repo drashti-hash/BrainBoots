@@ -2,6 +2,20 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { addSchulteScore } from "../services/api";
 
 function SchulteGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
+            startGame();
+        }
+    }, []);
+    // -----------------------------------------
+
     const [grid, setGrid] = useState([]);
     const [expectedNumber, setExpectedNumber] = useState(1);
     const [timer, setTimer] = useState(0);

@@ -2,6 +2,20 @@ import { useState, useRef, useEffect } from "react";
 import { addNumberSequenceScore } from "../services/api";
 
 function NumberSequenceGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
+            startGame();
+        }
+    }, []);
+    // -----------------------------------------
+
     const [sequence, setSequence] = useState([]);
     const [userInput, setUserInput] = useState("");
     const [level, setLevel] = useState(1);

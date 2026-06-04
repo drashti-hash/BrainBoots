@@ -2,6 +2,20 @@ import { useState, useRef, useEffect } from "react";
 import { addReactionScore } from "../services/api";
 
 function ReactionGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate && reactionTime) {
+            window.brainbootsScoreUpdate(100);
+        }
+    }, [reactionTime]);
+
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
+            startGame();
+        }
+    }, []);
+    // -----------------------------------------
+
     const [colorClass, setColorClass] = useState("bg-slate-700"); 
     const [message, setMessage] = useState("Press Start to Begin");
     const [reactionTime, setReactionTime] = useState(null);

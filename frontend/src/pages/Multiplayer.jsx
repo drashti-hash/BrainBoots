@@ -154,18 +154,50 @@ function MultiplayerArena({ roomCode, username }) {
     const chatEndRef = useRef(null);
     const gameContainerRef = useRef(null);
 
+    const [timeLeft, setTimeLeft] = useState(30);
+    const [currentLiveScore, setCurrentLiveScore] = useState(0);
+
+    // Synchronized 30-second countdown timer for all players
+    useEffect(() => {
+        if (roomState.activeGame.status !== "playing") return;
+
+        setTimeLeft(30);
+        setCurrentLiveScore(0);
+
+        const interval = setInterval(() => {
+            setTimeLeft((prev) => {
+                if (prev <= 1) {
+                    clearInterval(interval);
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [roomState.activeGame.status]);
+
+    // Handle countdown complete (Time's Up)
+    useEffect(() => {
+        if (roomState.activeGame.status === "playing" && timeLeft === 0) {
+            console.log(`Time is up! Submitting final live score: ${currentLiveScore}`);
+            roomState.submitFinalScore(currentLiveScore);
+        }
+    }, [timeLeft, roomState.activeGame.status, currentLiveScore, roomState]);
+
     // Auto-scroll chat to bottom
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [roomState.chatMessages]);
 
-    // Capture score submission from game completions
+    // Capture score submission from game completions (if they complete early)
     useEffect(() => {
         if (roomState.activeGame.status !== "playing") return;
 
         const handleGameResult = (event) => {
             const finalScore = event.detail?.score || 0;
-            console.log(`Captured score: ${finalScore}. Submitting...`);
+            console.log(`Captured early score: ${finalScore}. Submitting...`);
+            setCurrentLiveScore(finalScore);
             roomState.submitFinalScore(finalScore);
         };
 
@@ -175,46 +207,25 @@ function MultiplayerArena({ roomCode, username }) {
         };
     }, [roomState.activeGame.status, roomState]);
 
-    // Auto-start game if there is a start button inside the loaded game component
+    // Configure multiplayer global hook overrides for the active game instance
     useEffect(() => {
-        if (roomState.activeGame.status !== "playing") return;
+        if (roomState.activeGame.status === "playing") {
+            window.brainbootsIsMultiplayer = true;
+            window.brainbootsScoreUpdate = (score) => {
+                const numericScore = Number(score) || 0;
+                setCurrentLiveScore(numericScore);
+                roomState.updateLiveScore(numericScore);
+            };
+        } else {
+            window.brainbootsIsMultiplayer = false;
+            window.brainbootsScoreUpdate = undefined;
+        }
 
-        let attempts = 0;
-        const interval = setInterval(() => {
-            attempts++;
-            if (!gameContainerRef.current) return;
-
-            const buttons = gameContainerRef.current.querySelectorAll("button");
-            let found = false;
-            for (const btn of buttons) {
-                const text = btn.textContent.toLowerCase();
-                // Click any button that matches play triggers (start, sprint, begin, play)
-                // but exclude podium navigation/reset buttons (play again, return to lobby, back)
-                if (
-                    (text.includes("start") || 
-                     text.includes("sprint") || 
-                     text.includes("begin") || 
-                     text.includes("play")) && 
-                    !text.includes("again") && 
-                    !text.includes("back") && 
-                    !text.includes("lobby") &&
-                    !text.includes("dashboard")
-                ) {
-                    console.log(`Auto-clicker found start button: "${btn.textContent}". Triggering play!`);
-                    btn.click();
-                    found = true;
-                    break;
-                }
-            }
-
-            // Stop checking after finding the button or after 25 attempts (2.5 seconds)
-            if (found || attempts > 25) {
-                clearInterval(interval);
-            }
-        }, 100);
-
-        return () => clearInterval(interval);
-    }, [roomState.activeGame.status, roomState.activeGame.gameId]);
+        return () => {
+            window.brainbootsIsMultiplayer = false;
+            window.brainbootsScoreUpdate = undefined;
+        };
+    }, [roomState.activeGame.status, roomState]);
 
     // Handle copying room code
     const [copied, setCopied] = useState(false);
@@ -468,27 +479,45 @@ function MultiplayerArena({ roomCode, username }) {
 
                 {/* Game Area taking full width */}
                 <div className="flex-1 flex flex-col p-4 md:p-6">
-                    <header className="mb-4 flex items-center justify-between border-b border-slate-200 pb-3">
-                        <h1 className="text-lg font-black tracking-tight text-slate-900">
-                            {activeGame.gameName}
-                        </h1>
-                        <div className="flex items-center gap-1.5">
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    <header className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-3">
+                        <div>
+                            <h1 className="text-lg font-black tracking-tight text-slate-900">
+                                {activeGame.gameName}
+                            </h1>
+                            <div className="flex items-center gap-1.5 mt-0.5">
+                                <span className="relative flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                </span>
+                                <span className="text-[10px] font-bold text-emerald-700 font-mono tracking-wider uppercase">LIVE ARENA MATCH</span>
+                            </div>
+                        </div>
+
+                        {/* Synchronized 30-Second Timer HUD */}
+                        <div className="flex items-center gap-3 bg-rose-50 border border-rose-100 rounded-2xl px-4 py-2 shadow-sm">
+                            <span className="text-[10px] font-black text-rose-800 uppercase tracking-wider">Time Left:</span>
+                            <span className={`text-xl font-black font-mono transition-colors ${timeLeft <= 5 ? 'text-rose-600 animate-pulse' : 'text-slate-800'}`}>
+                                {timeLeft}s
                             </span>
-                            <span className="text-[10px] font-bold text-emerald-700 font-mono tracking-wider uppercase">LIVE</span>
+                            <div className="w-24 h-2 bg-rose-100 rounded-full overflow-hidden hidden sm:block">
+                                <div 
+                                    className={`h-full rounded-full transition-all duration-1000 ${timeLeft <= 5 ? 'bg-rose-600' : 'bg-rose-500'}`}
+                                    style={{ width: `${(timeLeft / 30) * 100}%` }}
+                                />
+                            </div>
                         </div>
                     </header>
 
                     {/* Rendering the active game */}
                     <div ref={gameContainerRef} className="flex-1 flex items-center justify-center bg-white rounded-2xl border border-slate-200 p-6 min-h-[55vh] relative overflow-hidden shadow-sm">
-                        {hasFinishedActiveGame ? (
+                        {timeLeft === 0 || hasFinishedActiveGame ? (
                             <div className="text-center max-w-sm p-6 rounded-2xl border border-slate-200 bg-slate-50/50">
                                 <div className="text-3xl mb-3">🏁</div>
-                                <h3 className="text-base font-bold text-slate-900">Completed</h3>
+                                <h3 className="text-base font-bold text-slate-900">
+                                    {timeLeft === 0 ? "Time's Up!" : "Completed"}
+                                </h3>
                                 <div className="mt-2 text-xs font-semibold text-slate-500">
-                                    Your Score: <span className="text-emerald-700 font-black font-mono text-sm">{myPlayerRecord?.score}</span>
+                                    Your Score: <span className="text-emerald-700 font-black font-mono text-sm">{timeLeft === 0 ? currentLiveScore : myPlayerRecord?.score}</span>
                                 </div>
                             </div>
                         ) : ActiveGameComponent ? (

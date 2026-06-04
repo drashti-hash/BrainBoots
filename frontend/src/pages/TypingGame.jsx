@@ -38,6 +38,20 @@ const levels = {
 };
 
 function TypingGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(wpm);
+        }
+    }, [wpm]);
+
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
+            startGame();
+        }
+    }, []);
+    // -----------------------------------------
+
   const [difficulty, setDifficulty] = useState("easy");
   const [currentSentence, setCurrentSentence] = useState("");
   const [input, setInput] = useState("");

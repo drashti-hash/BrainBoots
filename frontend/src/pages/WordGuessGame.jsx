@@ -9,6 +9,14 @@ const WORD_LIST = [
 ];
 
 function WordGuessGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+    // -----------------------------------------
+
     const [secretWord, setSecretWord] = useState("");
     const [guesses, setGuesses] = useState([]);
     const [currentGuess, setCurrentGuess] = useState("");

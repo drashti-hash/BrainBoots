@@ -2,6 +2,14 @@ import { useState, useEffect, useCallback } from "react";
 import { addLightsOutScore } from "../services/api";
 
 function LightsOutGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+    // -----------------------------------------
+
     const [grid, setGrid] = useState([]);
     const [moves, setMoves] = useState(0);
     const [level, setLevel] = useState(1);

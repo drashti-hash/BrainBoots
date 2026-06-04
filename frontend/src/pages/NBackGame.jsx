@@ -2,6 +2,20 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { addNBackScore } from "../services/api";
 
 function NBackGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
+            startGame();
+        }
+    }, []);
+    // -----------------------------------------
+
     const [nBack, setNBack] = useState(1); // 1-back, 2-back, etc.
     const [level, setLevel] = useState(1);
     const [score, setScore] = useState(0);

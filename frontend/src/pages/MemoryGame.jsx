@@ -21,6 +21,21 @@ const generateLevelCards = (lvl) => {
 };
 
 function MemoryGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            const calculatedScore = Math.max(0, (level * 100) - (moves * 5) - seconds);
+            window.brainbootsScoreUpdate(calculatedScore);
+        }
+    }, [level, moves, seconds]);
+
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startLevel === 'function') {
+            startLevel(1);
+        }
+    }, []);
+    // -----------------------------------------
+
     const [level, setLevel] = useState(1);
     const [cards, setCards] = useState(() => generateLevelCards(1));
     const [firstCard, setFirstCard] = useState(null);

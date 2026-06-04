@@ -2,6 +2,14 @@ import { useState, useEffect } from "react";
 import { addSudokuScore } from "../services/api";
 
 function SudokuGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+    // -----------------------------------------
+
     const initialBoard = [
         [5, 3, "", 6],
         [6, "", "", 1],

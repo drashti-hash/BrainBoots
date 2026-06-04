@@ -9,6 +9,20 @@ const colors = [
 ];
 
 function SimonGame() {
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
+            startGame();
+        }
+    }, []);
+    // -----------------------------------------
+
     const [gameSequence, setGameSequence] = useState([]);
     const [userSequence, setUserSequence] = useState([]);
     const [level, setLevel] = useState(1);
