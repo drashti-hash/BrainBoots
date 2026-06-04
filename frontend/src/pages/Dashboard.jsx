@@ -139,11 +139,90 @@ function Dashboard() {
                     
                     {/* Logo */}
                     <div className="flex items-center gap-2">
-                        <div className="bg-gradient-to-tr from-violet-600 to-indigo-600 p-2 rounded-xl text-white shadow-md shadow-indigo-100">
-                            <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                            </svg>
-                        </div>
+                        <svg className="w-8 h-8 overflow-visible" viewBox="0 0 100 100" fill="none">
+                            <style>{`
+                                @keyframes pulse-slow {
+                                    0%, 100% { transform: scale(1); }
+                                    50% { transform: scale(1.04); }
+                                }
+                                @keyframes float-left {
+                                    0%, 100% { transform: translateY(0px); }
+                                    50% { transform: translateY(-1.5px); }
+                                }
+                                @keyframes float-right {
+                                    0%, 100% { transform: translateY(0px); }
+                                    50% { transform: translateY(1.5px); }
+                                }
+                                .animate-brain {
+                                    animation: pulse-slow 4s ease-in-out infinite;
+                                    transform-origin: center;
+                                }
+                                .left-hemisphere {
+                                    animation: float-left 3.5s ease-in-out infinite;
+                                    transform-origin: 50% 50%;
+                                }
+                                .right-hemisphere {
+                                    animation: float-right 3.5s ease-in-out infinite;
+                                    transform-origin: 50% 50%;
+                                }
+                            `}</style>
+                            <g className="animate-brain">
+                                <defs>
+                                    <linearGradient id="nav-logo-grad-left" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stopColor="#8b5cf6" />
+                                        <stop offset="100%" stopColor="#4f46e5" />
+                                    </linearGradient>
+                                    <linearGradient id="nav-logo-grad-right" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stopColor="#a78bfa" />
+                                        <stop offset="100%" stopColor="#7c3aed" />
+                                    </linearGradient>
+                                </defs>
+
+                                {/* Stem / Spine connection line */}
+                                <line x1="50" y1="74" x2="50" y2="88" stroke="url(#nav-logo-grad-left)" strokeWidth="10" strokeLinecap="round" />
+
+                                {/* Left Hemisphere Group */}
+                                <g className="left-hemisphere">
+                                    <g stroke="url(#nav-logo-grad-left)" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round">
+                                        <line x1="28" y1="34" x2="18" y2="50" />
+                                        <line x1="18" y1="50" x2="30" y2="66" />
+                                        <line x1="30" y1="66" x2="38" y2="58" />
+                                        <line x1="38" y1="58" x2="40" y2="46" />
+                                        <line x1="40" y1="46" x2="28" y2="34" />
+                                        <line x1="28" y1="34" x2="50" y2="30" />
+                                        <line x1="38" y1="58" x2="50" y2="74" />
+                                    </g>
+                                    <circle cx="28" cy="34" r="9.5" fill="#8b5cf6" />
+                                    <circle cx="18" cy="50" r="11" fill="#6366f1" />
+                                    <circle cx="30" cy="66" r="9.5" fill="#4f46e5" />
+                                    <circle cx="40" cy="46" r="8.5" fill="#a78bfa" />
+                                    <circle cx="38" cy="58" r="7.5" fill="#6366f1" />
+                                </g>
+
+                                {/* Right Hemisphere Group */}
+                                <g className="right-hemisphere">
+                                    <g stroke="url(#nav-logo-grad-right)" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round">
+                                        <line x1="72" y1="34" x2="82" y2="50" />
+                                        <line x1="82" y1="50" x2="70" y2="66" />
+                                        <line x1="70" y1="66" x2="62" y2="58" />
+                                        <line x1="62" y1="58" x2="60" y2="46" />
+                                        <line x1="60" y1="46" x2="72" y2="34" />
+                                        <line x1="72" y1="34" x2="50" y2="30" />
+                                        <line x1="62" y1="58" x2="50" y2="74" />
+                                    </g>
+                                    <circle cx="72" cy="34" r="9.5" fill="#a78bfa" />
+                                    <circle cx="82" cy="50" r="11" fill="#8b5cf6" />
+                                    <circle cx="70" cy="66" r="9.5" fill="#7c3aed" />
+                                    <circle cx="60" cy="46" r="8.5" fill="#c084fc" />
+                                    <circle cx="62" cy="58" r="7.5" fill="#8b5cf6" />
+                                </g>
+
+                                {/* Center and Stem nodes */}
+                                <circle cx="50" cy="30" r="8" fill="#c084fc" />
+                                <circle cx="50" cy="74" r="9" fill="#4f46e5" />
+                                <circle cx="50" cy="88" r="7" fill="#312e81" />
+                            </g>
+                        </svg>
                         <span className="text-xl font-black tracking-tight text-slate-900">
                             Brain<span className="text-violet-600">Boot</span>
                         </span>
