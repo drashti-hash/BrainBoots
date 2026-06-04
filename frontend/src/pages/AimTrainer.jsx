@@ -8,7 +8,13 @@ function AimTrainer() {
     const [targetPosition, setTargetPosition] = useState({ top: 150, left: 250 });
     const [totalClicks, setTotalClicks] = useState(0);
     const [accuracy, setAccuracy] = useState(0);
-    const [highScore, setHighScore] = useState(0);
+    const [highScore, setHighScore] = useState(() => {
+        try {
+            const saved = localStorage.getItem("brainbootsResult:add-aim-score/");
+            if (saved) return JSON.parse(saved).bestScore || 0;
+        } catch {}
+        return 0;
+    });
     
     const gameAreaRef = useRef(null);
     const [areaDimensions, setAreaDimensions] = useState({ width: 800, height: 500 });

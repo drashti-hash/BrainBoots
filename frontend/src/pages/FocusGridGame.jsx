@@ -10,7 +10,13 @@ function FocusGridGame() {
     const [message, setMessage] = useState("👉 Press START to play!");
     const [isPlaying, setIsPlaying] = useState(false);
     const [totalAttempts, setTotalAttempts] = useState(0);
-    const [highScore, setHighScore] = useState(0);
+    const [highScore, setHighScore] = useState(() => {
+        try {
+            const saved = localStorage.getItem("brainbootsResult:add-focus-grid-score/");
+            if (saved) return JSON.parse(saved).bestScore || 0;
+        } catch {}
+        return 0;
+    });
     const [foundPosition, setFoundPosition] = useState(null);
     
     const intervalRef = useRef(null);

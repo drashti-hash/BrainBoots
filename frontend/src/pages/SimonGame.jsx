@@ -16,7 +16,13 @@ function SimonGame() {
     const [isPlaying, setIsPlaying] = useState(false);
     const [activeColor, setActiveColor] = useState("");
     const [message, setMessage] = useState("👉 Press START to play!");
-    const [highScore, setHighScore] = useState(0);
+    const [highScore, setHighScore] = useState(() => {
+        try {
+            const saved = localStorage.getItem("brainbootsResult:add-simon-score/");
+            if (saved) return JSON.parse(saved).bestScore || 0;
+        } catch {}
+        return 0;
+    });
     const [isShowingSequence, setIsShowingSequence] = useState(false);
     
     const intervalRef = useRef(null);

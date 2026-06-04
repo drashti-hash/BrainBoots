@@ -15,7 +15,13 @@ function WordGuessGame() {
     const [gameStatus, setGameStatus] = useState("playing"); // playing, won, lost
     const [level, setLevel] = useState(1);
     const [score, setScore] = useState(0);
-    const [highScore, setHighScore] = useState(0);
+    const [highScore, setHighScore] = useState(() => {
+        try {
+            const saved = localStorage.getItem("brainbootsResult:add-word-guess-score/");
+            if (saved) return JSON.parse(saved).bestScore || 0;
+        } catch {}
+        return 0;
+    });
     const [message, setMessage] = useState("👉 Guess the 5-letter word!");
 
     const startNewRound = useCallback((lvl, curScore) => {

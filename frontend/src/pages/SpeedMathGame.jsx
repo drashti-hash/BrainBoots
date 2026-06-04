@@ -4,7 +4,13 @@ import { addSpeedMathScore } from "../services/api";
 function SpeedMathGame() {
     const [level, setLevel] = useState(1);
     const [score, setScore] = useState(0);
-    const [highScore, setHighScore] = useState(0);
+    const [highScore, setHighScore] = useState(() => {
+        try {
+            const saved = localStorage.getItem("brainbootsResult:add-speed-math-score/");
+            if (saved) return JSON.parse(saved).bestScore || 0;
+        } catch {}
+        return 0;
+    });
     const [correctAnswers, setCorrectAnswers] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [question, setQuestion] = useState({ text: "", answer: 0, options: [] });

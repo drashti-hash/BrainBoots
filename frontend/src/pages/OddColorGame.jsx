@@ -9,7 +9,13 @@ function OddColorGame() {
     const [message, setMessage] = useState("👉 Press START to play!");
     const [isPlaying, setIsPlaying] = useState(false);
     const [totalClicks, setTotalClicks] = useState(0);
-    const [highScore, setHighScore] = useState(0);
+    const [highScore, setHighScore] = useState(() => {
+        try {
+            const saved = localStorage.getItem("brainbootsResult:add-odd-color-score/");
+            if (saved) return JSON.parse(saved).bestScore || 0;
+        } catch {}
+        return 0;
+    });
     const [showHint, setShowHint] = useState(false);
 
     const generateGrid = () => {

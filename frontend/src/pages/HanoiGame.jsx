@@ -4,7 +4,13 @@ import { addHanoiScore } from "../services/api";
 function HanoiGame() {
     const [level, setLevel] = useState(1); // Level 1 = 3 disks, Level 2 = 4 disks, Level 3 = 5 disks, Level 4 = 6 disks
     const [score, setScore] = useState(0);
-    const [highScore, setHighScore] = useState(0);
+    const [highScore, setHighScore] = useState(() => {
+        try {
+            const saved = localStorage.getItem("brainbootsResult:add-hanoi-score/");
+            if (saved) return JSON.parse(saved).bestScore || 0;
+        } catch {}
+        return 0;
+    });
     const [moves, setMoves] = useState(0);
     const [pegs, setPegs] = useState([[], [], []]);
     const [selectedPeg, setSelectedPeg] = useState(null);

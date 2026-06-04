@@ -5,7 +5,13 @@ function NBackGame() {
     const [nBack, setNBack] = useState(1); // 1-back, 2-back, etc.
     const [level, setLevel] = useState(1);
     const [score, setScore] = useState(0);
-    const [highScore, setHighScore] = useState(0);
+    const [highScore, setHighScore] = useState(() => {
+        try {
+            const saved = localStorage.getItem("brainbootsResult:add-nback-score/");
+            if (saved) return JSON.parse(saved).bestScore || 0;
+        } catch {}
+        return 0;
+    });
     const [isPlaying, setIsPlaying] = useState(false);
     const [sequence, setSequence] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(-1);

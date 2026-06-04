@@ -10,7 +10,13 @@ function NumberSequenceGame() {
     const [showSequence, setShowSequence] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [totalAttempts, setTotalAttempts] = useState(0);
-    const [highScore, setHighScore] = useState(0);
+    const [highScore, setHighScore] = useState(() => {
+        try {
+            const saved = localStorage.getItem("brainbootsResult:add-number-sequence-score/");
+            if (saved) return JSON.parse(saved).bestScore || 0;
+        } catch {}
+        return 0;
+    });
     
     const timeoutRef = useRef(null);
 

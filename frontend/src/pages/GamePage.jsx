@@ -42,7 +42,7 @@ function GamePage() {
     return (
         <main className="min-h-screen bg-slate-50 text-slate-900">
             <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 px-4 py-4 shadow-sm backdrop-blur md:px-8">
-                <div className="mx-auto flex max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mx-auto flex max-w-[1720px] w-[95%] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <Link
                             to="/dashboard"
@@ -63,7 +63,7 @@ function GamePage() {
                 </div>
             </header>
 
-            <section className="mx-auto flex w-full max-w-6xl justify-center px-4 py-6 md:px-8">
+            <section className="mx-auto flex w-full max-w-[1720px] w-[95%] justify-center px-4 py-6 md:px-8">
                 <div className="w-full animate-fadeIn">
                     <ActiveGame key={gameInstanceKey} />
                 </div>

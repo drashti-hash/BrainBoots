@@ -8,7 +8,13 @@ function SlidingTileGame() {
     const [moves, setMoves] = useState(0);
     const [level, setLevel] = useState(1);
     const [score, setScore] = useState(0);
-    const [highScore, setHighScore] = useState(0);
+    const [highScore, setHighScore] = useState(() => {
+        try {
+            const saved = localStorage.getItem("brainbootsResult:add-sliding-tile-score/");
+            if (saved) return JSON.parse(saved).bestScore || 0;
+        } catch {}
+        return 0;
+    });
     const [gameStatus, setGameStatus] = useState("playing"); // playing, won
     const [message, setMessage] = useState("🧩 Slide tiles to order 1-8!");
 

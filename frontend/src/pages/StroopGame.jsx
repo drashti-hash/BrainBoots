@@ -16,7 +16,13 @@ function StroopGame() {
     const [timeLeft, setTimeLeft] = useState(30);
     const [gameStarted, setGameStarted] = useState(false);
     const [accuracy, setAccuracy] = useState(0);
-    const [highScore, setHighScore] = useState(0);
+    const [highScore, setHighScore] = useState(() => {
+        try {
+            const saved = localStorage.getItem("brainbootsResult:add-stroop-score/");
+            if (saved) return JSON.parse(saved).bestScore || 0;
+        } catch {}
+        return 0;
+    });
     const [lastAnswerCorrect, setLastAnswerCorrect] = useState(null);
 
     const generateQuestion = () => {
