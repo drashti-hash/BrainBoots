@@ -21,21 +21,6 @@ const generateLevelCards = (lvl) => {
 };
 
 function MemoryGame() {
-    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
-            const calculatedScore = Math.max(0, (level * 100) - (moves * 5) - seconds);
-            window.brainbootsScoreUpdate(calculatedScore);
-        }
-    }, [level, moves, seconds]);
-
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && typeof startLevel === 'function') {
-            startLevel(1);
-        }
-    }, []);
-    // -----------------------------------------
-
     const [level, setLevel] = useState(1);
     const [cards, setCards] = useState(() => generateLevelCards(1));
     const [firstCard, setFirstCard] = useState(null);
@@ -152,7 +137,22 @@ function MemoryGame() {
         }, 800);
     };
 
-    return (
+    
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            const calculatedScore = Math.max(0, (level * 100) - (moves * 5) - seconds);
+            window.brainbootsScoreUpdate(calculatedScore);
+        }
+    }, [level, moves, seconds]);
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startLevel === 'function') {
+            startLevel(1);
+        }
+    }, []);
+    // -----------------------------------------
+
+return (
         <div className="flex flex-col items-center justify-center min-h-[80vh] bg-slate-50 p-4 font-sans text-slate-900 w-full">
             <div className="mb-8 text-center">
                 <h1 className="text-3xl font-black text-slate-800 mb-3">Memory Match</h1>

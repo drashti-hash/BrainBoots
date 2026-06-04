@@ -9,20 +9,6 @@ const colors = [
 ];
 
 function StroopGame() {
-    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
-            window.brainbootsScoreUpdate(score);
-        }
-    }, [score]);
-
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
-            startGame();
-        }
-    }, []);
-    // -----------------------------------------
-
     const [word, setWord] = useState("");
     const [textColor, setTextColor] = useState("");
     const [score, setScore] = useState(0);
@@ -50,6 +36,28 @@ function StroopGame() {
         setGameStarted(true);
         setLastAnswerCorrect(null);
         generateQuestion();
+    };
+
+    const finishGame = async () => {
+        setGameStarted(false);
+        
+        const calculatedAccuracy = questionCount === 0 ? 0 : ((score / questionCount) * 100).toFixed(1);
+        setAccuracy(calculatedAccuracy);
+        
+        if (score > highScore) {
+            setHighScore(score);
+        }
+        
+        try {
+            await addStroopScore({
+                score: score,
+                accuracy: parseFloat(calculatedAccuracy),
+                total_questions: questionCount
+            });
+            console.log("Stroop Score Saved");
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     useEffect(() => {
@@ -82,28 +90,6 @@ function StroopGame() {
         }, 500);
     };
 
-    const finishGame = async () => {
-        setGameStarted(false);
-        
-        const calculatedAccuracy = questionCount === 0 ? 0 : ((score / questionCount) * 100).toFixed(1);
-        setAccuracy(calculatedAccuracy);
-        
-        if (score > highScore) {
-            setHighScore(score);
-        }
-        
-        try {
-            await addStroopScore({
-                score: score,
-                accuracy: parseFloat(calculatedAccuracy),
-                total_questions: questionCount
-            });
-            console.log("Stroop Score Saved");
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
     const getTextColorClass = () => {
         switch(textColor) {
             case "red": return "text-red-600";
@@ -114,7 +100,21 @@ function StroopGame() {
         }
     };
 
-    return (
+    
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
+            startGame();
+        }
+    }, []);
+    // -----------------------------------------
+
+return (
         <div className="bg-slate-50 p-4 md:p-6 font-sans flex items-center justify-center w-full">
             <div className="w-full max-w-4xl mx-auto">
                 <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">

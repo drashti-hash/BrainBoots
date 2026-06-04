@@ -2,14 +2,6 @@ import { useState, useEffect } from "react";
 import { addSudokuScore } from "../services/api";
 
 function SudokuGame() {
-    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
-            window.brainbootsScoreUpdate(score);
-        }
-    }, [score]);
-    // -----------------------------------------
-
     const initialBoard = [
         [5, 3, "", 6],
         [6, "", "", 1],
@@ -131,7 +123,16 @@ function SudokuGame() {
         return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     };
 
-    return (
+    
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+    // -----------------------------------------
+
+return (
         <div className="bg-slate-50 p-4 md:p-6 font-sans flex items-center justify-center w-full">
             <div className="w-full max-w-2xl mx-auto">
                 <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">

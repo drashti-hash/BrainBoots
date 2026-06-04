@@ -38,20 +38,6 @@ const levels = {
 };
 
 function TypingGame() {
-    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
-            window.brainbootsScoreUpdate(wpm);
-        }
-    }, [wpm]);
-
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
-            startGame();
-        }
-    }, []);
-    // -----------------------------------------
-
   const [difficulty, setDifficulty] = useState("easy");
   const [currentSentence, setCurrentSentence] = useState("");
   const [input, setInput] = useState("");
@@ -200,7 +186,21 @@ function TypingGame() {
     ? ((charStats.correct / charStats.total) * 100).toFixed(0) 
     : 100;
 
-  return (
+  
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(wpm);
+        }
+    }, [wpm]);
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer) {
+            restartGame();
+        }
+    }, []);
+    // -----------------------------------------
+
+return (
     <div className="bg-slate-50 p-4 md:p-6 font-sans flex items-center justify-center w-full">
       <div className="w-full max-w-4xl mx-auto">
         <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">

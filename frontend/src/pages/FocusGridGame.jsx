@@ -2,20 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { addFocusGridScore } from "../services/api";
 
 function FocusGridGame() {
-    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
-            window.brainbootsScoreUpdate(score);
-        }
-    }, [score]);
-
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
-            startGame();
-        }
-    }, []);
-    // -----------------------------------------
-
     const [grid, setGrid] = useState([]);
     const [targetNumber, setTargetNumber] = useState(null);
     const [level, setLevel] = useState(1);
@@ -62,6 +48,24 @@ function FocusGridGame() {
         generateGrid();
     };
 
+    const gameOver = async () => {
+        setIsPlaying(false);
+        setMessage("❌ GAME OVER! Wrong number!");
+        
+        if (intervalRef.current) clearInterval(intervalRef.current);
+        
+        try {
+            await addFocusGridScore({
+                level_reached: level,
+                score: score,
+                total_attempts: totalAttempts
+            });
+            console.log("Score Saved");
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
         if (isPlaying && timer > 0) {
             intervalRef.current = setInterval(() => {
@@ -101,24 +105,6 @@ function FocusGridGame() {
         }
     };
 
-    const gameOver = async () => {
-        setIsPlaying(false);
-        setMessage("❌ GAME OVER! Wrong number!");
-        
-        if (intervalRef.current) clearInterval(intervalRef.current);
-        
-        try {
-            await addFocusGridScore({
-                level_reached: level,
-                score: score,
-                total_attempts: totalAttempts
-            });
-            console.log("Score Saved");
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
     const getTimerColor = () => {
         if (timer <= 2) return "text-rose-600 bg-rose-50 border border-rose-200";
         return "text-emerald-700 bg-emerald-50 border border-emerald-200";
@@ -133,7 +119,21 @@ function FocusGridGame() {
 
     const difficulty = getDifficulty();
 
-    return (
+    
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
+            startGame();
+        }
+    }, []);
+    // -----------------------------------------
+
+return (
         <div className="bg-slate-50 p-4 md:p-6 font-sans flex items-center justify-center w-full">
             <div className="w-full max-w-3xl mx-auto">
                 <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">

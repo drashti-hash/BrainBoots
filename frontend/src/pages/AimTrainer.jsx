@@ -2,20 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { addAimScore } from "../services/api";
 
 function AimTrainer() {
-    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
-            window.brainbootsScoreUpdate(score);
-        }
-    }, [score]);
-
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
-            startGame();
-        }
-    }, []);
-    // -----------------------------------------
-
     const [score, setScore] = useState(0);
     const [timeLeft, setTimeLeft] = useState(30);
     const [gameStarted, setGameStarted] = useState(false);
@@ -60,6 +46,28 @@ function AimTrainer() {
         }, 50);
     };
 
+    const finishGame = async () => {
+        setGameStarted(false);
+        
+        const calculatedAccuracy = totalClicks === 0 ? 0 : ((score / totalClicks) * 100).toFixed(1);
+        setAccuracy(calculatedAccuracy);
+        
+        if (score > highScore) {
+            setHighScore(score);
+        }
+        
+        try {
+            await addAimScore({
+                score: score,
+                total_clicks: totalClicks,
+                accuracy: parseFloat(calculatedAccuracy)
+            });
+            console.log("Aim Score Saved");
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
         let timer;
         if (gameStarted && timeLeft > 0) {
@@ -85,29 +93,21 @@ function AimTrainer() {
         }
     };
 
-    const finishGame = async () => {
-        setGameStarted(false);
-        
-        const calculatedAccuracy = totalClicks === 0 ? 0 : ((score / totalClicks) * 100).toFixed(1);
-        setAccuracy(calculatedAccuracy);
-        
-        if (score > highScore) {
-            setHighScore(score);
+    
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
         }
-        
-        try {
-            await addAimScore({
-                score: score,
-                total_clicks: totalClicks,
-                accuracy: parseFloat(calculatedAccuracy)
-            });
-            console.log("Aim Score Saved");
-        } catch (error) {
-            console.log(error);
+    }, [score]);
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
+            startGame();
         }
-    };
+    }, []);
+    // -----------------------------------------
 
-    return (
+return (
         <div className="bg-slate-50 p-4 md:p-6 font-sans flex items-center justify-center w-full">
             <div className="w-full max-w-5xl mx-auto">
                 <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">

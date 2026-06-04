@@ -9,14 +9,6 @@ const WORD_LIST = [
 ];
 
 function WordGuessGame() {
-    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
-            window.brainbootsScoreUpdate(score);
-        }
-    }, [score]);
-    // -----------------------------------------
-
     const [secretWord, setSecretWord] = useState("");
     const [guesses, setGuesses] = useState([]);
     const [currentGuess, setCurrentGuess] = useState("");
@@ -137,7 +129,16 @@ function WordGuessGame() {
         return status;
     };
 
-    return (
+    
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+    // -----------------------------------------
+
+return (
         <div className="bg-slate-50 p-4 md:p-6 font-sans flex items-center justify-center w-full min-h-[80vh]">
             <div className="w-full max-w-xl mx-auto">
                 <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">

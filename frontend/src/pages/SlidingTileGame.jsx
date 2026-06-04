@@ -4,14 +4,6 @@ import { addSlidingTileScore } from "../services/api";
 const SOLVED_STATE = [1, 2, 3, 4, 5, 6, 7, 8, 0];
 
 function SlidingTileGame() {
-    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
-            window.brainbootsScoreUpdate(score);
-        }
-    }, [score]);
-    // -----------------------------------------
-
     const [tiles, setTiles] = useState([]);
     const [moves, setMoves] = useState(0);
     const [level, setLevel] = useState(1);
@@ -108,7 +100,16 @@ function SlidingTileGame() {
         }
     };
 
-    return (
+    
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+    // -----------------------------------------
+
+return (
         <div className="bg-slate-50 p-4 md:p-6 font-sans flex items-center justify-center w-full min-h-[80vh]">
             <div className="w-full max-w-xl mx-auto">
                 <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">

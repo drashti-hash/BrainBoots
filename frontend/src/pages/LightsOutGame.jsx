@@ -2,14 +2,6 @@ import { useState, useEffect, useCallback } from "react";
 import { addLightsOutScore } from "../services/api";
 
 function LightsOutGame() {
-    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
-            window.brainbootsScoreUpdate(score);
-        }
-    }, [score]);
-    // -----------------------------------------
-
     const [grid, setGrid] = useState([]);
     const [moves, setMoves] = useState(0);
     const [level, setLevel] = useState(1);
@@ -98,7 +90,16 @@ function LightsOutGame() {
         }
     };
 
-    return (
+    
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+    // -----------------------------------------
+
+return (
         <div className="bg-slate-50 p-4 md:p-6 font-sans flex items-center justify-center w-full min-h-[80vh]">
             <div className="w-full max-w-xl mx-auto">
                 <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">

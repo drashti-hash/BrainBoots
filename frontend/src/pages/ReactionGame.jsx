@@ -2,20 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { addReactionScore } from "../services/api";
 
 function ReactionGame() {
-    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate && reactionTime) {
-            window.brainbootsScoreUpdate(100);
-        }
-    }, [reactionTime]);
-
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
-            startGame();
-        }
-    }, []);
-    // -----------------------------------------
-
     const [colorClass, setColorClass] = useState("bg-slate-700"); 
     const [message, setMessage] = useState("Press Start to Begin");
     const [reactionTime, setReactionTime] = useState(null);
@@ -74,7 +60,21 @@ function ReactionGame() {
         }
     };
 
-    return (
+    
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate && reactionTime) {
+            window.brainbootsScoreUpdate(100);
+        }
+    }, [reactionTime]);
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
+            startGame();
+        }
+    }, []);
+    // -----------------------------------------
+
+return (
         <div className="flex flex-col items-center mt-12 font-sans text-center w-full">
             <h1 className="text-3xl font-black text-slate-800">Reaction Brain Test</h1>
 

@@ -2,14 +2,6 @@ import { useState, useEffect, useCallback } from "react";
 import { addHanoiScore } from "../services/api";
 
 function HanoiGame() {
-    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
-    useEffect(() => {
-        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
-            window.brainbootsScoreUpdate(score);
-        }
-    }, [score]);
-    // -----------------------------------------
-
     const [level, setLevel] = useState(1); // Level 1 = 3 disks, Level 2 = 4 disks, Level 3 = 5 disks, Level 4 = 6 disks
     const [score, setScore] = useState(0);
     const [highScore, setHighScore] = useState(0);
@@ -121,7 +113,16 @@ function HanoiGame() {
         return colors[diskSize - 1] || "bg-slate-800 text-white";
     };
 
-    return (
+    
+    // --- MULTIPLAYER AUTO-START & SCORE SYNC ---
+    useEffect(() => {
+        if (window.brainbootsIsMultiplayer && window.brainbootsScoreUpdate) {
+            window.brainbootsScoreUpdate(score);
+        }
+    }, [score]);
+    // -----------------------------------------
+
+return (
         <div className="bg-slate-50 p-4 md:p-6 font-sans flex items-center justify-center w-full min-h-[80vh]">
             <div className="w-full max-w-2xl mx-auto">
                 <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
