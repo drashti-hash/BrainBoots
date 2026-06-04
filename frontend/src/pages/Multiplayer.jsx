@@ -160,7 +160,7 @@ function MultiplayerArena({ roomCode, username }) {
 
     // Synchronized starting countdown and match timer
     useEffect(() => {
-        if (roomState.activeGame.status !== "playing") {
+        if (gameplayStatus !== "playing") {
             setMatchStartCountdown(3);
             return;
         }
@@ -203,7 +203,7 @@ function MultiplayerArena({ roomCode, username }) {
             clearInterval(startTimer);
             clearInterval(playInterval);
         };
-    }, [roomState.activeGame.status]);
+    }, [gameplayStatus]);
 
     // Handle countdown complete (Time's Up)
     useEffect(() => {
@@ -308,11 +308,13 @@ function MultiplayerArena({ roomCode, username }) {
         connectionStatus,
         players,
         activeGame,
+        gameplayStatus,
         roomResults,
         chatMessages,
         isHost,
         sendMessage,
         startGame,
+        startGameplay,
         updateLiveScore,
         submitFinalScore,
         clearRoomResults,
@@ -564,8 +566,41 @@ function MultiplayerArena({ roomCode, username }) {
                             <div className="text-slate-500 font-bold text-xs">Game not found.</div>
                         )}
 
+                        {/* Gameplay Ready Overlay (Lobby Launch state) */}
+                        {gameplayStatus === "ready" && (
+                            <div className="absolute inset-0 bg-slate-900/95 backdrop-blur-md flex flex-col items-center justify-center z-50 text-white p-6 text-center">
+                                <span className="text-5xl mb-4 animate-bounce">🎮</span>
+                                <p className="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-1">Match Prepared</p>
+                                <h2 className="text-2xl font-black mb-6 uppercase tracking-tight text-white">
+                                    {activeGame.gameName}
+                                </h2>
+                                
+                                {isHost ? (
+                                    <div className="flex flex-col items-center space-y-4">
+                                        <button
+                                            type="button"
+                                            onClick={startGameplay}
+                                            className="px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl transition-all shadow-[0_0_15px_rgba(16,185,129,0.4)] text-sm cursor-pointer hover:scale-105 transform active:scale-95"
+                                        >
+                                            🚀 START MATCH FOR ALL
+                                        </button>
+                                        <p className="text-[10px] text-slate-400 max-w-xs font-semibold">
+                                            As the Host/Admin, you control when the match begins. Starting it will sync both players.
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col items-center space-y-4">
+                                        <div className="w-8 h-8 rounded-full border-4 border-slate-700 border-t-emerald-500 animate-spin" />
+                                        <p className="text-xs text-slate-300 font-bold tracking-wide animate-pulse">
+                                            Waiting for Host to start the match...
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
                         {/* Starting countdown overlay */}
-                        {matchStartCountdown > 0 && (
+                        {gameplayStatus === "playing" && matchStartCountdown > 0 && (
                             <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-sm flex flex-col items-center justify-center z-50 text-white">
                                 <p className="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-2">Prepare Yourself</p>
                                 <h2 className="text-lg font-black tracking-wider mb-6">MATCH STARTING IN</h2>

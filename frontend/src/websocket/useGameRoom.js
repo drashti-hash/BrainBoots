@@ -9,6 +9,7 @@ export function useGameRoom(roomCode, username) {
     const { status, connect, send, close, on, off } = useWebSocket();
     const [players, setPlayers] = useState([]);
     const [activeGame, setActiveGame] = useState({ gameId: null, gameName: null, status: "waiting" });
+    const [gameplayStatus, setGameplayStatus] = useState("waiting"); // "waiting", "ready", "playing"
     const [roomResults, setRoomResults] = useState(null);
     const [chatMessages, setChatMessages] = useState([]);
     const currentUsernameRef = useRef(username);
@@ -75,6 +76,7 @@ export function useGameRoom(roomCode, username) {
                 gameName: data.game_name,
                 status: "playing"
             });
+            setGameplayStatus("ready");
             setRoomResults(null);
             setPlayers(data.players);
             setChatMessages((prev) => [
@@ -86,6 +88,10 @@ export function useGameRoom(roomCode, username) {
                     isSystem: true
                 }
             ]);
+        };
+
+        const handleGameplayStarted = () => {
+            setGameplayStatus("playing");
         };
 
         const handleScoreUpdated = (data) => {
@@ -116,6 +122,7 @@ export function useGameRoom(roomCode, username) {
                 gameName: null,
                 status: "waiting"
             });
+            setGameplayStatus("waiting");
             setChatMessages((prev) => [
                 ...prev,
                 {
@@ -132,6 +139,7 @@ export function useGameRoom(roomCode, username) {
         on("player_left", handlePlayerLeft);
         on("chat_message", handleChatBroadcast);
         on("game_started", handleGameStarted);
+        on("gameplay_started", handleGameplayStarted);
         on("score_updated", handleScoreUpdated);
         on("player_finished", handlePlayerFinished);
         on("game_finished", handleGameFinished);
@@ -142,6 +150,7 @@ export function useGameRoom(roomCode, username) {
             off("player_left", handlePlayerLeft);
             off("chat_message", handleChatBroadcast);
             off("game_started", handleGameStarted);
+            off("gameplay_started", handleGameplayStarted);
             off("score_updated", handleScoreUpdated);
             off("player_finished", handlePlayerFinished);
             off("game_finished", handleGameFinished);
@@ -157,6 +166,10 @@ export function useGameRoom(roomCode, username) {
 
     const startGame = useCallback((gameId, gameName) => {
         send("start_game", { game_id: gameId, game_name: gameName });
+    }, [send]);
+
+    const startGameplay = useCallback(() => {
+        send("start_gameplay");
     }, [send]);
 
     const updateLiveScore = useCallback((score) => {
@@ -186,11 +199,13 @@ export function useGameRoom(roomCode, username) {
         connectionStatus: status,
         players,
         activeGame,
+        gameplayStatus,
         roomResults,
         chatMessages,
         isHost,
         sendMessage,
         startGame,
+        startGameplay,
         updateLiveScore,
         submitFinalScore,
         clearRoomResults,

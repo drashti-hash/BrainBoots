@@ -111,6 +111,8 @@ class MultiplayerConsumer(AsyncWebsocketConsumer):
                 await self.handle_chat_message(data)
             elif event_type == "start_game":
                 await self.handle_start_game(data)
+            elif event_type == "start_gameplay":
+                await self.handle_start_gameplay(data)
             elif event_type == "score_update":
                 await self.handle_score_update(data)
             elif event_type == "submit_score":
@@ -210,6 +212,19 @@ class MultiplayerConsumer(AsyncWebsocketConsumer):
             for p_username in list(players.keys()):
                 if p_username.startswith("Computer Bot"):
                     asyncio.create_task(self.simulate_bot_play(p_username))
+
+    async def handle_start_gameplay(self, data):
+        """
+        Broadcasts to all players that gameplay should start now.
+        """
+        players = rooms[self.room_code]["players"]
+        if self.username in players and players[self.username]["is_host"]:
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    "type": "gameplay_start_broadcast"
+                }
+            )
 
     async def handle_score_update(self, data):
         """
@@ -516,4 +531,9 @@ class MultiplayerConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             "event": "game_finished",
             "results": event["results"]
+        }))
+
+    async def gameplay_start_broadcast(self, event):
+        await self.send(text_data=json.dumps({
+            "event": "gameplay_started"
         }))
