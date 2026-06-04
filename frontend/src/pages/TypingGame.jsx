@@ -195,7 +195,13 @@ function TypingGame() {
     }, [wpm]);
     useEffect(() => {
         if (window.brainbootsIsMultiplayer) {
-            restartGame();
+            const handleStart = () => {
+                restartGame();
+            };
+            window.addEventListener("brainboots:start-game", handleStart);
+            return () => {
+                window.removeEventListener("brainboots:start-game", handleStart);
+            };
         }
     }, []);
     // -----------------------------------------

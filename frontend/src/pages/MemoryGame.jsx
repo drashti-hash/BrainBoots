@@ -146,8 +146,16 @@ function MemoryGame() {
         }
     }, [level, moves, seconds]);
     useEffect(() => {
-        if (window.brainbootsIsMultiplayer && typeof startLevel === 'function') {
-            startLevel(1);
+        if (window.brainbootsIsMultiplayer) {
+            const handleStart = () => {
+                if (typeof startLevel === 'function') {
+                    startLevel(1);
+                }
+            };
+            window.addEventListener("brainboots:start-game", handleStart);
+            return () => {
+                window.removeEventListener("brainboots:start-game", handleStart);
+            };
         }
     }, []);
     // -----------------------------------------

@@ -154,27 +154,55 @@ function MultiplayerArena({ roomCode, username }) {
     const chatEndRef = useRef(null);
     const gameContainerRef = useRef(null);
 
+    const [matchStartCountdown, setMatchStartCountdown] = useState(3);
     const [timeLeft, setTimeLeft] = useState(30);
     const [currentLiveScore, setCurrentLiveScore] = useState(0);
 
-    // Synchronized 30-second countdown timer for all players
+    // Synchronized starting countdown and match timer
     useEffect(() => {
-        if (roomState.activeGame.status !== "playing") return;
+        if (roomState.activeGame.status !== "playing") {
+            setMatchStartCountdown(3);
+            return;
+        }
 
+        setMatchStartCountdown(3);
         setTimeLeft(30);
         setCurrentLiveScore(0);
 
-        const interval = setInterval(() => {
-            setTimeLeft((prev) => {
+        let startTimer;
+        let playInterval;
+
+        startTimer = setInterval(() => {
+            setMatchStartCountdown((prev) => {
                 if (prev <= 1) {
-                    clearInterval(interval);
+                    clearInterval(startTimer);
+                    
+                    // Dispatch game start event
+                    setTimeout(() => {
+                        window.dispatchEvent(new CustomEvent("brainboots:start-game"));
+                    }, 0);
+
+                    // Start match timer
+                    playInterval = setInterval(() => {
+                        setTimeLeft((tPrev) => {
+                            if (tPrev <= 1) {
+                                clearInterval(playInterval);
+                                return 0;
+                            }
+                            return tPrev - 1;
+                        });
+                    }, 1000);
+
                     return 0;
                 }
                 return prev - 1;
             });
         }, 1000);
 
-        return () => clearInterval(interval);
+        return () => {
+            clearInterval(startTimer);
+            clearInterval(playInterval);
+        };
     }, [roomState.activeGame.status]);
 
     // Handle countdown complete (Time's Up)
@@ -430,6 +458,14 @@ function MultiplayerArena({ roomCode, username }) {
                     .animate-confetti-particle {
                         animation: confetti-fall linear infinite;
                     }
+                    @keyframes pulse-zoom {
+                        0% { transform: scale(0.3); opacity: 0; }
+                        50% { transform: scale(1.2); opacity: 0.9; }
+                        100% { transform: scale(1); opacity: 1; }
+                    }
+                    .animate-ping-once {
+                        animation: pulse-zoom 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+                    }
                 `}</style>
             </main>
         );
@@ -526,6 +562,17 @@ function MultiplayerArena({ roomCode, username }) {
                             </div>
                         ) : (
                             <div className="text-slate-500 font-bold text-xs">Game not found.</div>
+                        )}
+
+                        {/* Starting countdown overlay */}
+                        {matchStartCountdown > 0 && (
+                            <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-sm flex flex-col items-center justify-center z-50 text-white">
+                                <p className="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-2">Prepare Yourself</p>
+                                <h2 className="text-lg font-black tracking-wider mb-6">MATCH STARTING IN</h2>
+                                <div key={matchStartCountdown} className="text-8xl font-black text-emerald-500 animate-ping-once">
+                                    {matchStartCountdown}
+                                </div>
+                            </div>
                         )}
                     </div>
                 </div>

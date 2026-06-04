@@ -89,8 +89,16 @@ function SchulteGame() {
         }
     }, [score]);
     useEffect(() => {
-        if (window.brainbootsIsMultiplayer && typeof startGame === 'function') {
-            startGame();
+        if (window.brainbootsIsMultiplayer) {
+            const handleStart = () => {
+                if (typeof startGame === 'function') {
+                    startGame();
+                }
+            };
+            window.addEventListener("brainboots:start-game", handleStart);
+            return () => {
+                window.removeEventListener("brainboots:start-game", handleStart);
+            };
         }
     }, []);
     // -----------------------------------------
