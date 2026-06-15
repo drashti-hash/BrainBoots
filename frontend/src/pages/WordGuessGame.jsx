@@ -1,10 +1,52 @@
 import { useState, useEffect, useCallback } from "react";
 import { addWordGuessScore } from "../services/api";
 const WORD_LIST = [
-    "BRAIN", "LOGIC", "SMART", "FOCUS", "THINK", 
-    "SOLVE", "LEARN", "TRAIN", "SPEED", "MATCH", 
-    "VALID", "POWER", "QUICK", "CLEAN", "MINDS",
-    "SHARP", "CRISP", "CLEAR", "LIGHT", "PROVE"
+    "ABOUT", "ABOVE", "ACUTE", "ADMIT", "ADULT", "AGENT", "AGREE", "AHEAD", "ALARM", "ALBUM",
+    "ALERT", "ALIKE", "ALIVE", "ALLOW", "ALONG", "ALTER", "AMONG", "ANGER", "ANGLE", "ANGRY",
+    "APART", "APPLE", "APPLY", "ARENA", "ARGUE", "ARISE", "ARRAY", "ARROW", "ASIDE", "ASSET",
+    "AUDIO", "AUDIT", "AVOID", "AWARD", "AWARE", "BADGE", "BAKER", "BASIC", "BEACH", "BEGIN",
+    "BELOW", "BENCH", "BIRTH", "BLACK", "BLADE", "BLIND", "BLOCK", "BLOOD", "BOARD",
+    "BOOST", "BOOTH", "BOUND", "BRAIN", "BRAND", "BREAD", "BREAK", "BREED", "BRICK", "BRIDE",
+    "BRIEF", "BROAD", "BROWN", "BRUSH", "BUYER", "CABLE", "CANDY", "CARGO", "CARRY", "CARVE",
+    "CAUSE", "CHAIN", "CHAIR", "CHART", "CHASE", "CHEAP", "CHECK", "CHEST", "CHIEF", "CHILD",
+    "CHINA", "CHOIR", "CLAIM", "CLASS", "CLEAN", "CLEAR", "CLIMB", "CLOCK", "CLOSE", "COACH",
+    "COAST", "COUNT", "COURT", "COVER", "CRAFT", "CRASH", "CREAM", "CRIME", "CRISP", "CROWN",
+    "CRUDE", "CYCLE", "DAILY", "DANCE", "DEATH", "DELAY", "DEPTH", "DIRTY", "DOUBT", "DRAFT",
+    "DRAMA", "DREAM", "DRESS", "DRIFT", "DRINK", "DRIVE", "EARLY", "EARTH", "EIGHT",
+    "ELITE", "EMPTY", "ENEMY", "ENJOY", "ENTER", "ENTRY", "EQUAL", "EVENT", "EVERY", "EXACT",
+    "EXIST", "EXTRA", "FAITH", "FALSE", "FANCY", "FATAL", "FIBER", "FIELD", "FIFTH", "FIFTY",
+    "FIGHT", "FINAL", "FIRST", "FLAME", "FLASH", "FLEET", "FLUID", "FLUSH", "FOCUS",
+    "FORCE", "FORUM", "FOUND", "FRAME", "FRANK", "FRESH", "FRONT", "FRUIT", "GIANT", "GLASS",
+    "GLOBE", "GLOVE", "GRACE", "GRADE", "GRAND", "GRANT", "GRASS", "GRAVE", "GREAT", "GREEN",
+    "GROUP", "GROWN", "GUARD", "GUEST", "GUIDE", "HABIT", "HAPPY", "HARSH", "HEART", "HEAVY",
+    "HOUSE", "IDEAL", "IMAGE", "INDEX", "INNER", "INPUT", "JOINT", "JUDGE", "JUICE",
+    "KNIFE", "KNOCK", "LABEL", "LABOR", "LARGE", "LASER", "LATER", "LAUGH", "LAYER", "LEARN",
+    "LEASE", "LEAST", "LEMON", "LIGHT", "LIMIT", "LINKS", "LOCAL", "LOGIC", "LOOSE", "LOYAL",
+    "LUCKY", "LUNCH", "LYRIC", "MAGIC", "MAJOR", "MAKER", "MARCH", "MATCH", "MAYOR", "MEANT",
+    "MEDAL", "MEDIA", "MERCY", "MERIT", "METAL", "MICRO", "MIDST", "MINDS", "MINER", "MINOR",
+    "MODEL", "MONEY", "MONTH", "MOTOR", "MOUNT", "MOUSE", "MOUTH", "MOVIE", "MUSIC", "NEVER",
+    "NIGHT", "NOISE", "NORTH", "NOVEL", "NURSE", "OCCUR", "OCEAN", "OFFER", "OFTEN",
+    "ORDER", "OTHER", "OUTER", "OWNER", "PANEL", "PAPER", "PARTY", "PEACE", "PHASE", "PHONE",
+    "PHOTO", "PIANO", "PIECE", "PILOT", "PITCH", "PIXEL", "PLACE", "PLAIN", "PLANE", "PLANT",
+    "PLATE", "PLEAD", "POINT", "POUND", "POWER", "PRESS", "PRICE", "PRIDE", "PRIME", "PRINT",
+    "PRIOR", "PRIZE", "PROBE", "PROUD", "PROVE", "QUEEN", "QUICK", "QUIET", "QUITE", "QUOTE",
+    "RADIO", "RAISE", "RANGE", "RATIO", "REACH", "REACT", "READY", "REFER", "REIGN", "RELAX",
+    "REPLY", "RESET", "RIDGE", "RIGHT", "RIVAL", "RIVER", "ROBOT", "ROUGH", "ROUND", "ROUTE",
+    "ROYAL", "RURAL", "SCALE", "SCENE", "SCOPE", "SCORE", "SENSE", "SERVE", "SHAKE",
+    "SHARE", "SHARP", "SHEET", "SHELF", "SHIFT", "SHINE", "SHIRT", "SHOCK", "SHOOT", "SHORE",
+    "SHORT", "SHOWN", "SIGHT", "SINCE", "SIXTH", "SKILL", "SLEEP", "SLIDE", "SMALL", "SMART",
+    "SMILE", "SMOKE", "SOLAR", "SOLID", "SOLVE", "SOUND", "SOUTH", "SPACE", "SPARE", "SPEAK",
+    "SPEED", "SPEND", "SPENT", "SPLIT", "SPORT", "STAFF", "STAGE", "STAND", "START", "STATE",
+    "STEAM", "STEEL", "STEEP", "STICK", "STILL", "STOCK", "STONE", "STOOD", "STORE", "STORM",
+    "STORY", "STRIP", "STUDY", "STYLE", "SUGAR", "SUITE", "SUPER", "SWEET", "SWEPT", "SWIFT",
+    "SWING", "TABLE", "TAKEN", "TALENT", "TASTE", "THEME", "THERE", "THICK", "THING", "THINK",
+    "THIRD", "THOSE", "THREE", "THROW", "TIGHT", "TITLE", "TODAY", "TOKEN", "TOPIC", "TOTAL",
+    "TOUCH", "TOWEL", "TOWER", "TRACK", "TRADE", "TRAIN", "TREAT", "TREND", "TRIAL", "TRIBE",
+    "TRICK", "TROOP", "TRUCK", "TRUTH", "TWICE", "UNDER", "UNION", "UNITY", "UNTIL", "UPPER",
+    "UPSET", "URBAN", "USAGE", "USING", "VAGUE", "VALID", "VALUE", "VALVE", "VAPOR", "VAULT",
+    "VIRUS", "VISIT", "VITAL", "VOICE", "WASTE", "WATCH", "WATER", "WHEEL", "WHERE", "WHICH",
+    "WHILE", "WHITE", "WHOLE", "WHOSE", "WIDOW", "WIDTH", "WORLD", "WORST", "WORTH", "WOULD",
+    "WRITE", "WRONG", "YIELD", "YOUTH"
 ];
 
 function WordGuessGame() {
@@ -23,9 +65,33 @@ function WordGuessGame() {
     });
     const [message, setMessage] = useState("👉 Guess the 5-letter word!");
 
-    const startNewRound = useCallback((lvl, curScore) => {
+    const fetchSecretWord = async () => {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 2000);
+            const response = await fetch("https://random-word-api.herokuapp.com/word?length=5", { signal: controller.signal });
+            clearTimeout(timeoutId);
+            if (response.ok) {
+                const data = await response.json();
+                if (data && Array.isArray(data) && data.length > 0) {
+                    const word = String(data[0]).toUpperCase();
+                    if (/^[A-Z]{5}$/.test(word)) {
+                        return word;
+                    }
+                }
+            }
+        } catch (error) {
+            console.log("Random Word API failed, using local word fallback:", error);
+        }
+        
         const randomIndex = Math.floor(Math.random() * WORD_LIST.length);
-        setSecretWord(WORD_LIST[randomIndex]);
+        return WORD_LIST[randomIndex];
+    };
+
+    const startNewRound = useCallback(async (lvl, curScore) => {
+        setMessage("📡 Fetching random word...");
+        const word = await fetchSecretWord();
+        setSecretWord(word);
         setGuesses([]);
         setCurrentGuess("");
         setGameStatus("playing");

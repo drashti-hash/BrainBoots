@@ -578,13 +578,68 @@ const BRAIN_QUOTES = [
     { text: "The only limit to our realization\nof tomorrow is our doubts of today.", author: "Franklin D. Roosevelt" }
 ];
 
-/* ─────────────── Image Overlay Coordinates ─────────────── */
+/* ─────────────── Explore by Zone Configurations ─────────────── */
 const ZONES = [
-    { id: "memory", name: "Memory Island", top: "50%", left: "20%" },
-    { id: "focus", name: "Focus Forest", top: "28%", left: "44%" },
-    { id: "logic", name: "Logic Lab", top: "28%", left: "78%" },
-    { id: "reflex", name: "Reflex Mountain", top: "66%", left: "54%" },
-    { id: "fun", name: "Fun Park", top: "66%", left: "84%" },
+    { 
+        id: "memory", 
+        num: 1,
+        name: "Memory Island", 
+        emoji: "🧠", 
+        icon: "🧠",
+        image: "/zone_memory.png",
+        desc: "Train visual recall, sequence patterns, and speed matching.",
+        color: "#8b5cf6", 
+        bg: "#f5f3ff", 
+        shadowColor: "rgba(139, 92, 246, 0.15)" 
+    },
+    { 
+        id: "focus", 
+        num: 2,
+        name: "Focus Forest", 
+        emoji: "🌲", 
+        icon: "🌲",
+        image: "/zone_focus.png",
+        desc: "Enhance selective attention, scanning speed, and focus grid accuracy.",
+        color: "#10b981", 
+        bg: "#ecfdf5", 
+        shadowColor: "rgba(16, 185, 129, 0.15)" 
+    },
+    { 
+        id: "logic", 
+        num: 3,
+        name: "Logic Lab", 
+        emoji: "🧪", 
+        icon: "🧪",
+        image: "/zone_logic.png",
+        desc: "Boost mathematical deduction, tile sorting, and Sudoku grid logic.",
+        color: "#3b82f6", 
+        bg: "#eff6ff", 
+        shadowColor: "rgba(59, 130, 246, 0.15)" 
+    },
+    { 
+        id: "reflex", 
+        num: 4,
+        name: "Reflex Mountain", 
+        emoji: "⚡", 
+        icon: "⚡",
+        image: "/zone_reflex.png",
+        desc: "Improve motor response times, speed typing, and reflex control.",
+        color: "#f59e0b", 
+        bg: "#fffbeb", 
+        shadowColor: "rgba(245, 158, 11, 0.15)" 
+    },
+    { 
+        id: "fun", 
+        num: 5,
+        name: "Fun Park", 
+        emoji: "🎡", 
+        icon: "🎡",
+        image: "/zone_fun.png",
+        desc: "Interact in playful chat rounds and word guess challenges.",
+        color: "#ec4899", 
+        bg: "#fdf2f8", 
+        shadowColor: "rgba(236, 72, 153, 0.15)" 
+    },
 ];
 
 function Dashboard() {
@@ -598,6 +653,7 @@ function Dashboard() {
 
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
+    const [hoveredZone, setHoveredZone] = useState(null);
 
     const username = user.username || user.email || "Guest Player";
     const initials = getInitials(username);
@@ -1148,24 +1204,247 @@ function Dashboard() {
 
                     {/* EXPLORE BY ZONE */}
                     <section>
-                        <h3 style={{ fontSize: 18, fontWeight: 900, color: "#0f172a", marginBottom: 16 }}>Explore by Zone</h3>
-                        <div style={{ borderRadius: 24, overflow: "hidden", position: "relative", width: "100%", height: "380px", background: "#7cd3fc", boxShadow: "0 4px 12px rgba(0,0,0,0.03)" }}>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "16px" }}>
+                            <h3 style={{ fontSize: "24px", fontWeight: "900", color: "#1e1b4b", margin: 0 }}>Explore by Zone</h3>
+                            <p style={{ fontSize: "13px", color: "#94a3b8", fontWeight: "600", margin: 0 }}>
+                                Each zone has unique games. Explore & master them all! <span style={{ color: "#a78bfa" }}>✦</span>
+                            </p>
+                        </div>
+                        <div className="zones-grid" style={{ marginBottom: "24px" }}>
+                            {ZONES.map((zone, idx) => {
+                                const isHovered = hoveredZone === idx;
+                                const isHorizontal = idx >= 3;
 
-                            <img src="/zone_map.png" alt="Zone Map" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                                if (isHorizontal) {
+                                    return (
+                                        <Link 
+                                            key={idx} 
+                                            to={`/games?zone=${zone.id}`}
+                                            onMouseEnter={() => setHoveredZone(idx)}
+                                            onMouseLeave={() => setHoveredZone(null)}
+                                            className={`zone-card zone-card-${idx + 1}`}
+                                            style={{
+                                                border: isHovered ? `1.5px solid ${zone.color}` : "1.5px solid #f1f5f9",
+                                                boxShadow: isHovered ? `0 12px 32px ${zone.shadowColor}` : "0 4px 12px rgba(0,0,0,0.02)",
+                                                transform: isHovered ? "translateY(-6px)" : "translateY(0)"
+                                            }}
+                                        >
+                                            {/* Left Info Area */}
+                                            <div style={{
+                                                padding: "24px",
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                gap: "16px",
+                                                flex: 1.2,
+                                                justifyContent: "center",
+                                                position: "relative"
+                                            }}>
+                                                {/* Number Badge */}
+                                                <div style={{
+                                                    width: "28px",
+                                                    height: "28px",
+                                                    borderRadius: "50%",
+                                                    background: zone.color,
+                                                    color: "white",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    fontSize: "12px",
+                                                    fontWeight: "bold",
+                                                    position: "absolute",
+                                                    top: "16px",
+                                                    left: "16px"
+                                                }}>
+                                                    {zone.num}
+                                                </div>
 
-                            {ZONES.map((zone, idx) => (
-                                <Link key={idx} to={`/games?zone=${zone.id}`} style={{ position: "absolute", top: zone.top, left: zone.left, transform: "translate(-50%, -50%)", textDecoration: "none", display: "block", padding: "16px" }}>
-                                    <div style={{ background: "rgba(30, 27, 75, 0.9)", backdropFilter: "blur(4px)", padding: "8px 14px", borderRadius: "12px", color: "white", fontSize: 12, fontWeight: 700, lineHeight: 1, whiteSpace: "nowrap", boxShadow: "0 4px 10px rgba(0,0,0,0.2)", transition: "all 0.2s ease" }}>
-                                        {zone.name}
-                                    </div>
-                                </Link>
-                            ))}
+                                                <div style={{ display: "flex", gap: "14px", alignItems: "flex-start", marginTop: "16px" }}>
+                                                    <div style={{
+                                                        width: "44px",
+                                                        height: "44px",
+                                                        borderRadius: "50%",
+                                                        background: zone.color,
+                                                        color: "white",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                        flexShrink: 0
+                                                    }}>
+                                                        {zone.icon}
+                                                    </div>
+                                                    <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                                                        <h4 style={{ fontSize: "17px", fontWeight: "800", color: "#1e1b4b", margin: 0 }}>
+                                                            {zone.name}
+                                                        </h4>
+                                                        <p style={{ fontSize: "13px", color: "#64748b", fontWeight: "500", margin: 0, lineHeight: 1.4 }}>
+                                                            {zone.desc}
+                                                        </p>
+                                                    </div>
+                                                </div>
 
-                            <div style={{ position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)", background: "white", padding: "10px 28px", borderRadius: 100, display: "flex", alignItems: "center", gap: 10, boxShadow: "0 8px 24px rgba(0,0,0,0.12)", width: "max-content", maxWidth: "90%" }}>
-                                <span style={{ color: "#a78bfa", fontSize: 16 }}>★</span>
-                                <span style={{ fontSize: 12, fontWeight: 700, color: "#334155" }}>Each zone has unique games. Explore & master them all!</span>
-                                <span style={{ color: "#a78bfa", fontSize: 20, lineHeight: 0, position: "relative", top: 2, fontFamily: "serif" }}>”</span>
-                            </div>
+                                                <button style={{
+                                                    background: zone.color,
+                                                    color: "white",
+                                                    border: "none",
+                                                    borderRadius: "10px",
+                                                    padding: "8px 16px",
+                                                    fontSize: "13px",
+                                                    fontWeight: "700",
+                                                    cursor: "pointer",
+                                                    width: "max-content",
+                                                    boxShadow: `0 4px 10px ${zone.shadowColor}`,
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    gap: "6px",
+                                                    marginLeft: "58px",
+                                                    transition: "all 0.2s ease"
+                                                }}>
+                                                    Explore Zone <span style={{ fontSize: "14px" }}>➔</span>
+                                                </button>
+                                            </div>
+
+                                            {/* Right Image Area */}
+                                            <div style={{
+                                                flex: 1.4,
+                                                background: `linear-gradient(to right, #ffffff 0%, ${zone.bg} 100%)`,
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                position: "relative",
+                                                overflow: "hidden"
+                                            }}>
+                                                <img 
+                                                    src={zone.image} 
+                                                    alt={zone.name} 
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        maxHeight: "240px",
+                                                        objectFit: "contain",
+                                                        display: "block",
+                                                        transform: isHovered ? "scale(1.08)" : "scale(1)",
+                                                        transition: "transform 0.3s ease-out"
+                                                    }}
+                                                />
+                                            </div>
+                                        </Link>
+                                    );
+                                } else {
+                                    return (
+                                        <Link 
+                                            key={idx} 
+                                            to={`/games?zone=${zone.id}`}
+                                            onMouseEnter={() => setHoveredZone(idx)}
+                                            onMouseLeave={() => setHoveredZone(null)}
+                                            className={`zone-card zone-card-${idx + 1}`}
+                                            style={{
+                                                border: isHovered ? `1.5px solid ${zone.color}` : "1.5px solid #f1f5f9",
+                                                boxShadow: isHovered ? `0 12px 32px ${zone.shadowColor}` : "0 4px 12px rgba(0,0,0,0.02)",
+                                                transform: isHovered ? "translateY(-6px)" : "translateY(0)"
+                                            }}
+                                        >
+                                            {/* Top Image Area */}
+                                            <div style={{
+                                                height: "280px",
+                                                width: "100%",
+                                                position: "relative",
+                                                background: `linear-gradient(to bottom, ${zone.bg} 0%, #ffffff 100%)`,
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                overflow: "hidden"
+                                            }}>
+                                                {/* Number Badge */}
+                                                <div style={{
+                                                    width: "28px",
+                                                    height: "28px",
+                                                    borderRadius: "50%",
+                                                    background: zone.color,
+                                                    color: "white",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    fontSize: "12px",
+                                                    fontWeight: "bold",
+                                                    position: "absolute",
+                                                    top: "16px",
+                                                    left: "16px"
+                                                }}>
+                                                    {zone.num}
+                                                </div>
+                                                
+                                                <img 
+                                                    src={zone.image} 
+                                                    alt={zone.name} 
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        maxHeight: "260px",
+                                                        objectFit: "contain",
+                                                        display: "block",
+                                                        transform: isHovered ? "scale(1.08)" : "scale(1)",
+                                                        transition: "transform 0.3s ease-out"
+                                                    }}
+                                                />
+                                            </div>
+
+                                            {/* Content Area */}
+                                            <div style={{
+                                                padding: "20px 24px 24px",
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                gap: "16px",
+                                                flex: 1
+                                            }}>
+                                                <div style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
+                                                    <div style={{
+                                                        width: "44px",
+                                                        height: "44px",
+                                                        borderRadius: "50%",
+                                                        background: zone.color,
+                                                        color: "white",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                        flexShrink: 0
+                                                    }}>
+                                                        {zone.icon}
+                                                    </div>
+                                                    <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                                                        <h4 style={{ fontSize: "17px", fontWeight: "800", color: "#1e1b4b", margin: 0 }}>
+                                                            {zone.name}
+                                                        </h4>
+                                                        <p style={{ fontSize: "13px", color: "#64748b", fontWeight: "500", margin: 0, lineHeight: 1.4 }}>
+                                                            {zone.desc}
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <button style={{
+                                                    background: zone.color,
+                                                    color: "white",
+                                                    border: "none",
+                                                    borderRadius: "10px",
+                                                    padding: "8px 16px",
+                                                    fontSize: "13px",
+                                                    fontWeight: "700",
+                                                    cursor: "pointer",
+                                                    width: "max-content",
+                                                    boxShadow: `0 4px 10px ${zone.shadowColor}`,
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    gap: "6px",
+                                                    marginTop: "auto",
+                                                    marginLeft: "58px",
+                                                    transition: "all 0.2s ease"
+                                                }}>
+                                                    Explore Zone <span style={{ fontSize: "14px" }}>➔</span>
+                                                </button>
+                                            </div>
+                                        </Link>
+                                    );
+                                }
+                            })}
                         </div>
                     </section>
 
@@ -1370,6 +1649,55 @@ function Dashboard() {
                 .scrollbar-hide::-webkit-scrollbar { display: none; }
                 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
                 * { box-sizing: border-box; }
+                .zones-grid {
+                    display: grid;
+                    grid-template-columns: repeat(6, 1fr);
+                    gap: 24px;
+                    width: 100%;
+                }
+                .zone-card {
+                    background: white;
+                    border-radius: 24px;
+                    border: 1.5px solid #f1f5f9;
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                    text-decoration: none;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    position: relative;
+                }
+                .zone-card:hover {
+                    transform: translateY(-6px);
+                }
+                .zone-card-1, .zone-card-2, .zone-card-3 {
+                    grid-column: span 2;
+                }
+                .zone-card-4, .zone-card-5 {
+                    grid-column: span 3;
+                    flex-direction: row;
+                }
+                @media (max-width: 1024px) {
+                    .zones-grid {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                    .zone-card-1, .zone-card-2, .zone-card-3 {
+                        grid-column: span 1;
+                    }
+                    .zone-card-4, .zone-card-5 {
+                        grid-column: span 1;
+                        flex-direction: column;
+                    }
+                }
+                @media (max-width: 640px) {
+                    .zones-grid {
+                        grid-template-columns: 1fr;
+                    }
+                    .zone-card-1, .zone-card-2, .zone-card-3, .zone-card-4, .zone-card-5 {
+                        grid-column: span 1;
+                        flex-direction: column;
+                    }
+                }
             `}</style>
         </div>
     );

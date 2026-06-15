@@ -2,21 +2,24 @@ import { useState, useEffect } from "react";
 import { addSudokuScore } from "../services/api";
 
 function SudokuGame() {
-    const initialBoard = [
-        [5, 3, "", 6],
-        [6, "", "", 1],
-        ["", 9, 8, ""],
-        [8, "", 1, 5]
-    ];
-
-    const solution = [
-        [5, 3, 4, 6],
-        [6, 8, 2, 1],
-        [1, 9, 8, 3],
-        [8, 2, 1, 5]
-    ];
-
-    const [board, setBoard] = useState(initialBoard);
+    const [initialBoard, setInitialBoard] = useState([
+        ["", "", "", ""],
+        ["", "", "", ""],
+        ["", "", "", ""],
+        ["", "", "", ""]
+    ]);
+    const [solution, setSolution] = useState([
+        ["", "", "", ""],
+        ["", "", "", ""],
+        ["", "", "", ""],
+        ["", "", "", ""]
+    ]);
+    const [board, setBoard] = useState([
+        ["", "", "", ""],
+        ["", "", "", ""],
+        ["", "", "", ""],
+        ["", "", "", ""]
+    ]);
     const [message, setMessage] = useState("🧩 Fill in the empty cells!");
     const [score, setScore] = useState(0);
     const [completedTime, setCompletedTime] = useState(0);
@@ -24,6 +27,84 @@ function SudokuGame() {
     const [isActive, setIsActive] = useState(false);
     const [bestTime, setBestTime] = useState(null);
     const [showSuccess, setShowSuccess] = useState(false);
+
+    // Dynamic 4x4 Sudoku board generator
+    const generateNewPuzzle = () => {
+        const seed = [
+            [1, 2, 3, 4],
+            [3, 4, 1, 2],
+            [2, 3, 4, 1],
+            [4, 1, 2, 3]
+        ];
+
+        // Shuffle numbers 1..4
+        const numbers = [1, 2, 3, 4];
+        for (let i = numbers.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+        }
+
+        // Apply number mapping
+        let grid = seed.map(row => row.map(val => numbers[val - 1]));
+
+        // Shuffle rows within block 1 (0-1) and block 2 (2-3)
+        if (Math.random() < 0.5) {
+            [grid[0], grid[1]] = [grid[1], grid[0]];
+        }
+        if (Math.random() < 0.5) {
+            [grid[2], grid[3]] = [grid[3], grid[2]];
+        }
+
+        // Shuffle columns within block 1 (0-1) and block 2 (2-3)
+        if (Math.random() < 0.5) {
+            grid = grid.map(row => {
+                const newRow = [...row];
+                [newRow[0], newRow[1]] = [newRow[1], newRow[0]];
+                return newRow;
+            });
+        }
+        if (Math.random() < 0.5) {
+            grid = grid.map(row => {
+                const newRow = [...row];
+                [newRow[2], newRow[3]] = [newRow[3], newRow[2]];
+                return newRow;
+            });
+        }
+
+        // Transpose matrix (50% chance)
+        if (Math.random() < 0.5) {
+            const transposed = [[], [], [], []];
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    transposed[c][r] = grid[r][c];
+                }
+            }
+            grid = transposed;
+        }
+
+        const sol = grid.map(row => [...row]);
+
+        // Remove 6 or 7 cells randomly (out of 16) to create puzzle
+        const cellsToRemove = 6 + Math.floor(Math.random() * 2);
+        let removed = 0;
+        while (removed < cellsToRemove) {
+            const r = Math.floor(Math.random() * 4);
+            const c = Math.floor(Math.random() * 4);
+            if (grid[r][c] !== "") {
+                grid[r][c] = "";
+                removed++;
+            }
+        }
+
+        setInitialBoard(grid);
+        setSolution(sol);
+        setBoard(grid.map(row => [...row]));
+    };
+
+    // Initialize puzzle on mount
+    useEffect(() => {
+        generateNewPuzzle();
+    }, []);
 
     useEffect(() => {
         let interval;
@@ -45,7 +126,7 @@ function SudokuGame() {
         startTimer();
         
         const numValue = value === "" ? "" : Number(value);
-        if (value !== "" && (numValue < 1 || numValue > 9)) {
+        if (value !== "" && (numValue < 1 || numValue > 4)) {
             return;
         }
         
@@ -109,7 +190,16 @@ function SudokuGame() {
     };
 
     const resetGame = () => {
-        setBoard(JSON.parse(JSON.stringify(initialBoard)));
+        setBoard(initialBoard.map(row => [...row]));
+        setMessage("🧩 Fill in the empty cells!");
+        setScore(0);
+        setTimer(0);
+        setIsActive(false);
+        setShowSuccess(false);
+    };
+
+    const startNewGame = () => {
+        generateNewPuzzle();
         setMessage("🧩 Fill in the empty cells!");
         setScore(0);
         setTimer(0);
@@ -268,7 +358,7 @@ return (
                             ✅ CHECK SOLUTION
                         </button>
                         <button
-                            onClick={resetGame}
+                            onClick={startNewGame}
                             className="px-8 py-3 bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold rounded-xl transition-all shadow-sm text-sm"
                         >
                             🔄 NEW GAME

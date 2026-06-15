@@ -51,10 +51,57 @@ function TypingGame() {
   
   const inputRef = useRef(null);
 
-  const loadRandomSentence = () => {
-    const sentences = levels[difficulty].sentences;
+  const fetchRandomSentence = async (diff) => {
+    try {
+      let url = "";
+      if (diff === "easy") {
+        url = "https://api.quotable.io/random?minLength=20&maxLength=50";
+      } else if (diff === "medium") {
+        url = "https://api.quotable.io/random?minLength=51&maxLength=90";
+      } else {
+        url = "https://api.quotable.io/random?minLength=91&maxLength=150";
+      }
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      const response = await fetch(url, { signal: controller.signal });
+      clearTimeout(timeoutId);
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.content) {
+          return data.content;
+        }
+      }
+    } catch (err) {
+      console.log("Quotable API failed, trying dummyjson fallback:", err);
+    }
+
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      const response = await fetch("https://dummyjson.com/quotes/random", { signal: controller.signal });
+      clearTimeout(timeoutId);
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.quote) {
+          return data.quote;
+        }
+      }
+    } catch (err) {
+      console.log("All APIs failed, using local sentence list:", err);
+    }
+
+    const sentences = levels[diff].sentences;
     const randomIndex = Math.floor(Math.random() * sentences.length);
-    setCurrentSentence(sentences[randomIndex]);
+    return sentences[randomIndex];
+  };
+
+  const loadRandomSentence = async () => {
+    setCurrentSentence("Loading dynamic sentence...");
+    const sentence = await fetchRandomSentence(difficulty);
+    setCurrentSentence(sentence);
   };
 
   useEffect(() => {
