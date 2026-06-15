@@ -317,6 +317,54 @@ INSERT INTO `users` VALUES (1,'Bhavisha','bhavisha@gmail.com','$2b$12$QKmeUxgqwy
 UNLOCK TABLES;
 
 --
+-- Table structure for table `wrong_answer_scores`
+--
+
+DROP TABLE IF EXISTS `wrong_answer_scores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wrong_answer_scores` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `score` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wrong_answer_scores`
+--
+
+LOCK TABLES `wrong_answer_scores` WRITE;
+/*!40000 ALTER TABLE `wrong_answer_scores` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wrong_answer_scores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hot_potato_scores`
+--
+
+DROP TABLE IF EXISTS `hot_potato_scores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hot_potato_scores` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `score` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hot_potato_scores`
+--
+
+LOCK TABLES `hot_potato_scores` WRITE;
+/*!40000 ALTER TABLE `hot_potato_scores` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hot_potato_scores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping routines for database 'brain_game'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `add_aim_score` */;
@@ -753,6 +801,46 @@ begin
             TRUE AS success,
             'User registered successfully' AS message;
     END IF;
+END ;;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `add_wrong_answer_score` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_wrong_answer_score`(
+    IN p_score INT
+)
+BEGIN
+    INSERT INTO wrong_answer_scores(score)
+    VALUES(p_score);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `add_hot_potato_score` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_hot_potato_score`(
+    IN p_score INT
+)
+BEGIN
+    INSERT INTO hot_potato_scores(score)
+    VALUES(p_score);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;

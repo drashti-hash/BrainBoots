@@ -21,6 +21,7 @@ from .Operations.multiplayer_operation import save_multiplayer_result
 #         }
 #     }
 # }
+
 rooms = {}
 
 class MultiplayerConsumer(AsyncWebsocketConsumer):
@@ -121,6 +122,10 @@ class MultiplayerConsumer(AsyncWebsocketConsumer):
                 await self.handle_add_bot(data)
             elif event_type == "remove_bot":
                 await self.handle_remove_bot(data)
+            elif event_type == "reset_lobby":
+                await self.handle_reset_lobby(data)
+            elif event_type == "game_action":
+                await self.handle_game_action(data)
         except Exception as e:
             print(f"--- [WS RECEIVE ERROR] ---")
             import traceback
@@ -364,6 +369,48 @@ class MultiplayerConsumer(AsyncWebsocketConsumer):
                     }
                 )
 
+    async def handle_reset_lobby(self, data):
+        """
+        Resets the room and player states to 'waiting' and broadcasts a lobby_reset event.
+        Called by the host to return all players to the lobby screen.
+        """
+        if self.room_code not in rooms:
+            return
+        players = rooms[self.room_code]["players"]
+        
+        # Security: Check if caller is indeed the room host
+        if self.username in players and players[self.username]["is_host"]:
+            rooms[self.room_code]["status"] = "waiting"
+            rooms[self.room_code]["game_id"] = None
+            rooms[self.room_code]["game_name"] = None
+            
+            # Reset player active game scores and status
+            for p_username in players:
+                players[p_username]["score"] = 0
+                players[p_username]["status"] = "waiting"
+
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    "type": "lobby_reset_broadcast",
+                    "players": self.get_players_list()
+                }
+            )
+
+    async def handle_game_action(self, data):
+        """
+        Broadcasts custom game actions/payloads to all clients in the channel group.
+        """
+        payload = data.get("payload")
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                "type": "game_action_broadcast",
+                "username": self.username,
+                "payload": payload
+            }
+        )
+
     async def simulate_bot_play(self, bot_username):
         """
         Asynchronously simulates intermediate scoring and final submission for a bot.
@@ -374,8 +421,93 @@ class MultiplayerConsumer(AsyncWebsocketConsumer):
         
         game_id = rooms.get(self.room_code, {}).get("game_id", "")
         
+        if game_id == "hotpotato":
+            # For Hot Potato, bots sleep for a bit and submit a final score
+            await asyncio.sleep(random.uniform(25.0, 35.0))
+            if self.room_code not in rooms or rooms[self.room_code]["status"] != "playing":
+                return
+            players = rooms[self.room_code]["players"]
+            if bot_username in players and players[bot_username]["status"] == "playing":
+                final_score = random.randint(15, 50)
+                await self.handle_submit_score({"score": final_score}, submitter_username=bot_username)
+            return
+
+        if game_id == "wronganswers":
+            # Bot answer phase
+            await asyncio.sleep(random.uniform(4.0, 7.0))
+            if self.room_code not in rooms or rooms[self.room_code]["status"] != "playing":
+                return
+            players = rooms[self.room_code]["players"]
+            if bot_username not in players or players[bot_username]["status"] != "playing":
+                return
+
+            bot_silly_answers = [
+                "To recharge my invisible phone.",
+                "For watering my plastic trees.",
+                "To make the dust wet so it doesn't fly.",
+                "To wash my pet rock.",
+                "As hot chocolate sauce.",
+                "For inflating tires on my bicycle.",
+                "To paint my ceiling blue.",
+                "To keep the ocean from drying up.",
+                "As glue for sticking clouds together.",
+                "To clean my clean clothes again."
+            ]
+            chosen_answer = random.choice(bot_silly_answers)
+            
+            # Broadcast the bot's answer
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    "type": "game_action_broadcast",
+                    "username": bot_username,
+                    "payload": {
+                        "action": "submit_answer",
+                        "answer": chosen_answer
+                    }
+                }
+            )
+
+            # Bot voting phase (wait for players to submit answers, then vote)
+            await asyncio.sleep(random.uniform(10.0, 14.0))
+            if self.room_code not in rooms or rooms[self.room_code]["status"] != "playing":
+                return
+            players = rooms[self.room_code]["players"]
+            if bot_username not in players or players[bot_username]["status"] != "playing":
+                return
+
+            # Choose a random other player to vote for (prefer humans or other bots)
+            other_players = [p for p in players if p != bot_username]
+            voted_funniest = random.choice(other_players) if other_players else bot_username
+            voted_creative = random.choice(other_players) if other_players else bot_username
+
+            # Broadcast the bot's vote
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    "type": "game_action_broadcast",
+                    "username": bot_username,
+                    "payload": {
+                        "action": "submit_vote",
+                        "voted_funniest": voted_funniest,
+                        "voted_creative": voted_creative
+                    }
+                }
+            )
+
+            # Wait a bit more and then finish the game
+            await asyncio.sleep(random.uniform(5.0, 7.0))
+            if self.room_code not in rooms or rooms[self.room_code]["status"] != "playing":
+                return
+            players = rooms[self.room_code]["players"]
+            if bot_username in players and players[bot_username]["status"] == "playing":
+                # Final bot score
+                final_score = random.randint(20, 60)
+                await self.handle_submit_score({"score": final_score}, submitter_username=bot_username)
+            return
+        
         # Determine total duration and update steps based on the game
-        if game_id in ["aim", "stroop", "focusgrid"]:
+        if game_id in ["aim", "stroop", "focusgrid", "trafficcontrol"]:
             total_duration = 30.0
             steps = 5
         elif game_id == "reaction":
@@ -420,6 +552,8 @@ class MultiplayerConsumer(AsyncWebsocketConsumer):
                 score_increment = random.randint(1, 3)
             elif game_id == "typing":
                 score_increment = random.randint(10, 18)
+            elif game_id == "trafficcontrol":
+                score_increment = random.randint(2, 4) * 10
             else:
                 score_increment = random.randint(10, 25)
                 
@@ -451,6 +585,8 @@ class MultiplayerConsumer(AsyncWebsocketConsumer):
                 final_score = current_score + random.randint(1, 2)
             elif game_id == "typing":
                 final_score = current_score + random.randint(5, 12)
+            elif game_id == "trafficcontrol":
+                final_score = current_score + random.randint(1, 3) * 10
             else:
                 final_score = current_score + random.randint(5, 15)
                 
@@ -536,4 +672,17 @@ class MultiplayerConsumer(AsyncWebsocketConsumer):
     async def gameplay_start_broadcast(self, event):
         await self.send(text_data=json.dumps({
             "event": "gameplay_started"
+        }))
+
+    async def lobby_reset_broadcast(self, event):
+        await self.send(text_data=json.dumps({
+            "event": "lobby_reset",
+            "players": event["players"]
+        }))
+
+    async def game_action_broadcast(self, event):
+        await self.send(text_data=json.dumps({
+            "event": "game_action",
+            "username": event["username"],
+            "payload": event["payload"]
         }))

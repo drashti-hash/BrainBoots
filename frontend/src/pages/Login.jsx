@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { loginUser } from "../services/authService";
 
@@ -28,13 +29,13 @@ function Login() {
                 localStorage.setItem("token", result.token);
                 // STORE USER
                 localStorage.setItem("user", JSON.stringify(result.user));
-                alert(result.message);
+                toast.success(result.message || "Logged in successfully!");
                 navigate("/dashboard");
             } else {
-                alert(result.message);
+                toast.error(result.message || "Invalid credentials");
             }
         } catch {
-            alert("Login failed");
+            toast.error("Login failed");
         }
     };
 
@@ -53,7 +54,7 @@ function Login() {
     };
 
     return (
-        <div className="min-h-screen bg-[#f4f7fb] text-slate-900 flex items-center justify-center p-4 relative overflow-hidden font-sans">
+        <div className="min-h-screen bg-[#f5f5fa] text-[#1e1b4b] flex items-center justify-center p-4 relative overflow-hidden font-sans">
             
             {/* Embedded styles for background animations */}
             <style>{`
@@ -98,30 +99,30 @@ function Login() {
             `}</style>
 
             {/* Glowing floating orbs in background */}
-            <div className="absolute top-[-10%] left-[-10%] w-[450px] h-[450px] rounded-full bg-violet-400/15 blur-[90px] pointer-events-none bg-blob-1" />
-            <div className="absolute bottom-[-15%] right-[-10%] w-[550px] h-[550px] rounded-full bg-indigo-400/15 blur-[110px] pointer-events-none bg-blob-2" />
-            <div className="absolute top-[40%] left-[30%] w-[350px] h-[350px] rounded-full bg-fuchsia-300/10 blur-[80px] pointer-events-none bg-blob-3" />
+            <div className="absolute top-[-10%] left-[-10%] w-[450px] h-[450px] rounded-full bg-[#a29bfe]/10 blur-[90px] pointer-events-none bg-blob-1" />
+            <div className="absolute bottom-[-15%] right-[-10%] w-[550px] h-[550px] rounded-full bg-[#ede9ff]/15 blur-[110px] pointer-events-none bg-blob-2" />
+            <div className="absolute top-[40%] left-[30%] w-[350px] h-[350px] rounded-full bg-[#f5f5fa]/20 blur-[80px] pointer-events-none bg-blob-3" />
 
             {/* Background Geometric Abstract Pattern - Top Right */}
             <div className="absolute top-0 right-0 w-80 h-80 opacity-20 pointer-events-none bg-pattern-1">
                 <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <polygon points="50,0 100,0 100,50" fill="#8b5cf6" />
-                    <polygon points="70,-10 110,-10 110,30" fill="#6366f1" />
-                    <rect x="75" y="10" width="30" height="30" rx="6" transform="rotate(45)" fill="#a78bfa" />
+                    <polygon points="50,0 100,0 100,50" fill="#6c5ce7" />
+                    <polygon points="70,-10 110,-10 110,30" fill="#a29bfe" />
+                    <rect x="75" y="10" width="30" height="30" rx="6" transform="rotate(45)" fill="#ede9ff" />
                 </svg>
             </div>
 
             {/* Background Geometric Abstract Pattern - Bottom Left */}
             <div className="absolute bottom-0 left-0 w-80 h-80 opacity-20 pointer-events-none bg-pattern-2">
                 <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <polygon points="0,50 0,100 50,100" fill="#8b5cf6" />
-                    <polygon points="-10,70 -10,110 30,110" fill="#6366f1" />
-                    <rect x="-10" y="75" width="30" height="30" rx="6" transform="rotate(15)" fill="#a78bfa" />
+                    <polygon points="0,50 0,100 50,100" fill="#6c5ce7" />
+                    <polygon points="-10,70 -10,110 30,110" fill="#a29bfe" />
+                    <rect x="-10" y="75" width="30" height="30" rx="6" transform="rotate(15)" fill="#ede9ff" />
                 </svg>
             </div>
 
             {/* Centered Login Card */}
-            <div className="w-full max-w-[420px] rounded-[28px] border border-slate-200/80 bg-white p-7 sm:p-9 shadow-[0_20px_50px_rgba(139,92,246,0.12)] relative z-10 flex flex-col">
+            <div className="w-full max-w-[420px] rounded-[28px] border border-[#c4c2f0]/30 bg-white p-7 sm:p-9 shadow-[0_20px_50px_rgba(103,70,87,0.04)] relative z-10 flex flex-col">
                 
                 {/* Neural network brain logo matching mockup */}
                 <div className="flex flex-row items-center justify-center gap-3.5 mb-8">
@@ -155,12 +156,12 @@ function Login() {
                         <g className="animate-brain">
                             <defs>
                                 <linearGradient id="logo-grad-left" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stopColor="#8b5cf6" />
-                                    <stop offset="100%" stopColor="#4f46e5" />
+                                    <stop offset="0%" stopColor="#6c5ce7" />
+                                    <stop offset="100%" stopColor="#a29bfe" />
                                 </linearGradient>
                                 <linearGradient id="logo-grad-right" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stopColor="#a78bfa" />
-                                    <stop offset="100%" stopColor="#7c3aed" />
+                                    <stop offset="0%" stopColor="#c4c2f0" />
+                                    <stop offset="100%" stopColor="#ede9ff" />
                                 </linearGradient>
                             </defs>
 
@@ -178,11 +179,11 @@ function Login() {
                                     <line x1="28" y1="34" x2="50" y2="30" />
                                     <line x1="38" y1="58" x2="50" y2="74" />
                                 </g>
-                                <circle cx="28" cy="34" r="9.5" fill="#8b5cf6" />
-                                <circle cx="18" cy="50" r="11" fill="#6366f1" />
-                                <circle cx="30" cy="66" r="9.5" fill="#4f46e5" />
-                                <circle cx="40" cy="46" r="8.5" fill="#a78bfa" />
-                                <circle cx="38" cy="58" r="7.5" fill="#6366f1" />
+                                <circle cx="28" cy="34" r="9.5" fill="#6c5ce7" />
+                                <circle cx="18" cy="50" r="11" fill="#6c5ce7" />
+                                <circle cx="30" cy="66" r="9.5" fill="#a29bfe" />
+                                <circle cx="40" cy="46" r="8.5" fill="#a29bfe" />
+                                <circle cx="38" cy="58" r="7.5" fill="#6c5ce7" />
                             </g>
 
                             {/* Right Hemisphere Group */}
@@ -196,26 +197,26 @@ function Login() {
                                     <line x1="72" y1="34" x2="50" y2="30" />
                                     <line x1="62" y1="58" x2="50" y2="74" />
                                 </g>
-                                <circle cx="72" cy="34" r="9.5" fill="#a78bfa" />
-                                <circle cx="82" cy="50" r="11" fill="#8b5cf6" />
-                                <circle cx="70" cy="66" r="9.5" fill="#7c3aed" />
-                                <circle cx="60" cy="46" r="8.5" fill="#c084fc" />
-                                <circle cx="62" cy="58" r="7.5" fill="#8b5cf6" />
+                                <circle cx="72" cy="34" r="9.5" fill="#c4c2f0" />
+                                <circle cx="82" cy="50" r="11" fill="#ede9ff" />
+                                <circle cx="70" cy="66" r="9.5" fill="#f5f5fa" />
+                                <circle cx="60" cy="46" r="8.5" fill="#a29bfe" />
+                                <circle cx="62" cy="58" r="7.5" fill="#ede9ff" />
                             </g>
 
                             {/* Center and Stem nodes */}
-                            <circle cx="50" cy="30" r="8" fill="#c084fc" />
-                            <circle cx="50" cy="74" r="9" fill="#4f46e5" />
-                            <circle cx="50" cy="88" r="7" fill="#312e81" />
+                            <circle cx="50" cy="30" r="8" fill="#a29bfe" />
+                            <circle cx="50" cy="74" r="9" fill="#6c5ce7" />
+                            <circle cx="50" cy="88" r="7" fill="#c4c2f0" />
                         </g>
                     </svg>
-                    <span className="text-4xl font-black tracking-tight text-slate-800">
-                        Brain<span className="text-violet-600">Boot</span>
+                    <span className="text-4xl font-black tracking-tight text-[#6c5ce7] font-serif">
+                        Brain<span className="text-[#a29bfe]">Boot</span>
                     </span>
                 </div>
 
                 <div className="mb-6 text-center">
-                    <h2 className="text-2xl font-black text-slate-800 tracking-tight">
+                    <h2 className="text-2xl font-black text-[#6c5ce7] tracking-tight">
                         Welcome Back!
                     </h2>
                 </div>
@@ -223,14 +224,14 @@ function Login() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-4 text-left">
                         <label className="block">
-                            <span className="text-xs font-bold text-slate-700">
+                            <span className="text-xs font-bold text-[#6c5ce7]">
                                 Email Address
                             </span>
                             <input
                                 type="email"
                                 name="email"
                                 placeholder="name@email.com"
-                                className="mt-1.5 w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-xs text-slate-800 placeholder-slate-400 outline-none transition focus:border-violet-500 focus:bg-white"
+                                className="mt-1.5 w-full rounded-xl border border-[#c4c2f0]/40 bg-[#f5f5fa]/30 px-4 py-3 text-xs text-[#1e1b4b] placeholder-[#6c5ce7]/45 outline-none transition focus:border-[#a29bfe] focus:bg-white"
                                 onChange={handleChange}
                                 required
                             />
@@ -238,22 +239,22 @@ function Login() {
 
                         <label className="block">
                             <div className="flex justify-between items-center">
-                                <span className="text-xs font-bold text-slate-700">Password</span>
-                                <a href="#forgot" className="text-xs font-semibold text-violet-600 hover:text-violet-850">Forgot?</a>
+                               <span className="text-xs font-bold text-[#6c5ce7]">Password</span>
+                                <a href="#forgot" className="text-xs font-semibold text-[#a29bfe] hover:text-[#6c5ce7]">Forgot?</a>
                             </div>
                             <div className="relative mt-1.5">
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     name="password"
                                     placeholder="••••••••"
-                                    className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 pr-12 text-xs text-slate-800 outline-none transition focus:border-violet-500 focus:bg-white"
+                                    className="w-full rounded-xl border border-[#c4c2f0]/40 bg-[#f5f5fa]/30 px-4 py-3 pr-12 text-xs text-[#1e1b4b] outline-none transition focus:border-[#a29bfe] focus:bg-white"
                                     onChange={handleChange}
                                     required
-                                />
+                                  />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(prev => !prev)}
-                                    className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-slate-400 transition hover:text-slate-700 focus:outline-none cursor-pointer"
+                                    className="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-[#6c5ce7]/50 transition hover:text-[#6c5ce7] focus:outline-none cursor-pointer"
                                     aria-label={showPassword ? "Hide password" : "Show password"}
                                 >
                                     {showPassword ? (
@@ -273,16 +274,16 @@ function Login() {
 
                     <button
                         type="submit"
-                        className="mt-6 w-full rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 py-3 text-xs font-bold text-white shadow-[0_4px_20px_rgba(139,92,246,0.3)] transition cursor-pointer"
+                        className="mt-6 w-full rounded-2xl bg-[#6c5ce7] hover:bg-[#6c5ce7]/90 py-3 text-xs font-bold text-white shadow-[0_4px_20px_rgba(103,70,87,0.15)] transition cursor-pointer"
                     >
                         Sign In
                     </button>
 
-                    <p className="mt-4 text-center text-xs font-semibold text-slate-500">
+                    <p className="mt-4 text-center text-xs font-semibold text-[#6c5ce7]/60">
                         Don't have an account?
                         <Link
                             to="/register"
-                            className="ml-1 font-bold text-violet-600 hover:text-violet-700"
+                            className="ml-1 font-bold text-[#a29bfe] hover:text-[#6c5ce7]"
                         >
                             Create an Account
                         </Link>
@@ -290,9 +291,9 @@ function Login() {
 
                     <div className="relative my-5 flex items-center justify-center">
                         <div className="absolute inset-0 flex items-center">
-                            <div className="w-full border-t border-slate-100" />
+                            <div className="w-full border-t border-[#c4c2f0]/25" />
                         </div>
-                        <span className="relative bg-white px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                        <span className="relative bg-white px-3 text-[10px] font-bold uppercase tracking-wider text-[#6c5ce7]/50 font-mono">
                             or continue with
                         </span>
                     </div>
@@ -300,7 +301,7 @@ function Login() {
                     <button
                         type="button"
                         onClick={handlePlayAsGuest}
-                        className="w-full rounded-2xl border border-slate-200 bg-white hover:bg-slate-50/80 py-3 text-xs font-bold text-slate-700 transition cursor-pointer shadow-3xs"
+                        className="w-full rounded-2xl border border-[#c4c2f0]/50 bg-white hover:bg-[#ede9ff]/15 py-3 text-xs font-bold text-[#6c5ce7] transition cursor-pointer shadow-3xs"
                     >
                         Play as Guest / Demo Mode
                     </button>

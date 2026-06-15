@@ -13,7 +13,7 @@ function StroopGame() {
     const [textColor, setTextColor] = useState("");
     const [score, setScore] = useState(0);
     const [questionCount, setQuestionCount] = useState(0);
-    const [timeLeft, setTimeLeft] = useState(30);
+    const [timeLeft, setTimeLeft] = useState(60);
     const [gameStarted, setGameStarted] = useState(false);
     const [accuracy, setAccuracy] = useState(0);
     const [highScore, setHighScore] = useState(() => {
@@ -37,7 +37,7 @@ function StroopGame() {
     const startGame = () => {
         setScore(0);
         setQuestionCount(0);
-        setTimeLeft(30);
+        setTimeLeft(60);
         setAccuracy(0);
         setGameStarted(true);
         setLastAnswerCorrect(null);

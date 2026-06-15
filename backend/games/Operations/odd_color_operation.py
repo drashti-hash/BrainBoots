@@ -23,4 +23,4 @@ def add_odd_color_score_operation(
 
         )
 
-    return True
+    return True 

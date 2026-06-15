@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import { addWordGuessScore } from "../services/api";
-
 const WORD_LIST = [
     "BRAIN", "LOGIC", "SMART", "FOCUS", "THINK", 
     "SOLVE", "LEARN", "TRAIN", "SPEED", "MATCH", 

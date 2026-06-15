@@ -12,14 +12,8 @@ def add_simon_score_view(request):
     level_reached = request.data.get(
         'level_reached'
     )
-
-    score = request.data.get(
-        'score'
-    )
-
-    total_moves = request.data.get(
-        'total_moves'
-    )
+    score = request.data.get('score')
+    total_moves = request.data.get('total_moves' )
 
 
     add_simon_score_operation(

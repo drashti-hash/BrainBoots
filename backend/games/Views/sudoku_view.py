@@ -9,17 +9,11 @@ from games.Operations.sudoku_operation import (
 @api_view(['POST'])
 def add_sudoku_score_view(request):
 
-    level_reached = request.data.get(
-        'level_reached'
-    )
+    level_reached = request.data.get('level_reached')
 
-    score = request.data.get(
-        'score'
-    )
+    score = request.data.get('score')
 
-    completed_time = request.data.get(
-        'completed_time'
-    )
+    completed_time = request.data.get('completed_time')
 
 
     add_sudoku_score_operation(
@@ -27,9 +21,7 @@ def add_sudoku_score_view(request):
         level_reached,
         score,
         completed_time
-
-    )
-
+ )
     return Response({
 
         "status": True,

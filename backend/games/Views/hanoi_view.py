@@ -9,31 +9,12 @@ from games.Operations.hanoi_operation import (
 @api_view(['POST'])
 def add_hanoi_score_view(request):
 
-    level_reached = request.data.get(
-        'level_reached'
-    )
-
-    score = request.data.get(
-        'score'
-    )
-
-    moves = request.data.get(
-        'moves'
-    )
-
-    add_hanoi_score_operation(
-
-        level_reached,
-        score,
-        moves
-
-    )
-
+    level_reached = request.data.get('level_reached')
+    score = request.data.get('score')
+    moves = request.data.get('moves')
+    add_hanoi_score_operation(level_reached,score,moves)
     return Response({
-
         "status": True,
-
         "message":
             "Hanoi Score Added"
-
     })

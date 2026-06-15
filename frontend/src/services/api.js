@@ -34,6 +34,10 @@ const scoreEndpointNames = {
     "add-speed-math-score/": "Speed Math",
     "add-schulte-score/": "Schulte Table",
     "add-hanoi-score/": "Tower of Hanoi",
+    "add-memory-race-score/": "Memory Race",
+    "add-traffic-control-score/": "Traffic Control",
+    "add-wrong-answer-score/": "Wrong Answers Only",
+    "add-hot-potato-score/": "Hot Potato Chat",
 };
 
 const parseRequestData = (data) => {
@@ -202,4 +206,20 @@ export const addSchulteScore = async (data) => {
 
 export const addHanoiScore = async (data) => {
     return api.post("add-hanoi-score/", data);
+};
+
+export const addMemoryRaceScore = async (data) => {
+    return api.post("add-memory-race-score/", data);
+};
+
+export const addTrafficControlScore = async (data) => {
+    return api.post("add-traffic-control-score/", data);
+};
+
+export const addWrongAnswerScore = async (data) => {
+    return api.post("add-wrong-answer-score/", data);
+};
+
+export const addHotPotatoScore = async (data) => {
+    return api.post("add-hot-potato-score/", data);
 };

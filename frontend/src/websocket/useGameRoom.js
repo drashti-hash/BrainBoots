@@ -5,6 +5,7 @@ import useWebSocket from "./useWebSocket";
  * A stateful hook that handles the complete lifecycle of a multiplayer game room,
  * including player lists, chat messaging, starting games, and syncing live score status.
  */
+
 export function useGameRoom(roomCode, username) {
     const { status, connect, send, close, on, off } = useWebSocket();
     const [players, setPlayers] = useState([]);
@@ -20,6 +21,13 @@ export function useGameRoom(roomCode, username) {
 
     useEffect(() => {
         if (!roomCode || !username) return;
+
+        // Reset state for the new room session to prevent leaks from previous lobbies
+        setPlayers([]);
+        setActiveGame({ gameId: null, gameName: null, status: "waiting" });
+        setGameplayStatus("waiting");
+        setRoomResults(null);
+        setChatMessages([]);
 
         // Establish the socket connection
         connect(roomCode, username);
@@ -134,6 +142,35 @@ export function useGameRoom(roomCode, username) {
             ]);
         };
 
+        const handleLobbyReset = (data) => {
+            setRoomResults(null);
+            setActiveGame({
+                gameId: null,
+                gameName: null,
+                status: "waiting"
+            });
+            setGameplayStatus("waiting");
+            setPlayers(data.players);
+            setChatMessages((prev) => [
+                ...prev,
+                {
+                    username: "System",
+                    message: "🔄 Lobby reset by host. Select a new game!",
+                    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    isSystem: true
+                }
+            ]);
+        };
+
+        const handleGameAction = (data) => {
+            window.dispatchEvent(new CustomEvent("brainboots:game-action", {
+                detail: {
+                    username: data.username,
+                    payload: data.payload
+                }
+            }));
+        };
+
         // Register handlers
         on("player_joined", handlePlayerJoined);
         on("player_left", handlePlayerLeft);
@@ -143,6 +180,8 @@ export function useGameRoom(roomCode, username) {
         on("score_updated", handleScoreUpdated);
         on("player_finished", handlePlayerFinished);
         on("game_finished", handleGameFinished);
+        on("lobby_reset", handleLobbyReset);
+        on("game_action", handleGameAction);
 
         return () => {
             // Cleanup: remove listeners and close connection on component unmount
@@ -154,6 +193,8 @@ export function useGameRoom(roomCode, username) {
             off("score_updated", handleScoreUpdated);
             off("player_finished", handlePlayerFinished);
             off("game_finished", handleGameFinished);
+            off("lobby_reset", handleLobbyReset);
+            off("game_action", handleGameAction);
             close();
         };
     }, [roomCode, username, connect, on, off, close]);
@@ -195,6 +236,14 @@ export function useGameRoom(roomCode, username) {
         send("remove_bot");
     }, [send]);
 
+    const resetLobby = useCallback(() => {
+        send("reset_lobby");
+    }, [send]);
+
+    const sendGameAction = useCallback((payload) => {
+        send("game_action", { payload });
+    }, [send]);
+
     return {
         connectionStatus: status,
         players,
@@ -209,8 +258,10 @@ export function useGameRoom(roomCode, username) {
         updateLiveScore,
         submitFinalScore,
         clearRoomResults,
+        resetLobby,
         addBot,
-        removeBot
+        removeBot,
+        sendGameAction
     };
 }
 export default useGameRoom;

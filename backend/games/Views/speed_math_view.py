@@ -9,25 +9,10 @@ from games.Operations.speed_math_operation import (
 @api_view(['POST'])
 def add_speed_math_score_view(request):
 
-    level_reached = request.data.get(
-        'level_reached'
-    )
-
-    score = request.data.get(
-        'score'
-    )
-
-    correct_answers = request.data.get(
-        'correct_answers'
-    )
-
-    add_speed_math_score_operation(
-
-        level_reached,
-        score,
-        correct_answers
-
-    )
+    level_reached = request.data.get('level_reached')
+    score = request.data.get('score')
+    correct_answers = request.data.get('correct_answers')
+    add_speed_math_score_operation(level_reached,score,correct_answers)
 
     return Response({
 

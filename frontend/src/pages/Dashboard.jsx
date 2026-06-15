@@ -1,8 +1,550 @@
+
+
+
+// import { useEffect, useState } from "react";
+// import { Link } from "react-router-dom";
+// import { gameSections } from "../data/gameCatalog";
+// import { getDashboardData } from "../services/api";
+
+// /* ─────────────── Sidebar SVGs ─────────────── */
+// const IconHome = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" /></svg>;
+// const IconTrain = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 6.5h11M6.5 17.5h11M4 12h16M12 4v16" /><rect x="5" y="4" width="3" height="3" rx="1" /><rect x="16" y="17" width="3" height="3" rx="1" /></svg>;
+// const IconChallenge = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>;
+// const IconRooms = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="7" r="4" /><circle cx="17" cy="9" r="3" /><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2" /><path d="M19 21v-1.5a3 3 0 0 0-3-3" /></svg>;
+// const IconProgress = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>;
+// const IconLeaderboard = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="18" y="3" width="4" height="18" rx="1" /><rect x="10" y="9" width="4" height="12" rx="1" /><rect x="2" y="13" width="4" height="8" rx="1" /></svg>;
+// const IconProfile = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></svg>;
+// const IconChat = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>;
+
+// /* ─────────────── Bottom Nav SVGs ─────────────── */
+// const IconFriends = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>;
+// const IconTrophy = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10"></path><path d="M17 4v8a5 5 0 0 1-10 0V4"></path><path d="M7 4H3v3a4 4 0 0 0 4 4h0"></path><path d="M17 4h4v3a4 4 0 0 1-4 4h0"></path></svg>;
+// const IconBrain = () => <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 1.8.63 3.45 1.68 4.75C5.07 15.65 4 17.2 4 19c0 .55.45 1 1 1h4c2.21 0 4-1.79 4-4v-2c0-.55-.45-1-1-1s-1 .45-1 1v2c0 1.1-.9 2-2 2H6.83c.53-1.28 1.82-2.18 3.17-2.18.55 0 1-.45 1-1C11 10.9 8.1 8 12 8s1 .45 1 1c0 .55.45 1 1 1 .55 0 1-.45 1-1 0-3.31-2.69-6-6-6zM18.32 14.75C19.37 13.45 20 11.8 20 10c0-4.42-3.58-8-8-8-.55 0-1 .45-1 1s.45 1 1 1c3.31 0 6 2.69 6 6 0 .55.45 1 1 1s1-.45 1-1c0-1.8-1.46-3.26-3.26-3.26-.55 0-1 .45-1 1s.45 1 1 1c.7 0 1.26.56 1.26 1.26 0 1.07-.87 1.94-1.94 1.94-.55 0-1 .45-1 1v2c0 2.21 1.79 4 4 4h4c.55 0 1-.45 1-1 0-1.8-1.07-3.35-1.68-4.25z"/></svg>;
+// const IconMedal = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>;
+// const IconGift = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>;
+
+// /* ─────────────── utility helpers ─────────────── */
+// const readStoredJson = (key, fallback) => {
+//     try {
+//         const value = localStorage.getItem(key);
+//         return value ? JSON.parse(value) : fallback;
+//     } catch {
+//         return fallback;
+//     }
+// };
+
+// const getInitials = (name) => {
+//     const parts = String(name || "Player").trim().split(/\s+/).filter(Boolean);
+//     if (!parts.length) return "PL";
+//     if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+//     return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+// };
+
+// const getGreeting = () => {
+//     const h = new Date().getHours();
+//     if (h < 12) return "Good Morning";
+//     if (h < 17) return "Good Afternoon";
+//     return "Good Evening";
+// };
+
+// /* ─────────────── Image Overlay Coordinates ─────────────── */
+// const ZONES = [
+//     { id: "memory", name: "Memory Island", top: "50%", left: "20%" },
+//     { id: "focus", name: "Focus Forest", top: "28%", left: "44%" },
+//     { id: "logic", name: "Logic Lab", top: "28%", left: "78%" },
+//     { id: "reflex", name: "Reflex Mountain", top: "66%", left: "54%" },
+//     { id: "fun", name: "Fun Park", top: "66%", left: "84%" },
+// ];
+
+// function Dashboard() {
+//     const user = readStoredJson("user", {});
+//     const storedStats = readStoredJson("brainbootsStats", {});
+//     const [dashboardData, setDashboardData] = useState({
+//         stats: storedStats,
+//         highScores: [],
+//         tables: [],
+//     });
+
+//     const [isLoading, setIsLoading] = useState(true);
+//     const [errorMessage, setErrorMessage] = useState("");
+
+//     const username = user.username || user.email || "Guest Player";
+//     const initials = getInitials(username);
+//     const greeting = getGreeting();
+//     const stats = dashboardData.stats || {};
+//     const totalScore = stats.totalScore || 5005; 
+//     const streak = stats.streak || 7; 
+
+//     useEffect(() => {
+//         const fetchDashboardData = async () => {
+//             try {
+//                 const response = await getDashboardData();
+//                 if (response.data.success) {
+//                     setDashboardData({
+//                         stats: response.data.stats || {},
+//                         highScores: response.data.highScores || [],
+//                         tables: response.data.tables || [],
+//                     });
+//                     localStorage.setItem("brainbootsStats", JSON.stringify(response.data.stats || {}));
+//                     setErrorMessage("");
+//                 } else {
+//                     setErrorMessage(response.data.message || "Unable to fetch dashboard data");
+//                 }
+//             } catch {
+//                 setErrorMessage("Unable to fetch dashboard data");
+//             } finally {
+//                 setIsLoading(false);
+//             }
+//         };
+//         fetchDashboardData();
+//     }, []);
+
+//     const userLevel = Math.floor(totalScore / 1000) + 1;
+
+//     // Hardcoded recommended games based on exact image design requirement
+//     const recommendedGames = [
+//         { title: "Memory Match", icon: "🧠", tag: "Memory", tagColor: "#8b5cf6", tagBg: "#f3e8ff", bgLight: "#f4efff", path: "/games/memory-match" },
+//         { title: "Reaction Test", icon: "⚡", tag: "Reflex", tagColor: "#f59e0b", tagBg: "#fef3c7", bgLight: "#fff9e6", path: "/games/reaction-test" },
+//         { title: "Focus Grid", icon: "🎯", tag: "Focus", tagColor: "#10b981", tagBg: "#dcfce7", bgLight: "#e6fcf0", path: "/games/focus-grid" }
+//     ];
+
+//     const sidebarItems = [
+//         { label: "Home", icon: <IconHome />, active: true },
+//         { label: "Train", icon: <IconTrain />, to: "/games" },
+//         { label: "AI Assistant", icon: <IconChat />, to: "/chat" },
+//         { label: "Challenges", icon: <IconChallenge />, to: "/dashboard" },
+//         { label: "Rooms", icon: <IconRooms />, to: "/multiplayer" },
+//         { label: "Progress", icon: <IconProgress />, to: "/dashboard" },
+//         { label: "Leaderboard", icon: <IconLeaderboard />, to: "/dashboard" },
+//         { label: "Profile", icon: <IconProfile />, to: "/dashboard" },
+//     ];
+
+//     const streakDays = ["M", "T", "W", "T", "F", "S", "S"];
+
+//     return (
+//         <div style={{ display: "flex", minHeight: "100vh", background: "#f8f9fe", fontFamily: "Inter, system-ui, sans-serif" }}>
+
+//             {/* ════════════════ SIDEBAR ════════════════ */}
+//             <aside style={{ position: "fixed", top: 0, left: 0, bottom: 0, width: "240px", minWidth: "240px", background: "white", borderRight: "1px solid #f1f5f9", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "24px 16px", zIndex: 45, overflowY: "auto" }}>
+
+//                 <Link to="/dashboard" style={{ display: "flex", alignItems: "center", gap: "12px", paddingLeft: "8px", marginBottom: "32px", textDecoration: "none" }}>
+//                     <div style={{ width: 34, height: 34, borderRadius: "10px", background: "linear-gradient(135deg, #7c6aff, #a78bfa)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 13, fontWeight: 900 }}>
+//                         <IconBrain />
+//                     </div>
+//                     <div>
+//                         <p style={{ fontSize: 16, fontWeight: 800, color: "#0f172a", lineHeight: 1 }}>BrainBoot</p>
+//                         <p style={{ fontSize: 11, color: "#64748b", lineHeight: 1, marginTop: 4, fontWeight: 500 }}>Train Your Brain</p>
+//                     </div>
+//                 </Link>
+
+//                 <nav style={{ display: "flex", flexDirection: "column", gap: 6, flex: 1, overflowY: "auto" }} className="scrollbar-hide">
+//                     {sidebarItems.map((item, i) => (
+//                         <Link key={i} to={item.to || "#"} style={{
+//                             display: "flex", alignItems: "center", gap: 14, padding: "12px 16px", borderRadius: "12px",
+//                             background: item.active ? "linear-gradient(135deg, #8b5cf6, #a78bfa)" : "transparent",
+//                             color: item.active ? "white" : "#64748b", fontWeight: 600, fontSize: 14, textDecoration: "none", transition: "all 0.2s"
+//                         }}>
+//                             <span style={{ opacity: item.active ? 1 : 0.7 }}>{item.icon}</span>
+//                             <span>{item.label}</span>
+//                         </Link>
+//                     ))}
+//                 </nav>
+
+
+//                 <div style={{ padding: "0 8px" }}>
+//                     <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+//                         <span style={{ fontSize: 24 }}>🔥</span>
+//                         <span style={{ fontSize: 24, fontWeight: 800, color: "#10b981", lineHeight: 1 }}>{streak}</span>
+//                         <span style={{ fontSize: 11, fontWeight: 700, color: "#64748b", marginTop: 4 }}>Day Streak</span>
+//                     </div>
+//                     <div style={{ display: "flex", justifyContent: "space-between", gap: 4 }}>
+//                         {streakDays.map((d, i) => {
+//                             const isCompleted = i < (streak % 7 || (streak > 0 ? 7 : 0));
+//                             return (
+//                                 <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+//                                     <div style={{
+//                                         width: 22, height: 22, borderRadius: "50%",
+//                                         background: isCompleted ? "#10b981" : "#f1f5f9",
+//                                         display: "flex", alignItems: "center", justifyContent: "center"
+//                                     }}>
+//                                         {isCompleted ? <span style={{ color: "white", fontSize: 10, fontWeight: 900 }}>✓</span> : <span style={{ color: "#94a3b8", fontSize: 10, fontWeight: 600 }}>{d}</span>}
+//                                     </div>
+//                                     <span style={{ fontSize: 10, color: "#94a3b8", fontWeight: 600 }}>{d}</span>
+//                                 </div>
+//                             );
+//                         })}
+//                     </div>
+//                 </div>
+//             </aside>
+
+//             {/* ════════════════ MAIN CONTENT AREA ════════════════ */}
+//             <div style={{ 
+//                 marginLeft: "240px", 
+//                 flex: 1, 
+//                 display: "flex", 
+//                 flexDirection: "column", 
+//                 minHeight: "100vh", 
+//                 position: "relative",
+//                 backgroundColor: "#f8f9fe",
+//                 overflowX: "hidden"
+//             }}>
+//                 {/* Background Sky Image Layer */}
+//                 <div style={{
+//                     position: "absolute",
+//                     top: 0,
+//                     left: 0,
+//                     right: 0,
+//                     height: "580px",
+//                     backgroundImage: "url('/sky_bg.png')",
+//                     backgroundSize: "cover",
+//                     backgroundPosition: "center",
+//                     backgroundRepeat: "no-repeat",
+//                     zIndex: 0,
+//                     pointerEvents: "none"
+//                 }} />
+
+//                 <header style={{ background: "transparent", borderBottom: "none", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "24px 40px", flexShrink: 0, zIndex: 10 }}>
+//                     <div style={{ display: "flex", alignItems: "center", gap: 8, background: "white", borderRadius: "24px", padding: "8px 16px", boxShadow: "0 2px 8px rgba(0,0,0,0.02)" }}>
+//                         <span style={{ fontSize: 18 }}>🪙</span>
+//                         <span style={{ fontSize: 15, fontWeight: 800, color: "#0f172a" }}>{totalScore.toLocaleString()}</span>
+//                         <button style={{ background: "#f8f9fe", border: "none", width: 24, height: 24, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, cursor: "pointer", marginLeft: 4, color: "#64748b" }}>+</button>
+//                     </div>
+
+//                     <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+//                         <button style={{ width: 44, height: 44, borderRadius: "50%", border: "none", background: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#64748b", boxShadow: "0 2px 8px rgba(0,0,0,0.02)" }}>
+//                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+//                         </button>
+//                         <button style={{ width: 44, height: 44, borderRadius: "50%", border: "none", background: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#64748b", boxShadow: "0 2px 8px rgba(0,0,0,0.02)" }}>
+//                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+//                         </button>
+
+//                         <div style={{ display: "flex", alignItems: "center", gap: 12, background: "transparent", cursor: "pointer" }}>
+//                             <div style={{ width: 44, height: 44, borderRadius: "50%", background: "#f472b6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24 }}>
+//                                 👾
+//                             </div>
+//                             <div>
+//                                 <p style={{ fontSize: 14, fontWeight: 700, color: "#0f172a" }}>{username}</p>
+//                                 <p style={{ fontSize: 12, color: "#64748b", marginTop: 2, fontWeight: 500 }}>Level {userLevel}</p>
+//                             </div>
+//                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+//                         </div>
+//                     </div>
+//                 </header>
+//                 <main style={{ flex: 1, overflowY: "visible", padding: "0 40px 40px", display: "flex", flexDirection: "column", gap: 32, position: "relative", zIndex: 2 }} className="scrollbar-hide">
+//                     {/* HERO SECTION */}
+//                     <section style={{ 
+//                         position: "relative", 
+//                         minHeight: "500px", 
+//                         display: "flex", 
+//                         flexDirection: "column", 
+//                         justifyContent: "flex-end",
+//                         padding: "0 0 36px"
+//                     }}>
+//                         <div style={{ maxWidth: "60%", zIndex: 2, position: "relative", marginTop: "40px" }}>
+//                             <p style={{ fontSize: 22, fontWeight: 700, color: "#0f172a", marginBottom: 8 }}>Good Morning,</p>
+//                             <h1 style={{ fontSize: 48, fontWeight: 900, color: "#1e1b4b", lineHeight: 1.1, marginBottom: 16 }}>{username}!</h1>
+//                             <p style={{ fontSize: 16, color: "#475569", lineHeight: 1.5, marginBottom: 24, fontWeight: 500 }}>Ready to boost your brain today?<br/>Let's continue your journey.</p>
+
+//                             <button style={{ background: "linear-gradient(135deg, #8b5cf6, #a78bfa)", color: "white", border: "none", borderRadius: "12px", padding: "14px 24px", fontSize: 14, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 12, boxShadow: "0 4px 14px rgba(139,92,246,0.3)" }}>
+//                                 Continue Training <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+//                             </button>
+//                         </div>
+
+//                         {/* Stats Floating Row */}
+//                         <div style={{ display: "flex", gap: 16, marginTop: 40, zIndex: 2, position: "relative" }}>
+//                             <div style={{ background: "rgba(255,255,255,0.92)", borderRadius: 16, padding: "16px", width: 100, textAlign: "center", boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}>
+//                                 <div style={{ fontSize: 20, marginBottom: 8, color: "#8b5cf6", background: "#f5f3ff", width: 36, height: 36, borderRadius: "50%", margin: "0 auto 8px", display: "flex", alignItems: "center", justifyContent: "center" }}>🛡️</div>
+//                                 <div style={{ fontSize: 11, fontWeight: 600, color: "#64748b", marginBottom: 4 }}>Level</div>
+//                                 <div style={{ fontSize: 20, fontWeight: 800, color: "#0f172a" }}>{userLevel}</div>
+//                             </div>
+//                             <div style={{ background: "rgba(255,255,255,0.92)", borderRadius: 16, padding: "16px", width: 140, textAlign: "center", boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}>
+//                                 <div style={{ fontSize: 20, marginBottom: 8, color: "#3b82f6", background: "#eff6ff", width: 36, height: 36, borderRadius: "50%", margin: "0 auto 8px", display: "flex", alignItems: "center", justifyContent: "center" }}>⭐</div>
+//                                 <div style={{ fontSize: 11, fontWeight: 600, color: "#64748b", marginBottom: 4 }}>Brain Score</div>
+//                                 <div style={{ fontSize: 20, fontWeight: 800, color: "#0f172a" }}>{totalScore.toLocaleString()}</div>
+//                             </div>
+//                             <div style={{ background: "rgba(255,255,255,0.92)", borderRadius: 16, padding: "16px", width: 100, textAlign: "center", boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}>
+//                                 <div style={{ fontSize: 20, marginBottom: 8, color: "#10b981", background: "#ecfdf5", width: 36, height: 36, borderRadius: "50%", margin: "0 auto 8px", display: "flex", alignItems: "center", justifyContent: "center" }}>🔥</div>
+//                                 <div style={{ fontSize: 11, fontWeight: 600, color: "#64748b", marginBottom: 4 }}>Streak</div>
+//                                 <div style={{ fontSize: 20, fontWeight: 800, color: "#0f172a" }}>{streak} <span style={{ fontSize: 12 }}>Days</span></div>
+//                             </div>
+//                         </div>
+//                         <img 
+//                             src="/hero_mascot.png" 
+//                             alt="Brain Mascot" 
+//                             style={{ 
+//                                 position: "absolute", 
+//                                 bottom: "-2px", 
+//                                 right: "-40px", 
+//                                 height: "calc(100% + 2px)", 
+//                                 maxHeight: "500px",
+//                                 objectFit: "contain", 
+//                                 objectPosition: "right bottom",
+//                                 pointerEvents: "none",
+//                                 zIndex: 1,
+//                                 WebkitMaskImage: "linear-gradient(to right, transparent 0%, rgba(0,0,0,0) 2%, black 28%), linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0) 2%, black 12%)",
+//                                 WebkitMaskComposite: "source-in",
+//                                 maskImage: "linear-gradient(to right, transparent 0%, rgba(0,0,0,0) 2%, black 28%), linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0) 2%, black 12%)",
+//                                 maskComposite: "intersect"
+//                             }} 
+//                         />
+//                     </section>
+
+//                     {/* TWO COLUMN ROW */}
+//                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+//                         {/* Today's Challenge */}
+//                         <div style={{ background: "white", borderRadius: 24, padding: "24px", boxShadow: "0 4px 12px rgba(0,0,0,0.02)", position: "relative", overflow: "hidden" }}>
+//                             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
+//                                 <span style={{ fontSize: 20, color: "#ef4444" }}>🔥</span>
+//                                 <h3 style={{ fontSize: 18, fontWeight: 800, color: "#4f46e5" }}>Today's Challenge</h3>
+//                             </div>
+//                             <p style={{ fontSize: 14, color: "#475569", fontWeight: 600 }}>Complete 3 games</p>
+//                             <p style={{ fontSize: 14, color: "#475569", fontWeight: 600, marginBottom: 24 }}>Score 500+ points</p>
+
+//                             <p style={{ fontSize: 12, color: "#64748b", fontWeight: 600, marginBottom: 8 }}>1 / 3 Games Completed</p>
+//                             <div style={{ background: "#f1f5f9", height: 8, borderRadius: 4, width: "100%", marginBottom: 32, overflow: "hidden" }}>
+//                                 <div style={{ background: "#8b5cf6", height: "100%", width: "33%", borderRadius: 4 }}></div>
+//                             </div>
+
+//                             <button style={{ background: "linear-gradient(135deg, #8b5cf6, #a78bfa)", color: "white", border: "none", borderRadius: "12px", padding: "14px 24px", fontSize: 14, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between", width: "200px" }}>
+//                                 Start Challenge <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+//                             </button>
+
+//                             {/* Challenge Image/Chest */}
+//                             <div style={{ position: "absolute", right: 24, top: 40, textAlign: "center" }}>
+//                                 <div style={{ fontSize: 80, lineHeight: 1 }}>🧰</div>
+//                                 <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
+//                                     <span style={{ background: "#f8f9fe", color: "#8b5cf6", fontSize: 12, fontWeight: 700, padding: "4px 10px", borderRadius: 12 }}>+50 XP</span>
+//                                     <span style={{ background: "#fffbeb", color: "#d97706", fontSize: 12, fontWeight: 700, padding: "4px 10px", borderRadius: 12 }}>+100 🪙</span>
+//                                 </div>
+//                             </div>
+//                         </div>
+
+//                         {/* Quick Access */}
+//                         <div style={{ background: "white", borderRadius: 24, padding: "24px", boxShadow: "0 4px 12px rgba(0,0,0,0.02)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+//                             <h3 style={{ fontSize: 16, fontWeight: 800, color: "#0f172a", marginBottom: 20 }}>Quick Access</h3>
+
+//                             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 24 }}>
+//                                 {[
+//                                     { label: "Daily Challenge", icon: "🎯", bg: "#ffe4e6", color: "#e11d48" },
+//                                     { label: "Spin Wheel", icon: "🎡", bg: "#e0e7ff", color: "#4f46e5" },
+//                                     { label: "Brain Report", icon: "📊", bg: "#f3e8ff", color: "#9333ea" },
+//                                     { label: "Invite Friends", icon: "👥", bg: "#f1f5f9", color: "#475569" }
+//                                 ].map((item, idx) => (
+//                                     <div key={idx} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, cursor: "pointer" }}>
+//                                         <div style={{ width: 64, height: 64, borderRadius: "50%", background: item.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, boxShadow: "0 4px 10px rgba(0,0,0,0.05)" }}>
+//                                             {item.icon}
+//                                         </div>
+//                                         <span style={{ fontSize: 11, fontWeight: 700, color: "#475569", width: 60, textAlign: "center", lineHeight: 1.2 }}>{item.label}</span>
+//                                     </div>
+//                                 ))}
+//                             </div>
+
+//                             <div style={{ background: "#f8f9fe", borderRadius: 16, padding: "16px 20px", display: "flex", gap: 16, alignItems: "flex-start" }}>
+//                                 <span style={{ fontSize: 24, color: "#8b5cf6", lineHeight: 1, fontFamily: "serif", fontWeight: 900 }}>"</span>
+//                                 <div>
+//                                     <p style={{ fontSize: 14, color: "#475569", fontWeight: 500, lineHeight: 1.5, marginBottom: 8 }}>The more you train your brain,<br/>the stronger your future.</p>
+//                                     <p style={{ fontSize: 12, color: "#94a3b8", fontWeight: 600 }}>– BrainBoot</p>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     </div>
+
+//                     {/* EXPLORE BY ZONE */}
+//                     <section>
+//                         <h3 style={{ fontSize: 18, fontWeight: 900, color: "#0f172a", marginBottom: 16 }}>Explore by Zone</h3>
+//                         <div style={{ borderRadius: 24, overflow: "hidden", position: "relative", width: "100%", height: "380px", background: "#7cd3fc", boxShadow: "0 4px 12px rgba(0,0,0,0.03)" }}>
+
+//                             <img src="/zone_map.png" alt="Zone Map" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+
+//                             {ZONES.map((zone, idx) => (
+//                                 <Link key={idx} to={`/games?zone=${zone.id}`} style={{ position: "absolute", top: zone.top, left: zone.left, transform: "translate(-50%, -50%)", textDecoration: "none", display: "block", padding: "16px" }}>
+//                                     <div style={{ background: "rgba(30, 27, 75, 0.9)", backdropFilter: "blur(4px)", padding: "8px 14px", borderRadius: "12px", color: "white", fontSize: 12, fontWeight: 700, lineHeight: 1, whiteSpace: "nowrap", boxShadow: "0 4px 10px rgba(0,0,0,0.2)", transition: "all 0.2s ease" }}>
+//                                         {zone.name}
+//                                     </div>
+//                                 </Link>
+//                             ))}
+
+//                             <div style={{ position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)", background: "white", padding: "10px 28px", borderRadius: 100, display: "flex", alignItems: "center", gap: 10, boxShadow: "0 8px 24px rgba(0,0,0,0.12)", width: "max-content", maxWidth: "90%" }}>
+//                                 <span style={{ color: "#a78bfa", fontSize: 16 }}>★</span>
+//                                 <span style={{ fontSize: 12, fontWeight: 700, color: "#334155" }}>Each zone has unique games. Explore & master them all!</span>
+//                                 <span style={{ color: "#a78bfa", fontSize: 20, lineHeight: 0, position: "relative", top: 2, fontFamily: "serif" }}>”</span>
+//                             </div>
+//                         </div>
+//                     </section>
+
+//                     {/* ════════════════ BOTTOM ROW (PROGRESS & RECOMMENDED) ════════════════ */}
+//                     <div style={{ display: "grid", gridTemplateColumns: "1fr 2.5fr", gap: 24 }}>
+
+//                         {/* Radar Chart Component exactly matching the design */}
+//                         <div style={{ background: "white", borderRadius: 24, padding: "24px", boxShadow: "0 4px 12px rgba(0,0,0,0.03)", display: "flex", flexDirection: "column" }}>
+//                             <h3 style={{ fontSize: 16, fontWeight: 800, color: "#1e293b", marginBottom: 32 }}>Your Progress</h3>
+
+//                             <div style={{ position: "relative", width: "100%", flex: 1, display: "flex", alignItems: "center", justifyContent: "center", minHeight: 220 }}>
+
+//                                 {/* Absolute positioned text labels (matches exact styling from image) */}
+//                                 <div style={{ position: "absolute", top: -10, left: "50%", transform: "translateX(-50%)", textAlign: "center" }}>
+//                                     <span style={{ fontSize: 11, fontWeight: 700, color: "#334155", display: "block", marginBottom: 2 }}>Memory</span>
+//                                     <span style={{ fontSize: 11, color: "#64748b", fontWeight: 600 }}>76%</span>
+//                                 </div>
+//                                 <div style={{ position: "absolute", top: "40%", right: -5, transform: "translateY(-50%)", textAlign: "right" }}>
+//                                     <span style={{ fontSize: 11, fontWeight: 700, color: "#334155", display: "block", marginBottom: 2 }}>Focus</span>
+//                                     <span style={{ fontSize: 11, color: "#64748b", fontWeight: 600 }}>66%</span>
+//                                 </div>
+//                                 <div style={{ position: "absolute", bottom: -10, right: "12%", textAlign: "center" }}>
+//                                     <span style={{ fontSize: 11, fontWeight: 700, color: "#334155", display: "block", marginBottom: 2 }}>Logic</span>
+//                                     <span style={{ fontSize: 11, color: "#64748b", fontWeight: 600 }}>72%</span>
+//                                 </div>
+//                                 <div style={{ position: "absolute", bottom: -10, left: "12%", textAlign: "center" }}>
+//                                     <span style={{ fontSize: 11, fontWeight: 700, color: "#334155", display: "block", marginBottom: 2 }}>Reflex</span>
+//                                     <span style={{ fontSize: 11, color: "#64748b", fontWeight: 600 }}>80%</span>
+//                                 </div>
+//                                 <div style={{ position: "absolute", top: "40%", left: -5, transform: "translateY(-50%)", textAlign: "left" }}>
+//                                     <span style={{ fontSize: 11, fontWeight: 700, color: "#334155", display: "block", marginBottom: 2 }}>Problem Solving</span>
+//                                     <span style={{ fontSize: 11, color: "#64748b", fontWeight: 600 }}>70%</span>
+//                                 </div>
+
+//                                 {/* Refined SVG Pentagonal Chart */}
+//                                 <svg width="200" height="200" viewBox="0 0 100 100" style={{ overflow: "visible" }}>
+//                                     {/* Background Web Lines */}
+//                                     <polygon points="50,10 88,38 73.5,86 26.5,86 12,38" fill="none" stroke="#e2e8f0" strokeWidth="0.8"/>
+//                                     <polygon points="50,30 69,44 61.7,68 38.3,68 31,44" fill="none" stroke="#e2e8f0" strokeWidth="0.8"/>
+
+//                                     {/* Spoke Lines */}
+//                                     <line x1="50" y1="50" x2="50" y2="10" stroke="#e2e8f0" strokeWidth="0.8"/>
+//                                     <line x1="50" y1="50" x2="88" y2="38" stroke="#e2e8f0" strokeWidth="0.8"/>
+//                                     <line x1="50" y1="50" x2="73.5" y2="86" stroke="#e2e8f0" strokeWidth="0.8"/>
+//                                     <line x1="50" y1="50" x2="26.5" y2="86" stroke="#e2e8f0" strokeWidth="0.8"/>
+//                                     <line x1="50" y1="50" x2="12" y2="38" stroke="#e2e8f0" strokeWidth="0.8"/>
+
+//                                     {/* Filled Data Polygon (Purple) */}
+//                                     {/* Coordinates calculated roughly as: Memory 76%, Focus 66%, Logic 72%, Reflex 80%, Problem Solving 70% */}
+//                                     <polygon points="50,19.6 75,42 67,73.3 31.2,75.9 23.4,41.4" fill="#a78bfa" fillOpacity="0.5" stroke="#8b5cf6" strokeWidth="1.5" strokeLinejoin="round"/>
+
+//                                     {/* Data Vertex Dots */}
+//                                     <circle cx="50" cy="19.6" r="2.5" fill="white" stroke="#8b5cf6" strokeWidth="1.5" />
+//                                     <circle cx="75" cy="42" r="2.5" fill="white" stroke="#8b5cf6" strokeWidth="1.5" />
+//                                     <circle cx="67" cy="73.3" r="2.5" fill="white" stroke="#8b5cf6" strokeWidth="1.5" />
+//                                     <circle cx="31.2" cy="75.9" r="2.5" fill="white" stroke="#8b5cf6" strokeWidth="1.5" />
+//                                     <circle cx="23.4" cy="41.4" r="2.5" fill="white" stroke="#8b5cf6" strokeWidth="1.5" />
+//                                 </svg>
+//                             </div>
+//                         </div>
+
+//                         {/* Recommended For You Game Cards matching the design */}
+//                         <div style={{ display: "flex", flexDirection: "column" }}>
+//                             <h3 style={{ fontSize: 16, fontWeight: 800, color: "#1e293b", marginBottom: 24 }}>Recommended For You</h3>
+//                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20, flex: 1 }}>
+//                                 {recommendedGames.map((game, idx) => (
+//                                     <div key={idx} style={{ background: "white", borderRadius: 24, display: "flex", flexDirection: "column", overflow: "hidden", boxShadow: "0 4px 16px rgba(0,0,0,0.04)" }}>
+//                                         {/* Top Colored Image Area */}
+//                                         <div style={{ background: game.bgLight, height: 150, display: "flex", alignItems: "center", justifyContent: "center" }}>
+//                                             <span style={{ fontSize: 72, filter: "drop-shadow(0 12px 12px rgba(0,0,0,0.1))" }}>{game.icon}</span>
+//                                         </div>
+
+//                                         {/* Bottom White Text/Action Area */}
+//                                         <div style={{ padding: "16px 20px 20px", display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1 }}>
+//                                             <h4 style={{ fontSize: 15, fontWeight: 800, color: "#0f172a", marginBottom: 16 }}>{game.title}</h4>
+
+//                                             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+//                                                 {/* Category Tag */}
+//                                                 <span style={{ background: game.tagBg, color: game.tagColor, fontSize: 11, fontWeight: 700, padding: "6px 12px", borderRadius: 8 }}>
+//                                                     {game.tag}
+//                                                 </span>
+
+//                                                 {/* Play Button Outline */}
+//                                                 <Link to={game.path} style={{ width: 34, height: 34, borderRadius: "50%", border: `1.5px solid #e2e8f0`, display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", color: game.tagColor, transition: "all 0.2s" }} className="hover:border-violet-400 hover:shadow-sm">
+//                                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1" strokeLinejoin="round"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
+//                                                 </Link>
+//                                             </div>
+//                                         </div>
+//                                     </div>
+//                                 ))}
+//                             </div>
+//                         </div>
+
+//                     </div>
+
+//                     {/* ════════════════ INLINE PILL BOTTOM NAVIGATION ════════════════ */}
+//                     <div style={{ 
+//                         margin: "40px auto 0", 
+//                         background: "white", 
+//                         borderRadius: 100, 
+//                         padding: "16px 48px", 
+//                         display: "flex", 
+//                         alignItems: "center", 
+//                         justifyContent: "center",
+//                         gap: 64,
+//                         boxShadow: "0 8px 32px rgba(0,0,0,0.04)",
+//                         width: "max-content",
+//                         maxWidth: "100%"
+//                     }}>
+//                         <Link to="/friends" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, textDecoration: "none", color: "#64748b" }}>
+//                             <IconFriends />
+//                             <span style={{ fontSize: 12, fontWeight: 600 }}>Play with Friends</span>
+//                         </Link>
+//                         <Link to="/leaderboard" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, textDecoration: "none", color: "#64748b" }}>
+//                             <IconTrophy />
+//                             <span style={{ fontSize: 12, fontWeight: 600 }}>Leaderboards</span>
+//                         </Link>
+
+//                         <Link to="/dashboard" style={{ position: "relative", top: -20 }}>
+//                             <div style={{ width: 64, height: 64, borderRadius: "50%", background: "linear-gradient(135deg, #a78bfa, #8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", boxShadow: "0 0 0 8px #f5f3ff, 0 8px 24px rgba(139,92,246,0.3)" }}>
+//                                 <IconBrain />
+//                             </div>
+//                         </Link>
+
+//                         <Link to="/achievements" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, textDecoration: "none", color: "#64748b" }}>
+//                             <IconMedal />
+//                             <span style={{ fontSize: 12, fontWeight: 600 }}>Achievements</span>
+//                         </Link>
+//                         <Link to="/rewards" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, textDecoration: "none", color: "#64748b" }}>
+//                             <IconGift />
+//                             <span style={{ fontSize: 12, fontWeight: 600 }}>Daily Rewards</span>
+//                         </Link>
+//                     </div>
+
+//                 </main>
+
+//             </div>
+
+//             <style>{`
+//                 .scrollbar-hide::-webkit-scrollbar { display: none; }
+//                 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+//                 * { box-sizing: border-box; }
+//             `}</style>
+//         </div>
+//     );
+// }
+
+// export default Dashboard;
+
+
+
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { gameSections } from "../data/gameCatalog";
 import { getDashboardData } from "../services/api";
+import toast from "react-hot-toast";
 
+/* ─────────────── Sidebar SVGs ─────────────── */
+const IconHome = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" /></svg>;
+const IconTrain = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6.5 6.5h11M6.5 17.5h11M4 12h16M12 4v16" /><rect x="5" y="4" width="3" height="3" rx="1" /><rect x="16" y="17" width="3" height="3" rx="1" /></svg>;
+const IconChallenge = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>;
+const IconRooms = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="7" r="4" /><circle cx="17" cy="9" r="3" /><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2" /><path d="M19 21v-1.5a3 3 0 0 0-3-3" /></svg>;
+const IconProgress = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>;
+const IconLeaderboard = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="18" y="3" width="4" height="18" rx="1" /><rect x="10" y="9" width="4" height="12" rx="1" /><rect x="2" y="13" width="4" height="8" rx="1" /></svg>;
+const IconProfile = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></svg>;
+const IconChat = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>;
+
+/* ─────────────── Bottom Nav SVGs ─────────────── */
+const IconFriends = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>;
+const IconTrophy = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10"></path><path d="M17 4v8a5 5 0 0 1-10 0V4"></path><path d="M7 4H3v3a4 4 0 0 0 4 4h0"></path><path d="M17 4h4v3a4 4 0 0 1-4 4h0"></path></svg>;
+const IconBrain = () => <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 1.8.63 3.45 1.68 4.75C5.07 15.65 4 17.2 4 19c0 .55.45 1 1 1h4c2.21 0 4-1.79 4-4v-2c0-.55-.45-1-1-1s-1 .45-1 1v2c0 1.1-.9 2-2 2H6.83c.53-1.28 1.82-2.18 3.17-2.18.55 0 1-.45 1-1C11 10.9 8.1 8 12 8s1 .45 1 1c0 .55.45 1 1 1 .55 0 1-.45 1-1 0-3.31-2.69-6-6-6zM18.32 14.75C19.37 13.45 20 11.8 20 10c0-4.42-3.58-8-8-8-.55 0-1 .45-1 1s.45 1 1 1c3.31 0 6 2.69 6 6 0 .55.45 1 1 1s1-.45 1-1c0-1.8-1.46-3.26-3.26-3.26-.55 0-1 .45-1 1s.45 1 1 1c.7 0 1.26.56 1.26 1.26 0 1.07-.87 1.94-1.94 1.94-.55 0-1 .45-1 1v2c0 2.21 1.79 4 4 4h4c.55 0 1-.45 1-1 0-1.8-1.07-3.35-1.68-4.25z" /></svg>;
+const IconMedal = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>;
+const IconGift = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>;
+
+/* ─────────────── utility helpers ─────────────── */
 const readStoredJson = (key, fallback) => {
     try {
         const value = localStorage.getItem(key);
@@ -12,6 +554,39 @@ const readStoredJson = (key, fallback) => {
     }
 };
 
+const getInitials = (name) => {
+    const parts = String(name || "Player").trim().split(/\s+/).filter(Boolean);
+    if (!parts.length) return "PL";
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+};
+
+const getGreeting = () => {
+    const h = new Date().getHours();
+    if (h < 12) return "Good Morning";
+    if (h < 17) return "Good Afternoon";
+    return "Good Evening";
+};
+
+const BRAIN_QUOTES = [
+    { text: "The more you train your brain,\nthe stronger your future.", author: "BrainBoot" },
+    { text: "Focus is a muscle, and you\nbuild it through daily training.", author: "BrainBoot" },
+    { text: "Intelligence is the ability\nto adapt to change.", author: "Stephen Hawking" },
+    { text: "Consistency is the key to\nunlocking your brain's potential.", author: "BrainBoot" },
+    { text: "Your brain is like a muscle:\nwhen it's in use we feel very good.", author: "Carl Sagan" },
+    { text: "Do not let what you cannot do\ninterfere with what you can do.", author: "John Wooden" },
+    { text: "The only limit to our realization\nof tomorrow is our doubts of today.", author: "Franklin D. Roosevelt" }
+];
+
+/* ─────────────── Image Overlay Coordinates ─────────────── */
+const ZONES = [
+    { id: "memory", name: "Memory Island", top: "50%", left: "20%" },
+    { id: "focus", name: "Focus Forest", top: "28%", left: "44%" },
+    { id: "logic", name: "Logic Lab", top: "28%", left: "78%" },
+    { id: "reflex", name: "Reflex Mountain", top: "66%", left: "54%" },
+    { id: "fun", name: "Fun Park", top: "66%", left: "84%" },
+];
+
 function Dashboard() {
     const user = readStoredJson("user", {});
     const storedStats = readStoredJson("brainbootsStats", {});
@@ -20,37 +595,28 @@ function Dashboard() {
         highScores: [],
         tables: [],
     });
-    const [scoreModalOpen, setScoreModalOpen] = useState(false);
-    const [gamesPlayedModalOpen, setGamesPlayedModalOpen] = useState(false);
+
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
-    
-    const username = user.username || user.email || "Player";
-    const totalGames = gameSections.reduce((total, section) => total + section.games.length, 0);
-    
+
+    const username = user.username || user.email || "Guest Player";
+    const initials = getInitials(username);
+    const greeting = getGreeting();
     const stats = dashboardData.stats || {};
     const totalScore = stats.totalScore || 0;
-    const bestScore = stats.bestScore || 0;
     const streak = stats.streak || 0;
-    const gamesPlayed = stats.gamesPlayed || 0;
-    const highScores = dashboardData.highScores || [];
-    const tables = dashboardData.tables || [];
 
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
                 const response = await getDashboardData();
-
                 if (response.data.success) {
                     setDashboardData({
                         stats: response.data.stats || {},
                         highScores: response.data.highScores || [],
                         tables: response.data.tables || [],
                     });
-                    localStorage.setItem(
-                        "brainbootsStats",
-                        JSON.stringify(response.data.stats || {})
-                    );
+                    localStorage.setItem("brainbootsStats", JSON.stringify(response.data.stats || {}));
                     setErrorMessage("");
                 } else {
                     setErrorMessage(response.data.message || "Unable to fetch dashboard data");
@@ -61,641 +627,751 @@ function Dashboard() {
                 setIsLoading(false);
             }
         };
-
         fetchDashboardData();
     }, []);
 
-    // Get a random game ID to launch for Play Now button
-    const getRandomGameId = () => {
-        const allGames = gameSections.flatMap(s => s.games);
-        if (allGames.length === 0) return "aim";
-        const randomIndex = Math.floor(Math.random() * allGames.length);
-        return allGames[randomIndex].id;
+    const userLevel = Math.floor(totalScore / 1000) + 1;
+
+    // Helper to get best score for a specific database table
+    const getBestScore = (tableName) => {
+        const record = (dashboardData.highScores || []).find(h => (h.table || "").toLowerCase() === tableName.toLowerCase());
+        return record ? record.bestScore : 0;
     };
 
-    // Calculate level progression dynamically based on totalScore
-    const userLevel = Math.floor(totalScore / 1000) + 1;
-    const xpProgress = totalScore % 1000;
-    const xpPercent = Math.min(100, Math.max(5, Math.round((xpProgress / 1000) * 100)));
-
-    // Generate dynamic chart data from last 7 plays
-    const allPlayRows = tables.flatMap(t => 
-        (t.rows || []).map(r => ({
-            score: r.score ?? r.wpm ?? r.correct_answers ?? r.reaction_time ?? 0,
-            date: r.created_at ?? r.played_at ?? r.date ?? ""
-        }))
-    );
-    const lastSevenPlays = allPlayRows
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
-        .slice(-7);
-
-    const maxVal = Math.max(...lastSevenPlays.map(p => p.score), 10);
-    const minVal = Math.min(...lastSevenPlays.map(p => p.score), 0);
-
-    const chartPoints = lastSevenPlays.map((p, i) => {
-        const x = (i / Math.max(1, lastSevenPlays.length - 1)) * 300;
-        const y = 80 - ((p.score - minVal) / (maxVal - minVal || 1)) * 60;
-        return { x, y, score: p.score };
-    });
-
-    let pathD = "";
-    let fillD = "";
-    if (chartPoints.length > 0) {
-        pathD = `M ${chartPoints[0].x} ${chartPoints[0].y}`;
-        for (let i = 1; i < chartPoints.length; i++) {
-            pathD += ` L ${chartPoints[i].x} ${chartPoints[i].y}`;
+    // Helper to extract best score from shared 'scores' table by game name
+    const getSharedBestScore = (gameName) => {
+        const scoresTable = (dashboardData.tables || []).find(t => t.name === "scores");
+        if (scoresTable && scoresTable.rows) {
+            const rows = scoresTable.rows.filter(r => r.game_name === gameName);
+            if (rows.length > 0) {
+                return Math.max(...rows.map(r => r.score || 0));
+            }
         }
-        fillD = `${pathD} L ${chartPoints[chartPoints.length - 1].x} 100 L ${chartPoints[0].x} 100 Z`;
-    }
+        return 0;
+    };
 
-    // Dynamic Featured Games (Top 4 played games by user, no padding with 0-stat dummy games)
-    const sortedFeatured = [...highScores]
-        .filter(g => g.plays > 0)
-        .sort((a, b) => (b.plays - a.plays) || (b.bestScore - a.bestScore))
-        .slice(0, 4);
+    // Parse games played today across all tables
+    const getGamesPlayedTodayCount = () => {
+        if (!dashboardData.tables) return 0;
+        const localToday = new Date().toLocaleDateString('en-CA');
+        let count = 0;
+        dashboardData.tables.forEach(table => {
+            if (table.rows) {
+                table.rows.forEach(row => {
+                    for (const key of ["created_at", "created_on", "played_at", "date"]) {
+                        const val = row[key];
+                        if (val && String(val).includes(localToday)) {
+                            count++;
+                            break;
+                        }
+                    }
+                });
+            }
+        });
+        return count;
+    };
 
-    const catalogGames = gameSections.flatMap(s => s.games);
-    const featuredWithDetails = sortedFeatured.map(fg => {
-        const catalogMatch = catalogGames.find(cg => cg.name.toLowerCase() === fg.game.toLowerCase() || cg.id === fg.table);
+    // Parse scores achieved today across all tables
+    const getScoreAchievedToday = () => {
+        if (!dashboardData.tables) return 0;
+        const localToday = new Date().toLocaleDateString('en-CA');
+        let scoreSum = 0;
+        dashboardData.tables.forEach(table => {
+            if (table.rows) {
+                table.rows.forEach(row => {
+                    let isToday = false;
+                    for (const key of ["created_at", "created_on", "played_at", "date"]) {
+                        const val = row[key];
+                        if (val && String(val).includes(localToday)) {
+                            isToday = true;
+                            break;
+                        }
+                    }
+                    if (isToday) {
+                        for (const key of ["score", "total_score", "points", "wpm"]) {
+                            const val = row[key];
+                            if (val !== undefined && val !== null) {
+                                scoreSum += Number(val);
+                                break;
+                            }
+                        }
+                    }
+                });
+            }
+        });
+        return scoreSum;
+    };
+
+    const gamesPlayedToday = getGamesPlayedTodayCount();
+    const scoreAchievedToday = getScoreAchievedToday();
+    const isChallengeCompleted = gamesPlayedToday >= 3 && scoreAchievedToday >= 500;
+
+    const quoteIndex = new Date().getDay() % BRAIN_QUOTES.length;
+    const selectedQuote = BRAIN_QUOTES[quoteIndex];
+
+    // Calculate dynamic radar chart coordinates
+    const getCategoryScores = () => {
+        const memoryScores = [
+            getSharedBestScore("Memory Game") > 0 ? (getSharedBestScore("Memory Game") / 200) * 100 : null,
+            getBestScore("simon_scores") > 0 ? (getBestScore("simon_scores") / 50) * 100 : null,
+            getBestScore("number_sequence_scores") > 0 ? (getBestScore("number_sequence_scores") / 60) * 100 : null,
+            getBestScore("memory_race_scores") > 0 ? (getBestScore("memory_race_scores") / 100) * 100 : null,
+        ].filter(v => v !== null);
+        const memoryVal = memoryScores.length > 0
+            ? Math.min(100, Math.max(30, Math.round(memoryScores.reduce((a, b) => a + b, 0) / memoryScores.length)))
+            : 76;
+
+        const focusScores = [
+            getBestScore("focus_grid_scores") > 0 ? (getBestScore("focus_grid_scores") / 60) * 100 : null,
+            getBestScore("odd_color_scores") > 0 ? (getBestScore("odd_color_scores") / 400) * 100 : null,
+            getBestScore("stroop_scores") > 0 ? (getBestScore("stroop_scores") / 30) * 100 : null,
+        ].filter(v => v !== null);
+        const focusVal = focusScores.length > 0
+            ? Math.min(100, Math.max(30, Math.round(focusScores.reduce((a, b) => a + b, 0) / focusScores.length)))
+            : 66;
+
+        const logicScores = [
+            getBestScore("sudoku_scores") > 0 ? (getBestScore("sudoku_scores") / 100) * 100 : null,
+        ].filter(v => v !== null);
+        const logicVal = logicScores.length > 0
+            ? Math.min(100, Math.max(30, Math.round(logicScores.reduce((a, b) => a + b, 0) / logicScores.length)))
+            : 72;
+
+        const reflexScores = [
+            getSharedBestScore("Reaction Game") > 0 ? (getSharedBestScore("Reaction Game") / 250) * 100 : null,
+            getBestScore("aim_scores") > 0 ? (getBestScore("aim_scores") / 50) * 100 : null,
+            getBestScore("typing_scores") > 0 ? (getBestScore("typing_scores") / 100) * 100 : null,
+            getBestScore("traffic_control_scores") > 0 ? (getBestScore("traffic_control_scores") / 100) * 100 : null,
+        ].filter(v => v !== null);
+        const reflexVal = reflexScores.length > 0
+            ? Math.min(100, Math.max(30, Math.round(reflexScores.reduce((a, b) => a + b, 0) / reflexScores.length)))
+            : 80;
+
+        const problemSolvingScores = [
+            getBestScore("lights_out_scores") > 0 ? (getBestScore("lights_out_scores") / 100) * 100 : null,
+        ].filter(v => v !== null);
+        const problemSolvingVal = problemSolvingScores.length > 0
+            ? Math.min(100, Math.max(30, Math.round(problemSolvingScores.reduce((a, b) => a + b, 0) / problemSolvingScores.length)))
+            : 70;
+
         return {
-            ...fg,
-            icon: catalogMatch?.icon || "🎮",
-            desc: catalogMatch?.desc || "Cognitive training exercise",
-            id: catalogMatch?.id || fg.table
+            memory: memoryVal,
+            focus: focusVal,
+            logic: logicVal,
+            reflex: reflexVal,
+            problemSolving: problemSolvingVal
         };
-    });
+    };
 
-    // Dynamic Leaderboard (Personal Bests: Top 5 games by score)
-    const personalBests = [...highScores]
-        .sort((a, b) => b.bestScore - a.bestScore)
-        .slice(0, 5);
+    const categoryVals = getCategoryScores();
+
+    const getVertexCoords = (val, angleDeg) => {
+        const angleRad = (angleDeg * Math.PI) / 180;
+        const radius = 40 * (val / 100);
+        const x = 50 + radius * Math.cos(angleRad);
+        const y = 50 + radius * Math.sin(angleRad);
+        return { x: x.toFixed(1), y: y.toFixed(1) };
+    };
+
+    const p0 = getVertexCoords(categoryVals.memory, -90);
+    const p1 = getVertexCoords(categoryVals.focus, -18);
+    const p2 = getVertexCoords(categoryVals.logic, 54);
+    const p3 = getVertexCoords(categoryVals.reflex, 126);
+    const p4 = getVertexCoords(categoryVals.problemSolving, 198);
+
+    // Hardcoded recommended games based on exact image design requirement
+    const recommendedGames = [
+        { title: "Memory Match", image: "/rec_memory.png", tag: "Memory", tagColor: "#8b5cf6", tagBg: "#ede9ff", path: "/games/memory" },
+        { title: "Reaction Test", image: "/rec_reaction.png", tag: "Reflex", tagColor: "#d97706", tagBg: "#fffbeb", path: "/games/reaction" },
+        { title: "Focus Grid", image: "/rec_focus.png", tag: "Focus", tagColor: "#22c55e", tagBg: "#e8fdf0", path: "/games/focusgrid" }
+    ];
+
+    const quickAccessItems = [
+        {
+            label: "Daily Challenge",
+            icon: "🎯",
+            bg: "#ffe4e6",
+            color: "#e11d48",
+            onClick: () => {
+                const challengeSec = document.getElementById("daily-challenge");
+                if (challengeSec) challengeSec.scrollIntoView({ behavior: "smooth" });
+            }
+        },
+        {
+            label: "Spin Wheel",
+            icon: "🎡",
+            bg: "#e0e7ff",
+            color: "#4f46e5",
+            onClick: () => {
+                toast.success("Spin Wheel coming soon! Complete challenges to get free spins.");
+            }
+        },
+        {
+            label: "Brain Report",
+            icon: "📊",
+            bg: "#f3e8ff",
+            color: "#9333ea",
+            onClick: () => {
+                const progressSec = document.getElementById("your-progress");
+                if (progressSec) progressSec.scrollIntoView({ behavior: "smooth" });
+            }
+        },
+        {
+            label: "Invite Friends",
+            icon: "👥",
+            bg: "#f1f5f9",
+            color: "#475569",
+            onClick: () => {
+                navigator.clipboard.writeText(window.location.origin + "/register");
+                toast.success("Registration link copied! Invite your friends to play.");
+            }
+        }
+    ];
+
+    const sidebarItems = [
+        { label: "Home", icon: <IconHome />, active: true },
+        { label: "Train", icon: <IconTrain />, to: "/games" },
+        { label: "AI Assistant", icon: <IconChat />, to: "/chat" },
+        { label: "Challenges", icon: <IconChallenge />, to: "/dashboard" },
+        { label: "Rooms", icon: <IconRooms />, to: "/multiplayer" },
+        { label: "Progress", icon: <IconProgress />, to: "/dashboard" },
+        { label: "Leaderboard", icon: <IconLeaderboard />, to: "/dashboard" },
+        { label: "Profile", icon: <IconProfile />, to: "/dashboard" },
+    ];
+
+    const streakDays = ["M", "T", "W", "T", "F", "S", "S"];
 
     return (
-        <main className="min-h-screen bg-slate-50 text-slate-800 font-sans pb-12">
-            
-            {/* 1. TOP NAVIGATION BAR */}
-            <header className="sticky top-0 z-45 bg-white border-b border-slate-200/60 px-4 md:px-8 py-3.5 shadow-sm">
-                <div className="mx-auto flex max-w-[1720px] w-[95%] items-center justify-between gap-4">
-                    
-                    {/* Logo */}
-                    <div className="flex items-center gap-2">
-                        <svg className="w-8 h-8 overflow-visible" viewBox="0 0 100 100" fill="none">
-                            <style>{`
-                                @keyframes pulse-slow {
-                                    0%, 100% { transform: scale(1); }
-                                    50% { transform: scale(1.04); }
-                                }
-                                @keyframes float-left {
-                                    0%, 100% { transform: translateY(0px); }
-                                    50% { transform: translateY(-1.5px); }
-                                }
-                                @keyframes float-right {
-                                    0%, 100% { transform: translateY(0px); }
-                                    50% { transform: translateY(1.5px); }
-                                }
-                                .animate-brain {
-                                    animation: pulse-slow 4s ease-in-out infinite;
-                                    transform-origin: center;
-                                }
-                                .left-hemisphere {
-                                    animation: float-left 3.5s ease-in-out infinite;
-                                    transform-origin: 50% 50%;
-                                }
-                                .right-hemisphere {
-                                    animation: float-right 3.5s ease-in-out infinite;
-                                    transform-origin: 50% 50%;
-                                }
-                            `}</style>
-                            <g className="animate-brain">
-                                <defs>
-                                    <linearGradient id="nav-logo-grad-left" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stopColor="#8b5cf6" />
-                                        <stop offset="100%" stopColor="#4f46e5" />
-                                    </linearGradient>
-                                    <linearGradient id="nav-logo-grad-right" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stopColor="#a78bfa" />
-                                        <stop offset="100%" stopColor="#7c3aed" />
-                                    </linearGradient>
-                                </defs>
+        <div style={{ display: "flex", minHeight: "100vh", background: "#f8f9fe", fontFamily: "Inter, system-ui, sans-serif" }}>
 
-                                {/* Stem / Spine connection line */}
-                                <line x1="50" y1="74" x2="50" y2="88" stroke="url(#nav-logo-grad-left)" strokeWidth="10" strokeLinecap="round" />
+            {/* ════════════════ SIDEBAR ════════════════ */}
+            <aside style={{ position: "fixed", top: 0, left: 0, bottom: 0, width: "240px", minWidth: "240px", background: "white", borderRight: "1px solid #f1f5f9", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "24px 16px", zIndex: 45, overflowY: "auto" }}>
 
-                                {/* Left Hemisphere Group */}
-                                <g className="left-hemisphere">
-                                    <g stroke="url(#nav-logo-grad-left)" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round">
-                                        <line x1="28" y1="34" x2="18" y2="50" />
-                                        <line x1="18" y1="50" x2="30" y2="66" />
-                                        <line x1="30" y1="66" x2="38" y2="58" />
-                                        <line x1="38" y1="58" x2="40" y2="46" />
-                                        <line x1="40" y1="46" x2="28" y2="34" />
-                                        <line x1="28" y1="34" x2="50" y2="30" />
-                                        <line x1="38" y1="58" x2="50" y2="74" />
-                                    </g>
-                                    <circle cx="28" cy="34" r="9.5" fill="#8b5cf6" />
-                                    <circle cx="18" cy="50" r="11" fill="#6366f1" />
-                                    <circle cx="30" cy="66" r="9.5" fill="#4f46e5" />
-                                    <circle cx="40" cy="46" r="8.5" fill="#a78bfa" />
-                                    <circle cx="38" cy="58" r="7.5" fill="#6366f1" />
-                                </g>
-
-                                {/* Right Hemisphere Group */}
-                                <g className="right-hemisphere">
-                                    <g stroke="url(#nav-logo-grad-right)" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round">
-                                        <line x1="72" y1="34" x2="82" y2="50" />
-                                        <line x1="82" y1="50" x2="70" y2="66" />
-                                        <line x1="70" y1="66" x2="62" y2="58" />
-                                        <line x1="62" y1="58" x2="60" y2="46" />
-                                        <line x1="60" y1="46" x2="72" y2="34" />
-                                        <line x1="72" y1="34" x2="50" y2="30" />
-                                        <line x1="62" y1="58" x2="50" y2="74" />
-                                    </g>
-                                    <circle cx="72" cy="34" r="9.5" fill="#a78bfa" />
-                                    <circle cx="82" cy="50" r="11" fill="#8b5cf6" />
-                                    <circle cx="70" cy="66" r="9.5" fill="#7c3aed" />
-                                    <circle cx="60" cy="46" r="8.5" fill="#c084fc" />
-                                    <circle cx="62" cy="58" r="7.5" fill="#8b5cf6" />
-                                </g>
-
-                                {/* Center and Stem nodes */}
-                                <circle cx="50" cy="30" r="8" fill="#c084fc" />
-                                <circle cx="50" cy="74" r="9" fill="#4f46e5" />
-                                <circle cx="50" cy="88" r="7" fill="#312e81" />
-                            </g>
-                        </svg>
-                        <span className="text-xl font-black tracking-tight text-slate-900">
-                            Brain<span className="text-violet-600">Boot</span>
-                        </span>
+                <Link to="/dashboard" style={{ display: "flex", alignItems: "center", gap: "12px", paddingLeft: "8px", marginBottom: "32px", textDecoration: "none" }}>
+                    <div style={{ width: 34, height: 34, borderRadius: "10px", background: "linear-gradient(135deg, #7c6aff, #a78bfa)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 13, fontWeight: 900 }}>
+                        <IconBrain />
                     </div>
+                    <div>
+                        <p style={{ fontSize: 16, fontWeight: 800, color: "#0f172a", lineHeight: 1 }}>BrainBoot</p>
+                        <p style={{ fontSize: 11, color: "#64748b", lineHeight: 1, marginTop: 4, fontWeight: 500 }}>Train Your Brain</p>
+                    </div>
+                </Link>
 
-                    {/* Nav Links */}
-                    <nav className="hidden lg:flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200/40">
-                        <Link to="/dashboard" className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white text-violet-600 font-bold rounded-lg shadow-sm text-xs transition">
-                            🏠 Home
+                <nav style={{ display: "flex", flexDirection: "column", gap: 6, flex: 1, overflowY: "auto" }} className="scrollbar-hide">
+                    {sidebarItems.map((item, i) => (
+                        <Link key={i} to={item.to || "#"} style={{
+                            display: "flex", alignItems: "center", gap: 14, padding: "12px 16px", borderRadius: "12px",
+                            background: item.active ? "linear-gradient(135deg, #8b5cf6, #a78bfa)" : "transparent",
+                            color: item.active ? "white" : "#64748b", fontWeight: 600, fontSize: 14, textDecoration: "none", transition: "all 0.2s"
+                        }}>
+                            <span style={{ opacity: item.active ? 1 : 0.7 }}>{item.icon}</span>
+                            <span>{item.label}</span>
                         </Link>
-                        <a href="#games-catalog" className="flex items-center gap-1.5 px-3.5 py-1.5 text-slate-600 hover:text-slate-900 font-bold rounded-lg text-xs transition">
-                            🎮 Games
-                        </a>
-                        <Link to="/multiplayer" className="flex items-center gap-1.5 px-3.5 py-1.5 text-slate-600 hover:text-slate-900 font-bold rounded-lg text-xs transition">
-                            👥 Rooms
-                        </Link>
-                    </nav>
+                    ))}
+                </nav>
 
-                    {/* User Info & Actions */}
-                    <div className="flex items-center gap-4">
-                        {/* User Profile Info */}
-                        <div className="flex items-center gap-2.5">
-                            <div className="w-8.5 h-8.5 rounded-full bg-gradient-to-tr from-violet-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xs shadow-sm">
-                                {username.substring(0, 2).toUpperCase()}
-                            </div>
-                            <div className="hidden sm:flex flex-col items-start leading-none text-left">
-                                <span className="text-xs font-black text-slate-800">{username}</span>
-                                <span className="text-[10px] font-bold text-slate-400 mt-0.5">Level {userLevel}</span>
-                            </div>
-                        </div>
 
-                        <Link
-                            to="/login"
-                            className="text-xs font-bold text-slate-500 hover:text-rose-600 transition pl-3 border-l border-slate-200"
-                        >
-                            Logout
-                        </Link>
+                <div style={{ padding: "0 8px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+                        <span style={{ fontSize: 24 }}>🔥</span>
+                        <span style={{ fontSize: 24, fontWeight: 800, color: "#10b981", lineHeight: 1 }}>{streak}</span>
+                        <span style={{ fontSize: 11, fontWeight: 700, color: "#64748b", marginTop: 4 }}>Day Streak</span>
                     </div>
-                </div>
-            </header>
-
-            {/* MAIN CONTAINER */}
-            <div className="mx-auto max-w-[1720px] w-[95%] px-4 md:px-8 mt-6 space-y-6">
-                
-                {/* Loader / Errors */}
-                {isLoading && (
-                    <div className="rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4 text-xs font-bold text-indigo-900 animate-pulse">
-                        ⏳ Loading database workout data...
-                    </div>
-                )}
-                {errorMessage && (
-                    <div className="rounded-2xl border border-rose-100 bg-rose-50/50 p-4 text-xs font-bold text-rose-800">
-                        ⚠️ {errorMessage}
-                    </div>
-                )}
-
-                {/* 2. HERO BANNER */}
-                <section className="relative rounded-3xl bg-gradient-to-br from-indigo-50 via-purple-50/30 to-slate-100 border border-slate-200/60 overflow-hidden px-6 py-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
-                    <div className="flex-1 text-center md:text-left z-10 max-w-3xl">
-                        <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-tight text-slate-900">
-                            Welcome back, <span className="text-indigo-600">{username}!</span><br />
-                            Ready to level up your brain?
-                        </h1>
-                        <p className="mt-4 text-sm text-slate-500 font-semibold leading-relaxed max-w-2xl">
-                            {gamesPlayed > 0 ? (
-                                `You've completed ${gamesPlayed} cognitive workouts all-time with a total score of ${totalScore.toLocaleString()}. Your current rank is Level ${userLevel} with a streak of ${streak} day${streak === 1 ? '' : 's'}. Choose a game below to keep your streak going!`
-                            ) : (
-                                `Welcome to BrainBoot! Choose one of the games below to begin your cognitive training, improve your stats, and establish your first records.`
-                            )}
-                        </p>
-                        
-                        <div className="mt-6 flex flex-wrap justify-center md:justify-start gap-4">
-                            <Link
-                                to={`/games/${getRandomGameId()}`}
-                                className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 px-6 py-3.5 text-xs font-bold text-white transition transform hover:scale-105 active:scale-95 shadow-md shadow-indigo-100 cursor-pointer"
-                            >
-                                <span className="text-xs">▶</span> Play Now
-                            </Link>
-                            <Link
-                                to="/multiplayer"
-                                className="inline-flex items-center gap-2 rounded-2xl border-2 border-slate-200 bg-white hover:border-violet-500 px-6 py-3.5 text-xs font-bold text-violet-600 hover:text-violet-700 transition transform hover:scale-105 active:scale-95 shadow-sm cursor-pointer"
-                            >
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                                </svg>
-                                Join Room
-                            </Link>
-                        </div>
-                    </div>
-
-                    <div className="flex-1 flex justify-center z-10 relative">
-                        <div className="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center">
-                            <div className="absolute inset-4 rounded-full bg-violet-400/10 blur-3xl animate-pulse" />
-                            <img
-                                src="/3d_brain_character.png"
-                                alt="3D Weightlifter Brain"
-                                className="w-full h-full object-contain drop-shadow-xl animate-float"
-                                onError={(e) => {
-                                    e.target.style.display = "none";
-                                    e.target.nextSibling.style.display = "flex";
-                                }}
-                            />
-                            <div className="hidden w-full h-full flex-col items-center justify-center text-8xl bg-indigo-50 rounded-full border border-indigo-200">
-                                🧠
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* 3. THREE-COLUMN GAP-FREE PROGRESS GRID */}
-                <section className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
-                    
-                    {/* Your Progress Panel (6 cols) */}
-                    <div className="md:col-span-6 bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between">
-                        <div>
-                            <div className="flex items-center justify-between mb-4">
-                                <h2 className="text-sm font-black uppercase tracking-wider text-slate-500">Your Progress</h2>
-                                <span className="bg-slate-50 rounded-lg border border-slate-200 px-2 py-0.5 text-[9px] font-bold text-slate-500">All Time</span>
-                            </div>
-
-                            {/* Scores & Count indicators */}
-                            <div className="grid grid-cols-2 gap-3 mb-6">
-                                <button
-                                    type="button"
-                                    onClick={() => setScoreModalOpen(true)}
-                                    className="rounded-2xl border border-slate-100 bg-slate-50/50 p-4 text-left shadow-sm hover:border-violet-300 hover:-translate-y-0.5 hover:shadow-md transition cursor-pointer"
-                                >
-                                    <p className="text-[9px] font-black uppercase tracking-wider text-slate-400">Total Score</p>
-                                    <p className="mt-1 text-2xl font-black text-slate-800">{totalScore.toLocaleString()}</p>
-                                    <p className="mt-0.5 text-[9px] font-bold text-slate-400">Best: {bestScore.toLocaleString()}</p>
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => setGamesPlayedModalOpen(true)}
-                                    className="rounded-2xl border border-slate-100 bg-slate-50/50 p-4 text-left shadow-sm hover:border-violet-300 hover:-translate-y-0.5 hover:shadow-md transition cursor-pointer"
-                                >
-                                    <p className="text-[9px] font-black uppercase tracking-wider text-slate-400">Workouts</p>
-                                    <p className="mt-1 text-2xl font-black text-slate-800">{gamesPlayed}</p>
-                                    <p className="mt-0.5 text-[9px] font-bold text-slate-400">Streak: {streak} days</p>
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Sparkline Graph */}
-                        <div className="h-32 bg-slate-50/50 rounded-2xl border border-slate-100 p-3.5 relative flex items-center justify-center overflow-hidden">
-                            {chartPoints.length === 0 ? (
-                                <span className="text-[10px] font-bold text-slate-400 italic">No play rows recorded yet. Complete a game to see your graph!</span>
-                            ) : (
-                                <>
-                                    <svg viewBox="0 0 300 100" className="w-full h-full overflow-visible">
-                                        <line x1="0" y1="20" x2="300" y2="20" stroke="#f1f5f9" strokeDasharray="3" />
-                                        <line x1="0" y1="50" x2="300" y2="50" stroke="#f1f5f9" strokeDasharray="3" />
-                                        <line x1="0" y1="80" x2="300" y2="80" stroke="#f1f5f9" strokeDasharray="3" />
-                                        
-                                        <path d={fillD} fill="url(#chart-grad)" />
-                                        <path d={pathD} fill="none" stroke="#8b5cf6" strokeWidth="3.5" strokeLinecap="round" />
-                                        
-                                        {chartPoints.map((p, i) => (
-                                            <g key={i}>
-                                                <circle cx={p.x} cy={p.y} r="4" fill="#8b5cf6" stroke="#ffffff" strokeWidth="1.5" />
-                                            </g>
-                                        ))}
-                                    </svg>
-                                    <div className="absolute bottom-1 inset-x-4 flex justify-between text-[7px] font-black text-slate-400 font-mono">
-                                        <span>PLAY 1</span>
-                                        <span>PLAY 2</span>
-                                        <span>PLAY 3</span>
-                                        <span>PLAY 4</span>
-                                        <span>PLAY 5</span>
-                                        <span>PLAY 6</span>
-                                        <span>LAST</span>
-                                    </div>
-                                </>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Level Status Panel (3 cols) */}
-                    <div className="md:col-span-3 bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between">
-                        <div>
-                            <h2 className="text-xs font-black uppercase tracking-wider text-slate-500 mb-4">Level Status</h2>
-                            
-                            <div className="flex flex-col items-center py-4">
-                                <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-blue-500 via-indigo-600 to-violet-600 text-white flex flex-col items-center justify-center shadow-md relative overflow-hidden">
-                                    <div className="absolute inset-0 bg-white/10 opacity-30 rotate-12 transform scale-150" />
-                                    <span className="text-[9px] font-black uppercase tracking-widest text-indigo-200">LVL</span>
-                                    <span className="text-3xl font-black font-mono mt-0.5">{userLevel}</span>
-                                </div>
-                                <span className="text-xs font-black text-slate-800 mt-4">Rank Level</span>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="flex justify-between items-end mb-1.5">
-                                <span className="text-[9px] font-black uppercase text-slate-400">XP Progress</span>
-                                <span className="text-[9px] font-bold text-slate-500 font-mono">{xpProgress} / 1000 XP</span>
-                            </div>
-                            <div className="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden border border-slate-200/50">
-                                <div 
-                                    className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full transition-all duration-500"
-                                    style={{ width: `${xpPercent}%` }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Leaderboard/Personal Bests (3 cols) */}
-                    <div className="md:col-span-3 bg-white rounded-3xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between">
-                        <div>
-                            <h2 className="text-xs font-black uppercase tracking-wider text-slate-500 mb-4">🏆 High Records</h2>
-                            
-                            {personalBests.length === 0 ? (
-                                <div className="text-center py-10 text-[10px] font-bold text-slate-400 italic">No scores recorded yet. Complete a game to see your personal bests!</div>
-                            ) : (
-                                <div className="space-y-2.5">
-                                    {personalBests.map((pb, idx) => (
-                                        <div key={pb.table} className="flex items-center justify-between p-2 rounded-xl bg-slate-50/50 border border-slate-100">
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-[10px] font-black text-slate-400 w-3">{idx + 1}</span>
-                                                <span className="text-xs font-black text-slate-700 truncate max-w-28">{pb.game}</span>
-                                            </div>
-                                            <span className="text-xs font-black text-violet-600 font-mono">{pb.bestScore.toLocaleString()}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                        
-                        <div className="text-center border-t border-slate-100 pt-3">
-                            <span className="text-[8px] font-black uppercase tracking-widest text-slate-400">Your Top Game Records</span>
-                        </div>
-                    </div>
-
-                </section>
-
-                {/* 4. DYNAMIC FEATURED GAMES SECTION */}
-                {featuredWithDetails.length > 0 && (
-                    <section className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
-                        <div className="flex items-center justify-between mb-5">
-                            <h2 className="text-base font-black tracking-tight text-slate-800">Your Recent Workouts</h2>
-                            <a href="#games-catalog" className="text-xs font-bold text-violet-600 hover:text-violet-700 transition">
-                                View All
-                            </a>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                            {featuredWithDetails.map(game => (
-                                <Link
-                                    key={game.table}
-                                    to={`/games/${game.id}`}
-                                    className="group rounded-2xl border border-slate-100 bg-slate-50/50 p-4 shadow-sm hover:shadow-md hover:border-violet-300 transition-all duration-300 flex flex-col justify-between h-48 hover:-translate-y-1"
-                                >
-                                    <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-lg shadow-inner">
-                                        {game.icon}
-                                    </div>
-                                    <div>
-                                        <h3 className="text-xs font-black text-slate-800 mt-4 group-hover:text-violet-600 transition truncate">{game.game}</h3>
-                                        <p className="text-[10px] font-semibold text-slate-400 mt-1 leading-snug line-clamp-2">{game.desc}</p>
-                                    </div>
-                                    <div className="flex items-center justify-between mt-3 border-t border-slate-100/60 pt-2 text-[9px] font-bold text-slate-400 font-mono">
-                                        <span>Played: {game.plays}</span>
-                                        <span className="text-violet-600">Best: {game.bestScore}</span>
-                                    </div>
-                                </Link>
-                            ))}
-                        </div>
-                    </section>
-                )}
-
-                {/* 5. CHOOSE A GAME CATALOG SECTION */}
-                <section id="games-catalog" className="bg-white rounded-3xl border border-slate-200 p-6 md:p-8 shadow-sm">
-                    <div className="mb-6 border-b border-slate-100 pb-4">
-                        <h2 className="text-xl font-black tracking-tight text-slate-900">Choose a game</h2>
-                        <p className="mt-1 text-xs font-bold text-slate-400 uppercase tracking-wider">Select any exercise to start training your skills</p>
-                    </div>
-
-                    <div className="space-y-8">
-                        {gameSections.map(section => {
-                            let themeColor = "text-violet-600 bg-violet-50 border-violet-100";
-                            let cardHoverBorder = "hover:border-violet-300";
-                            if (section.title.includes("Reflex")) {
-                                themeColor = "text-rose-600 bg-rose-50 border-rose-100";
-                                cardHoverBorder = "hover:border-rose-300";
-                            } else if (section.title.includes("Perception")) {
-                                themeColor = "text-emerald-600 bg-emerald-50 border-emerald-100";
-                                cardHoverBorder = "hover:border-emerald-300";
-                            } else if (section.title.includes("Logic")) {
-                                themeColor = "text-amber-600 bg-amber-50 border-amber-100";
-                                cardHoverBorder = "hover:border-amber-300";
-                            }
-
+                    <div style={{ display: "flex", justifyContent: "space-between", gap: 4 }}>
+                        {streakDays.map((d, i) => {
+                            const isCompleted = i < (streak % 7 || (streak > 0 ? 7 : 0));
                             return (
-                                <div key={section.title} className="space-y-4">
-                                    <div className="flex items-center gap-2">
-                                        <span className={`inline-flex px-3 py-1 text-xs font-bold rounded-lg border uppercase tracking-wider ${themeColor}`}>
-                                            {section.title}
-                                        </span>
+                                <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+                                    <div style={{
+                                        width: 22, height: 22, borderRadius: "50%",
+                                        background: isCompleted ? "#10b981" : "#f1f5f9",
+                                        display: "flex", alignItems: "center", justifyContent: "center"
+                                    }}>
+                                        {isCompleted ? <span style={{ color: "white", fontSize: 10, fontWeight: 900 }}>✓</span> : <span style={{ color: "#94a3b8", fontSize: 10, fontWeight: 600 }}>{d}</span>}
                                     </div>
-                                    
-                                    <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-                                        {section.games.map(game => (
-                                            <Link
-                                                key={game.id}
-                                                to={`/games/${game.id}`}
-                                                className={`group rounded-2xl border border-slate-100 bg-slate-50/50 p-4 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 flex flex-col justify-between h-36 ${cardHoverBorder}`}
-                                            >
-                                                <div className="flex items-start justify-between gap-3">
-                                                    <div className="flex-1">
-                                                        <div className="flex items-center gap-2">
-                                                            <span className="text-lg">{game.icon}</span>
-                                                            <h4 className="text-sm font-black text-slate-800 truncate group-hover:text-violet-600 transition">
-                                                                {game.name}
-                                                            </h4>
-                                                        </div>
-                                                        <p className="mt-2 text-[11px] leading-relaxed text-slate-400 font-medium line-clamp-2">
-                                                            {game.desc}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-2.5">
-                                                    <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest font-mono">Cognitive</span>
-                                                    <span className="text-[10px] font-bold text-violet-600 group-hover:translate-x-1 transform transition">Play →</span>
-                                                </div>
-                                            </Link>
-                                        ))}
-                                    </div>
+                                    <span style={{ fontSize: 10, color: "#94a3b8", fontWeight: 600 }}>{d}</span>
                                 </div>
                             );
                         })}
                     </div>
-                </section>
+                </div>
+            </aside>
+
+            {/* ════════════════ MAIN CONTENT AREA ════════════════ */}
+            <div style={{
+                marginLeft: "240px",
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh",
+                position: "relative",
+                backgroundColor: "#f8f9fe",
+                overflowX: "hidden"
+            }}>
+                {/* Background Sky Image Layer */}
+                <div style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: "580px",
+                    backgroundImage: "url('/sky_bg.png')",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    zIndex: 0,
+                    pointerEvents: "none"
+                }} />
+
+                <header style={{ background: "transparent", borderBottom: "none", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "24px 40px", flexShrink: 0, zIndex: 10 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, background: "white", borderRadius: "24px", padding: "8px 16px", boxShadow: "0 2px 8px rgba(0,0,0,0.02)" }}>
+                        <span style={{ fontSize: 18 }}>🪙</span>
+                        <span style={{ fontSize: 15, fontWeight: 800, color: "#0f172a" }}>{totalScore.toLocaleString()}</span>
+                        <button style={{ background: "#f8f9fe", border: "none", width: 24, height: 24, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, cursor: "pointer", marginLeft: 4, color: "#64748b" }}>+</button>
+                    </div>
+
+                    <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                        <button style={{ width: 44, height: 44, borderRadius: "50%", border: "none", background: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#64748b", boxShadow: "0 2px 8px rgba(0,0,0,0.02)" }}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </button>
+                        <button style={{ width: 44, height: 44, borderRadius: "50%", border: "none", background: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#64748b", boxShadow: "0 2px 8px rgba(0,0,0,0.02)" }}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        </button>
+
+                        <div style={{ display: "flex", alignItems: "center", gap: 12, background: "transparent", cursor: "pointer" }}>
+                            <div style={{ width: 44, height: 44, borderRadius: "50%", background: "#f472b6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24 }}>
+                                👾
+                            </div>
+                            <div>
+                                <p style={{ fontSize: 14, fontWeight: 700, color: "#0f172a" }}>{username}</p>
+                                <p style={{ fontSize: 12, color: "#64748b", marginTop: 2, fontWeight: 500 }}>Level {userLevel}</p>
+                            </div>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                    </div>
+                </header>
+                <main style={{ flex: 1, overflowY: "visible", padding: "0 40px 40px", display: "flex", flexDirection: "column", gap: 32, position: "relative", zIndex: 2 }} className="scrollbar-hide">
+                    {/* HERO SECTION */}
+                    <section style={{
+                        position: "relative",
+                        minHeight: "500px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-end",
+                        padding: "0 0 36px"
+                    }}>
+                        <div style={{ maxWidth: "60%", zIndex: 2, position: "relative", marginTop: "40px" }}>
+                            <p style={{ fontSize: 22, fontWeight: 700, color: "#0f172a", marginBottom: 8 }}>{greeting},</p>
+                            <h1 style={{ fontSize: 48, fontWeight: 900, color: "#1e1b4b", lineHeight: 1.1, marginBottom: 16 }}>{username}!</h1>
+                            <p style={{ fontSize: 16, color: "#475569", lineHeight: 1.5, marginBottom: 24, fontWeight: 500 }}>Ready to boost your brain today?<br />Let's continue your journey.</p>
+
+                            <Link to="/games" style={{ textDecoration: "none" }}>
+                                <button style={{ background: "linear-gradient(135deg, #8b5cf6, #a78bfa)", color: "white", border: "none", borderRadius: "12px", padding: "14px 24px", fontSize: 14, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 12, boxShadow: "0 4px 14px rgba(139,92,246,0.3)" }}>
+                                    Continue Training <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </button>
+                            </Link>
+                        </div>
+
+                        {/* Stats Floating Row */}
+                        <div style={{ display: "flex", gap: 16, marginTop: 40, zIndex: 2, position: "relative" }}>
+                            <div style={{ background: "rgba(255,255,255,0.92)", borderRadius: 16, padding: "16px", width: 100, textAlign: "center", boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}>
+                                <div style={{ fontSize: 20, marginBottom: 8, color: "#8b5cf6", background: "#f5f3ff", width: 36, height: 36, borderRadius: "50%", margin: "0 auto 8px", display: "flex", alignItems: "center", justifyContent: "center" }}>🛡️</div>
+                                <div style={{ fontSize: 11, fontWeight: 600, color: "#64748b", marginBottom: 4 }}>Level</div>
+                                <div style={{ fontSize: 20, fontWeight: 800, color: "#0f172a" }}>{userLevel}</div>
+                            </div>
+                            <div style={{ background: "rgba(255,255,255,0.92)", borderRadius: 16, padding: "16px", width: 140, textAlign: "center", boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}>
+                                <div style={{ fontSize: 20, marginBottom: 8, color: "#3b82f6", background: "#eff6ff", width: 36, height: 36, borderRadius: "50%", margin: "0 auto 8px", display: "flex", alignItems: "center", justifyContent: "center" }}>⭐</div>
+                                <div style={{ fontSize: 11, fontWeight: 600, color: "#64748b", marginBottom: 4 }}>Brain Score</div>
+                                <div style={{ fontSize: 20, fontWeight: 800, color: "#0f172a" }}>{totalScore.toLocaleString()}</div>
+                            </div>
+                            <div style={{ background: "rgba(255,255,255,0.92)", borderRadius: 16, padding: "16px", width: 100, textAlign: "center", boxShadow: "0 4px 12px rgba(0,0,0,0.06)" }}>
+                                <div style={{ fontSize: 20, marginBottom: 8, color: "#10b981", background: "#ecfdf5", width: 36, height: 36, borderRadius: "50%", margin: "0 auto 8px", display: "flex", alignItems: "center", justifyContent: "center" }}>🔥</div>
+                                <div style={{ fontSize: 11, fontWeight: 600, color: "#64748b", marginBottom: 4 }}>Streak</div>
+                                <div style={{ fontSize: 20, fontWeight: 800, color: "#0f172a" }}>{streak} <span style={{ fontSize: 12 }}>Days</span></div>
+                            </div>
+                        </div>
+                        <img
+                            src="/hero_mascot.png"
+                            alt="Brain Mascot"
+                            style={{
+                                position: "absolute",
+                                bottom: "-2px",
+                                right: "-40px",
+                                height: "calc(100% + 2px)",
+                                maxHeight: "500px",
+                                objectFit: "contain",
+                                objectPosition: "right bottom",
+                                pointerEvents: "none",
+                                zIndex: 1,
+                                WebkitMaskImage: "linear-gradient(to right, transparent 0%, rgba(0,0,0,0) 2%, black 28%), linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0) 2%, black 12%)",
+                                WebkitMaskComposite: "source-in",
+                                maskImage: "linear-gradient(to right, transparent 0%, rgba(0,0,0,0) 2%, black 28%), linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0) 2%, black 12%)",
+                                maskComposite: "intersect"
+                            }}
+                        />
+                    </section>
+
+                    {/* TWO COLUMN ROW */}
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+                        {/* Today's Challenge */}
+                        <div id="daily-challenge" style={{
+                            background: "white",
+                            borderRadius: 24,
+                            padding: "28px 24px 24px",
+                            boxShadow: "0 4px 12px rgba(0,0,0,0.02)",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "stretch",
+                            gap: 20,
+                            position: "relative",
+                            overflow: "hidden"
+                        }}>
+                            {/* Left Column */}
+                            <div style={{ display: "flex", flexDirection: "column", flex: 1.2, justifyContent: "space-between" }}>
+                                <div>
+                                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
+                                        <span style={{ fontSize: 20 }}>🔥</span>
+                                        <h3 style={{ fontSize: 18, fontWeight: 800, color: "#8b5cf6" }}>Today's Challenge</h3>
+                                    </div>
+                                    <p style={{ fontSize: 14, color: "#475569", fontWeight: 600, margin: "0 0 4px 0" }}>Complete 3 games ({gamesPlayedToday} done)</p>
+                                    <p style={{ fontSize: 14, color: "#475569", fontWeight: 600, margin: "0 0 20px 0" }}>Score 500+ points ({scoreAchievedToday} achieved)</p>
+
+                                    <p style={{ fontSize: 12, color: "#64748b", fontWeight: 600, margin: "0 0 8px 0" }}>{gamesPlayedToday} / 3 Games Completed</p>
+                                    <div style={{ background: "#f1f5f9", height: 8, borderRadius: 4, width: "100%", overflow: "hidden", marginBottom: 20 }}>
+                                        <div style={{ background: isChallengeCompleted ? "linear-gradient(90deg, #10b981, #34d399)" : "linear-gradient(90deg, #8b5cf6, #a78bfa)", height: "100%", width: `${Math.min(100, Math.round((gamesPlayedToday / 3) * 100))}%`, borderRadius: 4 }}></div>
+                                    </div>
+                                </div>
+
+                                <Link to={isChallengeCompleted ? "#" : "/games"} style={{ textDecoration: "none" }}>
+                                    <button style={{
+                                        background: isChallengeCompleted ? "linear-gradient(135deg, #10b981, #34d399)" : "linear-gradient(135deg, #8b5cf6, #a78bfa)",
+                                        color: "white",
+                                        border: "none",
+                                        borderRadius: "14px",
+                                        padding: "12px 24px",
+                                        fontSize: 14,
+                                        fontWeight: 700,
+                                        cursor: isChallengeCompleted ? "default" : "pointer",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: 10,
+                                        width: "max-content",
+                                        boxShadow: isChallengeCompleted ? "0 4px 14px rgba(16,185,129,0.25)" : "0 4px 14px rgba(139,92,246,0.25)",
+                                        transition: "all 0.2s"
+                                    }}
+                                        disabled={isChallengeCompleted}
+                                    >
+                                        {isChallengeCompleted ? "Challenge Completed!" : "Start Challenge"}
+                                        {!isChallengeCompleted && (
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                <polyline points="12 5 19 12 12 19"></polyline>
+                                            </svg>
+                                        )}
+                                    </button>
+                                </Link>
+                            </div>
+
+                            {/* Right Column (Chest & Rewards) */}
+                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", flex: 0.9 }}>
+                                <img
+                                    src="/treasure_chest.png"
+                                    alt="Treasure Chest"
+                                    style={{
+                                        width: 190,
+                                        height: 190,
+                                        objectFit: "contain",
+                                        transform: "translateY(-10px)",
+                                        filter: "drop-shadow(0 8px 16px rgba(0,0,0,0.06))",
+                                        mixBlendMode: "multiply"
+                                    }}
+                                />
+
+                                <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+                                    <span style={{ fontSize: 11, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.05em" }}>Rewards</span>
+                                    <div style={{ display: "flex", gap: 8, justifyContent: "center", width: "100%" }}>
+                                        <span style={{
+                                            background: "#f3e8ff",
+                                            color: "#8b5cf6",
+                                            fontSize: 12,
+                                            fontWeight: 700,
+                                            padding: "6px 12px",
+                                            borderRadius: 12,
+                                            display: "inline-flex",
+                                            alignItems: "center"
+                                        }}>
+                                            +50 XP
+                                        </span>
+                                        <span style={{
+                                            background: "#fffbeb",
+                                            color: "#d97706",
+                                            fontSize: 12,
+                                            fontWeight: 700,
+                                            padding: "6px 12px",
+                                            borderRadius: 12,
+                                            display: "inline-flex",
+                                            alignItems: "center",
+                                            gap: 4
+                                        }}>
+                                            +100 <span style={{ fontSize: 14 }}>🪙</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Quick Access */}
+                        <div style={{ background: "white", borderRadius: 24, padding: "24px", boxShadow: "0 4px 12px rgba(0,0,0,0.02)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                            <h3 style={{ fontSize: 16, fontWeight: 800, color: "#0f172a", marginBottom: 20 }}>Quick Access</h3>
+
+                            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 24 }}>
+                                {quickAccessItems.map((item, idx) => (
+                                    <div key={idx} onClick={item.onClick} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, cursor: "pointer" }}>
+                                        <div style={{ width: 64, height: 64, borderRadius: "50%", background: item.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, boxShadow: "0 4px 10px rgba(0,0,0,0.05)" }}>
+                                            {item.icon}
+                                        </div>
+                                        <span style={{ fontSize: 11, fontWeight: 700, color: "#475569", width: 60, textAlign: "center", lineHeight: 1.2 }}>{item.label}</span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div style={{ background: "#f8f9fe", borderRadius: 16, padding: "16px 20px", display: "flex", gap: 16, alignItems: "flex-start" }}>
+                                <span style={{ fontSize: 24, color: "#8b5cf6", lineHeight: 1, fontFamily: "serif", fontWeight: 900 }}>"</span>
+                                <div>
+                                    <p style={{ fontSize: 14, color: "#475569", fontWeight: 500, lineHeight: 1.5, marginBottom: 8 }}>The more you train your brain,<br />the stronger your future.</p>
+                                    <p style={{ fontSize: 12, color: "#94a3b8", fontWeight: 600 }}>– BrainBoot</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* EXPLORE BY ZONE */}
+                    <section>
+                        <h3 style={{ fontSize: 18, fontWeight: 900, color: "#0f172a", marginBottom: 16 }}>Explore by Zone</h3>
+                        <div style={{ borderRadius: 24, overflow: "hidden", position: "relative", width: "100%", height: "380px", background: "#7cd3fc", boxShadow: "0 4px 12px rgba(0,0,0,0.03)" }}>
+
+                            <img src="/zone_map.png" alt="Zone Map" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+
+                            {ZONES.map((zone, idx) => (
+                                <Link key={idx} to={`/games?zone=${zone.id}`} style={{ position: "absolute", top: zone.top, left: zone.left, transform: "translate(-50%, -50%)", textDecoration: "none", display: "block", padding: "16px" }}>
+                                    <div style={{ background: "rgba(30, 27, 75, 0.9)", backdropFilter: "blur(4px)", padding: "8px 14px", borderRadius: "12px", color: "white", fontSize: 12, fontWeight: 700, lineHeight: 1, whiteSpace: "nowrap", boxShadow: "0 4px 10px rgba(0,0,0,0.2)", transition: "all 0.2s ease" }}>
+                                        {zone.name}
+                                    </div>
+                                </Link>
+                            ))}
+
+                            <div style={{ position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)", background: "white", padding: "10px 28px", borderRadius: 100, display: "flex", alignItems: "center", gap: 10, boxShadow: "0 8px 24px rgba(0,0,0,0.12)", width: "max-content", maxWidth: "90%" }}>
+                                <span style={{ color: "#a78bfa", fontSize: 16 }}>★</span>
+                                <span style={{ fontSize: 12, fontWeight: 700, color: "#334155" }}>Each zone has unique games. Explore & master them all!</span>
+                                <span style={{ color: "#a78bfa", fontSize: 20, lineHeight: 0, position: "relative", top: 2, fontFamily: "serif" }}>”</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* ════════════════ BOTTOM ROW (PROGRESS & RECOMMENDED) ════════════════ */}
+                    <div style={{ display: "grid", gridTemplateColumns: "1.2fr 2.5fr", gap: 24 }}>
+
+                        {/* Radar Chart Component exactly matching the design */}
+                        <div id="your-progress" style={{ background: "white", borderRadius: 24, padding: "28px 24px", boxShadow: "0 4px 16px rgba(0,0,0,0.02)", display: "flex", flexDirection: "column", border: "1.5px solid #f3f1fa" }}>
+                            <h3 style={{ fontSize: 18, fontWeight: 900, color: "#1e1b4b", marginBottom: 32 }}>Your Progress</h3>
+
+                            <div style={{ position: "relative", width: "100%", flex: 1, display: "flex", alignItems: "center", justifyContent: "center", minHeight: 220 }}>
+
+                                {/* Absolute positioned text labels (matches exact styling from image) */}
+                                <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", textAlign: "center" }}>
+                                    <span style={{ fontSize: 12, fontWeight: 800, color: "#1e1b4b", display: "block" }}>Memory</span>
+                                    <span style={{ fontSize: 11, color: "#64748b", fontWeight: 700 }}>{categoryVals.memory}%</span>
+                                </div>
+                                <div style={{ position: "absolute", top: "42%", right: 5, transform: "translateY(-50%)", textAlign: "left" }}>
+                                    <span style={{ fontSize: 12, fontWeight: 800, color: "#1e1b4b", display: "block" }}>Focus</span>
+                                    <span style={{ fontSize: 11, color: "#64748b", fontWeight: 700 }}>{categoryVals.focus}%</span>
+                                </div>
+                                <div style={{ position: "absolute", bottom: 5, right: "12%", textAlign: "center" }}>
+                                    <span style={{ fontSize: 12, fontWeight: 800, color: "#1e1b4b", display: "block" }}>Logic</span>
+                                    <span style={{ fontSize: 11, color: "#64748b", fontWeight: 700 }}>{categoryVals.logic}%</span>
+                                </div>
+                                <div style={{ position: "absolute", bottom: 5, left: "12%", textAlign: "center" }}>
+                                    <span style={{ fontSize: 12, fontWeight: 800, color: "#1e1b4b", display: "block" }}>Reflex</span>
+                                    <span style={{ fontSize: 11, color: "#64748b", fontWeight: 700 }}>{categoryVals.reflex}%</span>
+                                </div>
+                                <div style={{ position: "absolute", top: "42%", left: 5, transform: "translateY(-50%)", textAlign: "right" }}>
+                                    <span style={{ fontSize: 12, fontWeight: 800, color: "#1e1b4b", display: "block" }}>Problem Solving</span>
+                                    <span style={{ fontSize: 11, color: "#64748b", fontWeight: 700 }}>{categoryVals.problemSolving}%</span>
+                                </div>
+
+                                {/* Refined SVG Pentagonal Chart */}
+                                <svg width="190" height="190" viewBox="0 0 100 100" style={{ overflow: "visible" }}>
+                                    {/* 5 Concentric Pentagons */}
+                                    <polygon points="50,10 88,37.6 73.5,82.4 26.5,82.4 12,37.6" fill="none" stroke="#ede9fe" strokeWidth="0.8" />
+                                    <polygon points="50,18 80.4,40.1 68.8,75.9 31.2,75.9 19.6,40.1" fill="none" stroke="#ede9fe" strokeWidth="0.8" />
+                                    <polygon points="50,26 72.8,42.6 64.1,69.4 35.9,69.4 27.2,42.6" fill="none" stroke="#ede9fe" strokeWidth="0.8" />
+                                    <polygon points="50,34 65.2,45.1 59.4,62.9 40.6,62.9 34.8,45.1" fill="none" stroke="#ede9fe" strokeWidth="0.8" />
+                                    <polygon points="50,42 57.6,47.5 54.7,56.5 45.3,56.5 42.4,47.5" fill="none" stroke="#ede9fe" strokeWidth="0.8" />
+
+                                    {/* Spoke Lines */}
+                                    <line x1="50" y1="50" x2="50" y2="10" stroke="#ede9fe" strokeWidth="0.8" />
+                                    <line x1="50" y1="50" x2="88" y2="37.6" stroke="#ede9fe" strokeWidth="0.8" />
+                                    <line x1="50" y1="50" x2="73.5" y2="82.4" stroke="#ede9fe" strokeWidth="0.8" />
+                                    <line x1="50" y1="50" x2="26.5" y2="82.4" stroke="#ede9fe" strokeWidth="0.8" />
+                                    <line x1="50" y1="50" x2="12" y2="37.6" stroke="#ede9fe" strokeWidth="0.8" />
+
+                                    {/* Filled Data Polygon (Purple) */}
+                                    <polygon points={`${p0.x},${p0.y} ${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y}`} fill="#8c7cf0" fillOpacity="0.45" stroke="#7c6aff" strokeWidth="2" strokeLinejoin="round" />
+
+                                    {/* Data Vertex Dots */}
+                                    <circle cx={p0.x} cy={p0.y} r="2.5" fill="white" stroke="#7c6aff" strokeWidth="1.5" />
+                                    <circle cx={p1.x} cy={p1.y} r="2.5" fill="white" stroke="#7c6aff" strokeWidth="1.5" />
+                                    <circle cx={p2.x} cy={p2.y} r="2.5" fill="white" stroke="#7c6aff" strokeWidth="1.5" />
+                                    <circle cx={p3.x} cy={p3.y} r="2.5" fill="white" stroke="#7c6aff" strokeWidth="1.5" />
+                                    <circle cx={p4.x} cy={p4.y} r="2.5" fill="white" stroke="#7c6aff" strokeWidth="1.5" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        {/* Recommended For You Game Cards matching the design */}
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                            <h3 style={{ fontSize: 18, fontWeight: 900, color: "#1e1b4b", marginBottom: 24 }}>Recommended For You</h3>
+                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20, flex: 1 }}>
+                                {recommendedGames.map((game, idx) => (
+                                    <div key={idx} style={{ background: "white", borderRadius: 24, display: "flex", flexDirection: "column", overflow: "hidden", boxShadow: "0 4px 16px rgba(0,0,0,0.02)", border: "1.5px solid #f3f1fa" }}>
+                                        {/* Top Colored Image Area */}
+                                        <div style={{ height: 170, overflow: "hidden", position: "relative" }}>
+                                            <img src={game.image} alt={game.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                                        </div>
+
+                                        {/* Bottom White Text/Action Area */}
+                                        <div style={{ padding: "20px", display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1, gap: 16 }}>
+                                            <h4 style={{ fontSize: 16, fontWeight: 800, color: "#1e1b4b", margin: 0 }}>{game.title}</h4>
+
+                                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                                                {/* Category Tag */}
+                                                <span style={{ background: game.tagBg, color: game.tagColor, fontSize: 11, fontWeight: 800, padding: "6px 16px", borderRadius: 20 }}>
+                                                    {game.tag}
+                                                </span>
+
+                                                {/* Play Button Outline */}
+                                                <Link to={game.path} style={{
+                                                    width: 44,
+                                                    height: 44,
+                                                    borderRadius: "50%",
+                                                    border: "2px solid #e5e0ff",
+                                                    background: "white", 
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    textDecoration: "none",
+                                                    color: "#7c6aff", transition: "all 0.2s ease",
+                                                    boxShadow: "0 2px 8px rgba(124,106,255,0.05)"
+                                                }}
+                                                    onMouseEnter={e => {
+                                                        e.currentTarget.style.borderColor = "#7c6aff";
+                                                        e.currentTarget.style.boxShadow = "0 4px 12px rgba(124,106,255,0.15)";
+                                                    }}
+                                                    onMouseLeave={e => {
+                                                        e.currentTarget.style.borderColor = "#e5e0ff";
+                                                        e.currentTarget.style.boxShadow = "0 2px 8px rgba(124,106,255,0.05)";
+                                                    }}>
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style={{ marginLeft: 2 }}><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {/* ════════════════ INLINE PILL BOTTOM NAVIGATION ════════════════ */}
+                    <div style={{
+                        margin: "40px auto 0",
+                        background: "white",
+                        borderRadius: 100,
+                        padding: "8px 48px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        boxShadow: "0 8px 32px rgba(124,106,255,0.06)",
+                        width: "100%",
+                        border: "1.5px solid #f3f1fa"
+                    }}>
+                        <Link
+                            to="/friends"
+                            style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 10, textDecoration: "none", color: "#2e2a77", transition: "all 0.2s ease" }}
+                            onMouseEnter={e => { e.currentTarget.style.color = "#8b5cf6"; }}
+                            onMouseLeave={e => { e.currentTarget.style.color = "#2e2a77"; }}
+                        >
+                            <IconFriends />
+                            <span style={{ fontSize: 13.5, fontWeight: 700 }}>Play with Friends</span>
+                        </Link>
+
+                        <Link
+                            to="/leaderboard"
+                            style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 10, textDecoration: "none", color: "#2e2a77", transition: "all 0.2s ease" }}
+                            onMouseEnter={e => { e.currentTarget.style.color = "#8b5cf6"; }}
+                            onMouseLeave={e => { e.currentTarget.style.color = "#2e2a77"; }}
+                        >
+                            <IconTrophy />
+                            <span style={{ fontSize: 13.5, fontWeight: 700 }}>Leaderboards</span>
+                        </Link>
+
+                        <Link to="/dashboard" style={{ display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none" }}>
+                            <div style={{
+                                width: 46,
+                                height: 46,
+                                borderRadius: "12px",
+                                background: "linear-gradient(135deg, #8b5cf6, #a78bfa)",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                color: "white",
+                                boxShadow: "0 4px 12px rgba(139,92,246,0.25)",
+                                transition: "all 0.2s ease"
+                            }}
+                                onMouseEnter={e => {
+                                    e.currentTarget.style.transform = "scale(1.05)";
+                                    e.currentTarget.style.boxShadow = "0 6px 16px rgba(139,92,246,0.35)";
+                                }}
+                                onMouseLeave={e => {
+                                    e.currentTarget.style.transform = "scale(1)";
+                                    e.currentTarget.style.boxShadow = "0 4px 12px rgba(139,92,246,0.25)";
+                                }}>
+                                <IconBrain />
+                            </div>
+                        </Link>
+
+                        <Link
+                            to="/achievements"
+                            style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 10, textDecoration: "none", color: "#2e2a77", transition: "all 0.2s ease" }}
+                            onMouseEnter={e => { e.currentTarget.style.color = "#8b5cf6"; }}
+                            onMouseLeave={e => { e.currentTarget.style.color = "#2e2a77"; }}
+                        >
+                            <IconMedal />
+                            <span style={{ fontSize: 13.5, fontWeight: 700 }}>Achievements</span>
+                        </Link>
+
+                        <Link
+                            to="/rewards"
+                            style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 10, textDecoration: "none", color: "#2e2a77", transition: "all 0.2s ease" }}
+                            onMouseEnter={e => { e.currentTarget.style.color = "#8b5cf6"; }}
+                            onMouseLeave={e => { e.currentTarget.style.color = "#2e2a77"; }}
+                        >
+                            <IconGift />
+                            <span style={{ fontSize: 13.5, fontWeight: 700 }}>Daily Rewards</span>
+                        </Link>
+                    </div>
+
+                </main>
 
             </div>
 
-            {/* MODALS */}
-            {scoreModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-sm px-4 py-6">
-                    <div className="w-full max-w-2xl rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden animate-fade-in">
-                        <div className="flex items-start justify-between gap-4 border-b border-slate-100 p-6 bg-slate-50">
-                            <div>
-                                <p className="text-[10px] font-black uppercase tracking-wider text-violet-600">Scores Summary</p>
-                                <h2 className="mt-1 text-2xl font-black text-slate-800 tracking-tight">
-                                    Total Score: {totalScore.toLocaleString()}
-                                </h2>
-                                <p className="text-xs font-semibold text-slate-400 mt-1">Highest recorded score for each mental exercise.</p>
-                            </div>
-                            <button
-                                type="button"
-                                onClick={() => setScoreModalOpen(false)}
-                                className="rounded-xl bg-white border border-slate-200 hover:bg-slate-50 px-4 py-2 text-xs font-bold text-slate-600 transition cursor-pointer"
-                                aria-label="Close scores modal"
-                            >
-                                Close
-                            </button>
-                        </div>
-
-                        <div className="max-h-[60vh] overflow-y-auto p-6 space-y-3">
-                            {highScores.length === 0 ? (
-                                <div className="rounded-2xl bg-slate-50 p-6 text-center text-xs font-bold text-slate-400 border border-slate-100">
-                                    No game scores registered yet. Start playing to track scores!
-                                </div>
-                            ) : (
-                                <div className="grid gap-3 sm:grid-cols-2">
-                                    {highScores.map(item => (
-                                        <div
-                                            key={item.table}
-                                            className="rounded-2xl border border-slate-100 bg-slate-50/50 p-4 hover:border-violet-300 transition"
-                                        >
-                                            <div className="flex items-start justify-between gap-3">
-                                                <div>
-                                                    <h3 className="text-xs font-black text-slate-800">
-                                                        {item.game}
-                                                    </h3>
-                                                    <p className="mt-1 text-[10px] font-bold text-slate-400 font-mono">
-                                                        Total Rounds: {item.plays}
-                                                    </p>
-                                                </div>
-                                                <div className="text-right">
-                                                    <p className="text-[9px] font-black uppercase tracking-wider text-violet-600">
-                                                        Record
-                                                    </p>
-                                                    <p className="mt-0.5 text-xl font-black text-slate-900 font-mono">
-                                                        {item.bestScore}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {gamesPlayedModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-sm px-4 py-6">
-                    <div className="w-full max-w-2xl rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden animate-fade-in">
-                        <div className="flex items-start justify-between gap-4 border-b border-slate-100 p-6 bg-slate-50">
-                            <div>
-                                <p className="text-[10px] font-black uppercase tracking-wider text-violet-600">Workout Counts</p>
-                                <h2 className="mt-1 text-2xl font-black text-slate-800 tracking-tight">
-                                    Total Mental Workouts: {gamesPlayed}
-                                </h2>
-                                <p className="text-xs font-semibold text-slate-400 mt-1">Number of plays grouped by mental exercise.</p>
-                            </div>
-                            <button
-                                type="button"
-                                onClick={() => setGamesPlayedModalOpen(false)}
-                                className="rounded-xl bg-white border border-slate-200 hover:bg-slate-50 px-4 py-2 text-xs font-bold text-slate-600 transition cursor-pointer"
-                                aria-label="Close games played modal"
-                            >
-                                Close
-                            </button>
-                        </div>
-
-                        <div className="max-h-[60vh] overflow-y-auto p-6 space-y-3">
-                            {highScores.length === 0 ? (
-                                <div className="rounded-2xl bg-slate-50 p-6 text-center text-xs font-bold text-slate-400 border border-slate-100">
-                                    No completed workouts found yet.
-                                </div>
-                            ) : (
-                                <div className="grid gap-3 sm:grid-cols-2">
-                                    {highScores
-                                        .filter(item => item.plays > 0)
-                                        .map(item => (
-                                            <div
-                                                key={item.table}
-                                                className="rounded-2xl border border-slate-100 bg-slate-50/50 p-4 hover:border-violet-300 transition"
-                                            >
-                                                <div className="flex items-start justify-between gap-3">
-                                                    <div>
-                                                        <h3 className="text-xs font-black text-slate-800">
-                                                            {item.game}
-                                                        </h3>
-                                                        <p className="mt-1 text-[10px] font-bold text-slate-400">
-                                                            Best score: <span className="font-mono">{item.bestScore}</span>
-                                                        </p>
-                                                    </div>
-                                                    <div className="text-right">
-                                                        <p className="text-[9px] font-black uppercase tracking-wider text-violet-600">
-                                                            Played
-                                                        </p>
-                                                        <p className="mt-0.5 text-xl font-black text-slate-900 font-mono">
-                                                            {item.plays}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Custom Embedded CSS animations */}
             <style>{`
-                @keyframes float-animation {
-                    0% { transform: translateY(0px); }
-                    50% { transform: translateY(-8px); }
-                    100% { transform: translateY(0px); }
-                }
-                .animate-float {
-                    animation: float-animation 4s ease-in-out infinite;
-                }
-                #chart-grad stop {
-                    stop-color: #8b5cf6;
-                }
+                .scrollbar-hide::-webkit-scrollbar { display: none; }
+                .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+                * { box-sizing: border-box; }
             `}</style>
-
-        </main>
+        </div>
     );
 }
 

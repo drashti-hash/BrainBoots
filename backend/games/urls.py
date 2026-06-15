@@ -19,6 +19,10 @@ from games.Views.nback_view import add_nback_score_view
 from games.Views.speed_math_view import add_speed_math_score_view
 from games.Views.schulte_view import add_schulte_score_view
 from games.Views.hanoi_view import add_hanoi_score_view
+from games.Views.memory_race_view import add_memory_race_score_view
+from games.Views.traffic_control_view import add_traffic_control_score_view
+from games.Views.wrong_answer_view import add_wrong_answer_score_view
+from games.Views.hot_potato_view import add_hot_potato_score_view
 
 urlpatterns = [
     path('add-reaction-score/', add_reaction_score_view),
@@ -41,4 +45,8 @@ urlpatterns = [
     path('register/', register_view, name='register'),
     path('login/', login_view, name='login'),
     path('dashboard-data/', dashboard_data_view, name='dashboard-data'),
+    path('add-memory-race-score/', add_memory_race_score_view),
+    path('add-traffic-control-score/', add_traffic_control_score_view),
+    path('add-wrong-answer-score/', add_wrong_answer_score_view),
+    path('add-hot-potato-score/', add_hot_potato_score_view),
 ]

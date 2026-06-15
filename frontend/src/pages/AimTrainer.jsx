@@ -3,7 +3,7 @@ import { addAimScore } from "../services/api";
 
 function AimTrainer() {
     const [score, setScore] = useState(0);
-    const [timeLeft, setTimeLeft] = useState(30);
+    const [timeLeft, setTimeLeft] = useState(60);
     const [gameStarted, setGameStarted] = useState(false);
     const [targetPosition, setTargetPosition] = useState({ top: 150, left: 250 });
     const [totalClicks, setTotalClicks] = useState(0);
@@ -42,7 +42,7 @@ function AimTrainer() {
 
     const startGame = () => {
         setScore(0);
-        setTimeLeft(30);
+        setTimeLeft(60);
         setTotalClicks(0);
         setAccuracy(0);
         setGameStarted(true);

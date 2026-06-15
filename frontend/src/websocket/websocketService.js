@@ -9,7 +9,7 @@ class WebSocketService {
         this.roomCode = null;
         this.username = null;
         this.reconnectAttempts = 0;
-        this.maxReconnectAttempts = 5;
+        this.maxReconnectAttempts = 25; // Try reconnecting for ~5.5 minutes
         this.reconnectDelay = 2000; // Start with 2 seconds
         this.isIntentionalClose = false;
         this.connectionStatusCallbacks = [];
@@ -61,13 +61,21 @@ class WebSocketService {
      * Initialize connection to the ASGI server
      */
     connect(roomCode, username) {
+        const incomingRoomCode = roomCode.toUpperCase();
+
+        // Close existing connection if switching to a different room
+        if (this.ws && this.roomCode !== incomingRoomCode) {
+            console.log(`Room code changed from ${this.roomCode} to ${incomingRoomCode}. Closing old connection.`);
+            this.close();
+        }
+
         // Avoid opening duplicate connections if already connected
         if (this.ws && (this.ws.readyState === WebSocket.OPEN || this.ws.readyState === WebSocket.CONNECTING)) {
             console.log("WebSocket is already active. ReadyState:", this.ws.readyState);
             return;
         }
 
-        this.roomCode = roomCode.toUpperCase();
+        this.roomCode = incomingRoomCode;
         this.username = username;
         this.isIntentionalClose = false;
 
@@ -120,7 +128,7 @@ class WebSocketService {
     }
 
     /**
-     * Reconnection retry logic with exponential backoff
+     * Reconnection retry logic with exponential backoff capped at 15s
      */
     attemptReconnect() {
         if (this.reconnectAttempts >= this.maxReconnectAttempts) {
@@ -129,7 +137,8 @@ class WebSocketService {
         }
 
         this.reconnectAttempts++;
-        const delay = this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1);
+        // Capping backoff delay at 15 seconds (15000ms)
+        const delay = Math.min(15000, this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1));
         console.log(`Attempting reconnect in ${delay}ms (Attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts})`);
         
         setTimeout(() => {
@@ -175,6 +184,11 @@ class WebSocketService {
     close() {
         this.isIntentionalClose = true;
         if (this.ws) {
+            // Nullify event handlers of the old socket to prevent callbacks firing after close
+            this.ws.onopen = null;
+            this.ws.onmessage = null;
+            this.ws.onclose = null;
+            this.ws.onerror = null;
             this.ws.close();
             this.ws = null;
         }
