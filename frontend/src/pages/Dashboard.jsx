@@ -890,7 +890,6 @@ function Dashboard() {
         { label: "AI Assistant", icon: <IconChat />, to: "/chat" },
         { label: "Challenges", icon: <IconChallenge />, to: "/dashboard" },
         { label: "Rooms", icon: <IconRooms />, to: "/multiplayer" },
-        { label: "Progress", icon: <IconProgress />, to: "/dashboard" },
         { label: "Leaderboard", icon: <IconLeaderboard />, to: "/dashboard" },
         { label: "Profile", icon: <IconProfile />, to: "/dashboard" },
     ];

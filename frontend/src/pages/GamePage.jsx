@@ -41,29 +41,33 @@ function GamePage() {
 
     return (
         <main className="min-h-screen bg-[#f5f5fa] text-[#1e1b4b]">
-            <header className="sticky top-0 z-30 border-b border-[#c4c2f0]/30 bg-white/95 px-4 py-4 shadow-sm backdrop-blur md:px-8">
-                <div className="mx-auto flex max-w-[1720px] w-[95%] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
+            <header className="sticky top-0 z-30 border-b border-[#c4c2f0]/20 bg-white/95 px-4 py-2 shadow-xs backdrop-blur md:px-8">
+                <div className="mx-auto flex max-w-[1720px] w-full items-center justify-between">
+                    <div className="flex items-center gap-3">
                         <Link
                             to="/dashboard"
-                            className="text-sm font-bold text-[#a29bfe] hover:text-[#6c5ce7]"
+                            className="flex items-center gap-1 text-xs font-extrabold text-[#6c5ce7] hover:text-[#a29bfe] transition-colors"
+                            style={{ textDecoration: "none" }}
                         >
-                            Back to dashboard
+                            <span style={{ fontSize: "14px" }}>←</span> Back
                         </Link>
-                        <h1 className="mt-1 text-2xl font-black tracking-tight text-[#6c5ce7]">
-                            {game.name}
-                        </h1>
-                        <p className="text-sm font-medium text-[#6c5ce7]/65">
-                            {game.section}
-                        </p>
+                        <div className="h-4 w-[1px] bg-[#c4c2f0]/40"></div>
+                        <div>
+                            <h1 className="text-base font-black tracking-tight text-[#6c5ce7] m-0 leading-tight">
+                                {game.name}
+                            </h1>
+                            <p className="text-[10px] font-semibold text-[#6c5ce7]/50 m-0 leading-none">
+                                {game.section}
+                            </p>
+                        </div>
                     </div>
-                    <span className="inline-flex w-fit rounded-lg bg-[#ede9ff]/25 px-3 py-2 text-sm font-bold text-[#6c5ce7]">
+                    <span className="rounded-md bg-[#ede9ff]/30 px-2.5 py-1 text-[11px] font-black text-[#6c5ce7]">
                         {game.icon}
                     </span>
                 </div>
             </header>
 
-            <section className="mx-auto flex w-full max-w-[1720px] w-[95%] justify-center px-4 py-6 md:px-8">
+            <section className="mx-auto flex w-full max-w-[1720px] w-full justify-center px-4 py-3 md:px-8">
                 <div className="w-full animate-fadeIn">
                     <Suspense fallback={
                         <div className="flex h-64 items-center justify-center rounded-2xl border border-indigo-100 bg-white p-6 font-sans text-sm font-semibold text-indigo-500 shadow-sm animate-pulse">

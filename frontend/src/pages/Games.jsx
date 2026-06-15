@@ -709,7 +709,6 @@ function Games() {
         { label: "Train", icon: <IconTrain />, active: true },
         { label: "Challenges", icon: <IconChallenge />, to: "/dashboard" },
         { label: "Rooms", icon: <IconRooms />, to: "/multiplayer" },
-        { label: "Progress", icon: <IconProgress />, to: "/dashboard" },
         { label: "Leaderboard", icon: <IconLeaderboard />, to: "/dashboard" },
         { label: "Profile", icon: <IconProfile />, to: "/dashboard" },
     ];
@@ -766,18 +765,6 @@ function Games() {
                         );
                     })}
                 </nav>
-
-                {/* Go Premium Violet Widget */}
-                <div style={{ background: "#f3f0ff", borderRadius: 16, padding: "16px", border: "1px solid #e8e4ff", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 10, margin: "20px 0" }}>
-                    <div style={{ width: 36, height: 36, borderRadius: "50%", background: "white", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 10px rgba(0,0,0,0.02)" }}>
-                        <span className="notranslate" translate="no" style={{ fontSize: 18 }}>💎</span>
-                    </div>
-                    <div>
-                        <p style={{ fontSize: 12, fontWeight: 900, color: "#1e1b4b", margin: 0 }}>Go Premium</p>
-                        <p style={{ fontSize: 9, color: "#64748b", margin: "4px 0 0 0", lineHeight: 1.4 }}>Unlock all games, stats, reports and more.</p>
-                    </div>
-                    <button type="button" style={{ background: "linear-gradient(135deg, #7c6aff, #a78bfa)", color: "white", border: "none", borderRadius: 10, padding: "8px 0", width: "100%", fontSize: 11, fontWeight: 800, cursor: "pointer", boxShadow: "0 4px 10px rgba(124,106,255,0.15)" }}>Upgrade Now</button>
-                </div>
 
                 {/* Streak widget at the bottom */}
                 <div style={{ background: "white", borderRadius: 16, border: "1px solid #f0edff", padding: "12px 14px" }}>
