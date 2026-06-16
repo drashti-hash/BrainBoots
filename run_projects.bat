@@ -11,10 +11,6 @@ start "BrainBoots Backend" cmd /k "cd /d %~dp0backend && ..\venv\Scripts\python.
 echo [*] Launching BrainBoots Frontend (React) on http://localhost:5173 ...
 start "BrainBoots Frontend" cmd /k "cd /d %~dp0frontend && npm run dev"
 
-:: 3. Start AI Chatbot Backend
-echo [*] Launching AI Chatbot Backend (PostgreSQL) on http://127.0.0.1:8080 ...
-start "AI Chatbot Backend" cmd /k "cd /d D:\ai-chatbot && .\venv\Scripts\python.exe manage.py runserver 127.0.0.1:8080"
-
 echo.
 echo [✓] All services have been triggered! 
 echo     Keep the newly opened console windows running.

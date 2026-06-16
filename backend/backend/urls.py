@@ -25,6 +25,11 @@ urlpatterns = [
     ),
 
     path(
+        'api/chat/',
+        include('chat.urls')
+    ),
+
+    path(
         '',
         include('games.urls')
     ),

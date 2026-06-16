@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://127.0.0.1:8080/api/chat";
+const BASE_URL = `${import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000"}/api/chat`;
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");
