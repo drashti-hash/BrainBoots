@@ -3,7 +3,7 @@ from .views import (
     ChatAPIView, ChatHistoryAPIView, CreateSessionAPIView, DeleteDocumentAPIView,
     DocumentListAPIView, DocumentSearchAPIView, DocumentUploadAPIView,
     SessionListAPIView, SessionMessagesAPIView, TestAPI, ChatStreamAPIView,
-    DeleteSessionAPIView
+    DeleteSessionAPIView, DebugAPIView
 )
 
 urlpatterns = [
@@ -15,6 +15,7 @@ urlpatterns = [
     path("sessions/<int:session_id>/messages/", SessionMessagesAPIView.as_view()),
     path("sessions/<int:session_id>/delete/", DeleteSessionAPIView.as_view(), name="delete_session"),
     path("test/", TestAPI.as_view()),
+    path("debug/", DebugAPIView.as_view(), name="debug_api"),
 
     path("documents/upload/", DocumentUploadAPIView.as_view()),
     path("documents/", DocumentListAPIView.as_view()),

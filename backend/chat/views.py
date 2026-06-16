@@ -27,14 +27,20 @@ class CreateSessionAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-
-        session = ChatSession.objects.create(
-            user=request.user
-        )
-
-        return Response({
-            "session_id": session.id
-        }, status=status.HTTP_201_CREATED)
+        try:
+            session = ChatSession.objects.create(
+                user=request.user
+            )
+            return Response({
+                "session_id": session.id
+            }, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            import traceback
+            return Response({
+                "error": "Failed to create chat session",
+                "details": str(e),
+                "traceback": traceback.format_exc()
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # =========================
@@ -325,28 +331,35 @@ class SessionListAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        try:
+            sessions = ChatSession.objects.filter(
+                user=request.user
+            ).order_by("-created_at")
 
-        sessions = ChatSession.objects.filter(
-            user=request.user
-        ).order_by("-created_at")
+            data = []
 
-        data = []
+            for session in sessions:
 
-        for session in sessions:
+                first_message = Message.objects.filter(
+                    session=session,
+                    role="user"
+                ).first()
 
-            first_message = Message.objects.filter(
-                session=session,
-                role="user"
-            ).first()
+                data.append({
+                    "id": session.id,
+                    "title": first_message.content[:40]
+                    if first_message
+                    else "New Chat"
+                })
 
-            data.append({
-                "id": session.id,
-                "title": first_message.content[:40]
-                if first_message
-                else "New Chat"
-            })
-
-        return Response(data)
+            return Response(data)
+        except Exception as e:
+            import traceback
+            return Response({
+                "error": "Failed to list sessions",
+                "details": str(e),
+                "traceback": traceback.format_exc()
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 
 class SessionMessagesAPIView(APIView):
@@ -451,15 +464,22 @@ class DocumentListAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        try:
+            documents = Document.objects.all().order_by("-uploaded_at")
 
-        documents = Document.objects.all().order_by("-uploaded_at")
+            serializer = DocumentSerializer(
+                documents,
+                many=True
+            )
 
-        serializer = DocumentSerializer(
-            documents,
-            many=True
-        )
-
-        return Response(serializer.data)
+            return Response(serializer.data)
+        except Exception as e:
+            import traceback
+            return Response({
+                "error": "Failed to list documents",
+                "details": str(e),
+                "traceback": traceback.format_exc()
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 class DeleteDocumentAPIView(APIView):
     authentication_classes = [BrainbootsJWTAuthentication]
@@ -569,3 +589,80 @@ class TestAPI(APIView):
             "message": "Logged in user",
             "user": request.user.username
         })
+
+
+# =========================
+# DEBUG API
+# =========================
+class DebugAPIView(APIView):
+    permission_classes = []
+    authentication_classes = []
+
+    def get(self, request):
+        import os
+        from django.db import connection
+        from django.conf import settings
+
+        db_info = {
+            "ENGINE": settings.DATABASES['default']['ENGINE'],
+            "HOST": settings.DATABASES['default'].get('HOST'),
+            "PORT": settings.DATABASES['default'].get('PORT'),
+            "NAME": settings.DATABASES['default'].get('NAME'),
+            "USER": settings.DATABASES['default'].get('USER'),
+        }
+
+        tables = []
+        procedures = []
+        db_error = None
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute("SHOW TABLES")
+                tables = [r[0] for r in cursor.fetchall()]
+                
+                try:
+                    cursor.execute("SHOW PROCEDURE STATUS WHERE Db = %s", [db_info["NAME"]])
+                    procedures = [r[1] for r in cursor.fetchall()]
+                except Exception as e:
+                    procedures = [f"Failed to fetch procedures: {e}"]
+        except Exception as e:
+            db_error = str(e)
+
+        chroma_status = {}
+        try:
+            import chromadb
+            chroma_status["installed"] = True
+            chroma_status["version"] = chromadb.__version__
+            try:
+                os.makedirs("./chroma_db", exist_ok=True)
+                test_file = "./chroma_db/.write_test"
+                with open(test_file, "w") as f:
+                    f.write("test")
+                os.remove(test_file)
+                chroma_status["writeable"] = True
+            except Exception as e:
+                chroma_status["writeable"] = False
+                chroma_status["write_error"] = str(e)
+        except Exception as e:
+            chroma_status["installed"] = False
+            chroma_status["error"] = str(e)
+
+        chat_tables = [t for t in tables if t.startswith("chat_")]
+        django_tables = [t for t in tables if t.startswith("django_") or t.startswith("auth_")]
+
+        return Response({
+            "status": "ok",
+            "database_connection": db_info,
+            "database_error": db_error,
+            "all_tables_count": len(tables),
+            "chat_tables": chat_tables,
+            "django_tables": django_tables,
+            "stored_procedures": procedures,
+            "chroma_status": chroma_status,
+            "environment_variables": {
+                "PORT": os.environ.get("PORT"),
+                "MYSQLDATABASE": os.environ.get("MYSQLDATABASE"),
+                "MYSQLHOST": os.environ.get("MYSQLHOST"),
+                "GROQ_API_KEY_configured": bool(os.environ.get("GROQ_API_KEY")),
+            }
+        })
+

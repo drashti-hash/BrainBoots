@@ -7,6 +7,17 @@ from django.conf import settings
 
 class BrainbootsJWTAuthentication(BaseAuthentication):
     def authenticate(self, request):
+        try:
+            return self._authenticate(request)
+        except AuthenticationFailed:
+            raise
+        except Exception as e:
+            import traceback
+            tb = traceback.format_exc()
+            print(f"[AUTH_ERROR] Authentication Exception: {tb}", file=sys.stderr)
+            raise AuthenticationFailed(f"Auth system exception: {str(e)} | Details: {tb[:300]}")
+
+    def _authenticate(self, request):
         auth_header = request.headers.get("Authorization")
         print(f"[AUTH_DEBUG] Authorization Header: {auth_header}", file=sys.stderr)
         
@@ -58,3 +69,4 @@ class BrainbootsJWTAuthentication(BaseAuthentication):
             raise AuthenticationFailed("Token is missing user identifiers")
             
         return (user, token)
+
