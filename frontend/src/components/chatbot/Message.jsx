@@ -66,7 +66,7 @@ export default function Message({ role, text, timestamp }) {
         <code
           className={`px-1.5 py-0.5 rounded text-xs font-mono border ${
             isUser
-              ? 'bg-indigo-700/50 text-indigo-100 border-indigo-500/20'
+              ? 'bg-neutral-700/50 text-neutral-100 border-neutral-600/20'
               : 'bg-slate-100 text-pink-600 border-slate-200/50'
           }`}
           {...props}
@@ -105,7 +105,7 @@ export default function Message({ role, text, timestamp }) {
       <blockquote
         className={`border-l-4 pl-4 italic my-2 py-1 rounded-r text-sm ${
           isUser
-            ? 'border-indigo-400 text-indigo-200 bg-indigo-700/20'
+            ? 'border-neutral-500 text-neutral-300 bg-neutral-800/20'
             : 'border-slate-300 text-slate-500 bg-slate-50'
         }`}
       >
@@ -125,7 +125,7 @@ export default function Message({ role, text, timestamp }) {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={`hover:underline transition-colors ${isUser ? 'text-indigo-100 hover:text-white' : 'text-indigo-600 hover:text-indigo-800'}`}
+        className={`hover:underline transition-colors ${isUser ? 'text-neutral-200 hover:text-white' : 'text-neutral-800 hover:text-neutral-900'}`}
       >
         {children}
       </a>
@@ -137,7 +137,7 @@ export default function Message({ role, text, timestamp }) {
       <div className={`flex max-w-[80%] ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
         <div className={`flex-shrink-0 ${isUser ? 'ml-3' : 'mr-3'}`}>
           <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-            isUser ? 'bg-indigo-600' : 'bg-gray-600'
+            isUser ? 'bg-neutral-700' : 'bg-neutral-800'
           }`}>
             {isUser ? (
               <User className="w-4 h-4 text-white" />
@@ -150,7 +150,7 @@ export default function Message({ role, text, timestamp }) {
         <div className="flex flex-col">
           <div className={`px-4 py-3 rounded-2xl shadow-sm ${
             isUser
-              ? 'bg-indigo-600 text-white rounded-br-none'
+              ? 'bg-neutral-800 text-white rounded-br-none'
               : 'bg-white text-gray-800 rounded-bl-none border border-slate-200/80'
           }`}>
             <ReactMarkdown

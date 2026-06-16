@@ -51,7 +51,7 @@ export default function DocumentManager({
   return (
     <div className="flex flex-col font-sans border-t border-slate-200 bg-slate-50/50">
       <div className="px-4 py-3 border-b border-slate-200 flex items-center space-x-2">
-        <BookOpen className="w-4 h-4 text-indigo-600" />
+        <BookOpen className="w-4 h-4 text-neutral-700" />
         <h3 className="font-semibold text-slate-700 text-xs uppercase tracking-wider">
           Knowledge Base (PDF)
         </h3>
@@ -66,7 +66,7 @@ export default function DocumentManager({
           onClick={triggerFileSelect}
           className={`border border-dashed rounded-xl p-3.5 text-center cursor-pointer transition-all duration-200 ${
             dragActive
-              ? "border-indigo-500 bg-indigo-50/60"
+              ? "border-neutral-500 bg-neutral-100/60"
               : "border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/50"
           } ${isUploading ? "pointer-events-none opacity-60" : ""}`}
         >
@@ -79,7 +79,7 @@ export default function DocumentManager({
           />
           {isUploading ? (
             <div className="flex flex-col items-center justify-center space-y-1.5 py-1">
-              <Loader2 className="w-5 h-5 text-indigo-600 animate-spin" />
+              <Loader2 className="w-5 h-5 text-neutral-700 animate-spin" />
               <span className="text-[11px] font-medium text-slate-500">
                 Chunking & indexing...
               </span>
@@ -113,7 +113,7 @@ export default function DocumentManager({
                 className="group flex items-center justify-between p-1.5 rounded-lg bg-white border border-slate-100 hover:border-slate-200 shadow-sm transition-all duration-150"
               >
                 <div className="flex items-center space-x-1.5 min-w-0 flex-1">
-                  <FileText className="w-3.5 h-3.5 text-indigo-500 flex-shrink-0" />
+                  <FileText className="w-3.5 h-3.5 text-neutral-600 flex-shrink-0" />
                   <span className="text-[11px] font-medium text-slate-600 truncate" title={displayName}>
                     {displayName}
                   </span>

@@ -327,7 +327,7 @@ export default function Chat() {
           <div className="flex items-center space-x-4">
             <button
               onClick={() => navigate("/dashboard")}
-              className="px-4 py-2 text-sm bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg font-medium transition cursor-pointer"
+              className="px-4 py-2 text-sm bg-neutral-100 hover:bg-neutral-200 text-neutral-800 rounded-lg font-medium transition cursor-pointer"
             >
               Back to Dashboard
             </button>
