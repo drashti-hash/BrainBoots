@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from .auth_backend import BrainbootsJWTAuthentication
 
 from .models import ChatSession, Message
 from .services import ask_ai, ask_ai_stream
@@ -23,6 +24,7 @@ def is_simple_greeting(text):
 # CREATE SESSION
 # =========================
 class CreateSessionAPIView(APIView):
+    authentication_classes = [BrainbootsJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -40,6 +42,7 @@ class CreateSessionAPIView(APIView):
 # NORMAL CHAT (NON-STREAM)
 # =========================
 class ChatAPIView(APIView):
+    authentication_classes = [BrainbootsJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -151,6 +154,7 @@ Assistant:"""
 # 🔥 STREAMING CHAT
 # =========================
 class ChatStreamAPIView(APIView):
+    authentication_classes = [BrainbootsJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -295,6 +299,7 @@ Assistant:"""
 # CHAT HISTORY
 # =========================
 class ChatHistoryAPIView(APIView):
+    authentication_classes = [BrainbootsJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -317,6 +322,7 @@ class ChatHistoryAPIView(APIView):
         return Response(data)
     
 class SessionListAPIView(APIView):
+    authentication_classes = [BrainbootsJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -345,6 +351,7 @@ class SessionListAPIView(APIView):
     
 
 class SessionMessagesAPIView(APIView):
+    authentication_classes = [BrainbootsJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request, session_id):
@@ -366,6 +373,7 @@ class SessionMessagesAPIView(APIView):
 
 
 class DeleteSessionAPIView(APIView):
+    authentication_classes = [BrainbootsJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def delete(self, request, session_id):
@@ -377,7 +385,7 @@ class DeleteSessionAPIView(APIView):
             return Response({"error": "Session not found"}, status=status.HTTP_404_NOT_FOUND)
 
 class DocumentUploadAPIView(APIView):
-
+    authentication_classes = [BrainbootsJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -440,7 +448,7 @@ class DocumentUploadAPIView(APIView):
             )
         
 class DocumentListAPIView(APIView):
-
+    authentication_classes = [BrainbootsJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -455,7 +463,7 @@ class DocumentListAPIView(APIView):
         return Response(serializer.data)
     
 class DeleteDocumentAPIView(APIView):
-
+    authentication_classes = [BrainbootsJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def delete(self, request, document_id):
@@ -491,7 +499,7 @@ class DeleteDocumentAPIView(APIView):
             )
     
 class DocumentSearchAPIView(APIView):
-
+    authentication_classes = [BrainbootsJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -554,6 +562,7 @@ class DocumentSearchAPIView(APIView):
 # TEST API
 # =========================
 class TestAPI(APIView):
+    authentication_classes = [BrainbootsJWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
