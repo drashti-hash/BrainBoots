@@ -1,5 +1,5 @@
 from pypdf import PdfReader
-from .chroma_db import collection
+from .chroma_db import get_chroma_collection
 import fitz
 
 _model = None
@@ -13,6 +13,7 @@ def get_embedding_model():
 
 def save_chunks_to_chromadb(document, chunks):
     model = get_embedding_model()
+    collection = get_chroma_collection()
     for index, chunk in enumerate(chunks):
 
         embedding = model.encode(chunk).tolist()
@@ -110,6 +111,7 @@ def search_chunks(query, top_k=10, user_doc_ids=None):
     model = get_embedding_model()
     embedding = model.encode(query).tolist()
 
+    collection = get_chroma_collection()
     results = collection.query(
         query_embeddings=[embedding],
         n_results=top_k,
@@ -136,6 +138,7 @@ def delete_document_from_chromadb(document_id):
     Delete document chunks from ChromaDB
     """
     try:
+        collection = get_chroma_collection()
         collection.delete(where={"document_id": document_id})
     except Exception as e:
         print(f"Error deleting document {document_id} from ChromaDB: {e}")

@@ -12,7 +12,6 @@ from .models import Document , DocumentChunk
 from .serializers import DocumentSerializer
 from .utils import extract_pdf_text, create_chunks, save_chunks_to_chromadb, search_chunks, delete_document_from_chromadb
 from .rag_service import generate_rag_response
-from .chroma_db import collection
 
 
 def is_simple_greeting(text):
