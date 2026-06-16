@@ -322,7 +322,7 @@ export default function Chat() {
         <header className="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center shadow-sm">
           <div>
             <h1 className="text-xl font-semibold text-gray-800">AI Chat Assistant</h1>
-            <p className="text-sm text-gray-500">Powered by Phi3 Mini</p>
+            <p className="text-sm text-gray-500">Powered by Groq (Llama 3)</p>
           </div>
           <div className="flex items-center space-x-4">
             <button
